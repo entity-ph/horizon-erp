@@ -40,7 +40,7 @@ const app = express();
 const port = process.env.PORT || 5001;
 
 const allowedOrigins = [
-  'https://edge.horizonexpress.ph',
+  'https://api-horizonexpress.entity.ph',
   'http://localhost:5173',
 ];
 
