@@ -86,6 +86,9 @@ export default function EditClientDialog({ clientData }: IUpdateClientProps) {
 		if (clientData) {
 			form.reset({
 				...clientData,
+				notes: clientData.notes ?? '',
+				contactPerson: clientData.contactPerson ?? '',
+				department: clientData.department ?? '',
 			})
 		}
 	}, [clientData, form]);

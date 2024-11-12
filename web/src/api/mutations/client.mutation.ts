@@ -20,10 +20,11 @@ export interface IUpdateClient {
   name?: string
   email?: string
   contactNumber?: string
+  contactPerson?: string
   documents?: string[]
   department?: string
   officeBranch?: OfficeBranch
-  notes?: string | null;
+  notes?: string;
 }
 
 export enum TypeOfClient {
@@ -38,6 +39,7 @@ export interface IClient {
   id: string
   name?: string
   email?: string
+  notes?: string
   creatorId: string;
   approverId: string;
   contactNumber?: string

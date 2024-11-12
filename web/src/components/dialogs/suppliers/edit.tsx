@@ -85,7 +85,9 @@ export default function EditSupplierDialog({ supplierData }: IUpdateSupplierProp
 	useEffect(() => {
 		if (supplierData) {
 			form.reset({
-				...supplierData
+				...supplierData,
+				notes: supplierData.notes ?? '',
+				category: supplierData.category ?? ""
 			})
 		}
 	}, [supplierData, form])

@@ -20,6 +20,7 @@ export interface ICreateClient {
   clientType: ClientType;
   notes?: string;
   creatorId: string
+  department?: string
 }
 export interface IUpdateClient {
   name?: string

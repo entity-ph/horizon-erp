@@ -13,8 +13,9 @@ export interface ISupplier {
   purchaseOrders: IPurchaseRequestOrder[]
   creator: IUser,
   approver: IUser
-  approverId: String
-  creatorId: String
+  approverId: string
+  creatorId: string
+  notes?: string
 
   createdAt: Date
   updatedAt: Date
@@ -36,9 +37,9 @@ export interface IUpdateSupplier {
   name?: string
   address?: string
   contact?: string
-  category?: string | null;
+  category?: string;
   emailAddress?: string;
-  notes?: string | null;
+  notes?: string;
   officeBranch?: OfficeBranch
 }
 
