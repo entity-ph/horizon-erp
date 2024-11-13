@@ -31,6 +31,7 @@ export enum TypeOfClient {
 export interface ICreateSalesAgreement {
   clientId: string;
   currency: Currency;
+  approverId?: string;
 }
 
 export interface IUpdateSalesAgreement {

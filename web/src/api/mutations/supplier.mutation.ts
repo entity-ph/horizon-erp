@@ -30,6 +30,7 @@ export interface ICreateSupplier {
   notes?: string;
   officeBranch: OfficeBranch;
   creatorId: string;
+  approverId?: string;
 }
 
 export interface IUpdateSupplier {

@@ -68,11 +68,12 @@ export default function CreateSalesAgreementDialog() {
     },
   });
 
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createMutate({
-      ...values,
-    })
+    const payload = { ...values, approverId: user?.userType === UserType.ADMIN ? String(user.id) : undefined };
+    createMutate(payload);
   }
+
 
   function renderSelectedCompany(clientId?: string) {
     if (!clientId) return "Select client";

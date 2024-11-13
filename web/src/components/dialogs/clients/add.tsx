@@ -16,7 +16,7 @@ import { TypeOfClient } from "@/interfaces/sales-agreement.interface";
 import { useEffect } from "react";
 // import Constants from "@/constants";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { OfficeBranch } from "@/interfaces/user.interface";
+import { OfficeBranch, UserType } from "@/interfaces/user.interface";
 import { useAuth } from "@/providers/auth-provider";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -102,8 +102,9 @@ export default function CreateClientDialog({ openDialog, setOpenDialog }: ICreat
 		createClientMutate({
 			...values,
 			officeBranch: branch as OfficeBranch,
-			creatorId: String(session?.user?.id)
-		})
+			creatorId: String(session?.user?.id),
+			...(session?.user?.userType === UserType.ADMIN && { approverId: String(session.user.id) })
+		});
 	}
 
 	useEffect(() => {

@@ -23,12 +23,9 @@ const formSchema = z.object({
   }, {
     message: 'Invalid quantity'
   }),
-  unitPrice: z.string().refine(value => {
-    const numberValue = Number(value);
-    return !isNaN(numberValue) && numberValue > 0;
-  }, {
+  unitPrice: z.preprocess((value) => parseFloat(value as string), z.number().positive({
     message: 'Invalid unit price'
-  }),
+  })),
   total: z.number().refine(value => value > 0, {
     message: 'Invalid total'
   }),
@@ -53,8 +50,8 @@ export default function AddPurchaseRequestItemDialog({ purchaseRequestId }: Prop
   const unitPrice = form.watch('unitPrice');
 
   useEffect(() => {
-    const total = (Number(quantity) * Number(unitPrice));
-    form.setValue('total', total);
+    const total = (Number(quantity) * Number(unitPrice)).toFixed(2);
+    form.setValue('total', Number(total));
   }, [quantity, unitPrice])
 
 
@@ -63,6 +60,9 @@ export default function AddPurchaseRequestItemDialog({ purchaseRequestId }: Prop
     onSuccess: (data) => {
       queryClient.refetchQueries({ queryKey: ['purchase-request-details'] })
       form.reset();
+      form.setValue('total', 0)
+      form.setValue('unitPrice', 0)
+      form.setValue('quantity', "")
       setOpen(false);
       toast.success(data.message, {
         position: 'top-center',
@@ -111,7 +111,7 @@ export default function AddPurchaseRequestItemDialog({ purchaseRequestId }: Prop
                   <FormItem>
                     <FormLabel>Particulars:</FormLabel>
                     <FormControl>
-                      <MultiInput { ...field } placeholder="Enter particulars" />
+                      <MultiInput {...field} placeholder="Enter particulars" />
                     </FormControl>
                     <FormMessage className="text-[10px]" />
                   </FormItem>

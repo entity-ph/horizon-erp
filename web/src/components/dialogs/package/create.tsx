@@ -48,12 +48,12 @@ const formSchema = z.object({
 export default function CreatePackageDialog() {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-  const { session:{user}, branch } = useAuth()
+  const { session: { user }, branch } = useAuth()
   const navigate = useNavigate();
   const [inclusionOptions, setInclusionOptions] = useState(Constants.PackageInclusions);
-	const [selectedInclusions, setSelectedInclusions] = useState<string[]>([]);
+  const [selectedInclusions, setSelectedInclusions] = useState<string[]>([]);
   const [exclusionOptions, setExclusionOptions] = useState(Constants.PackageExclusions);
-	const [selectedExclusions, setSelectedExclusions] = useState<string[]>([]);
+  const [selectedExclusions, setSelectedExclusions] = useState<string[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -89,7 +89,8 @@ export default function CreatePackageDialog() {
       ...values,
       inclusions: selectedInclusions,
       exclusions: selectedExclusions,
-      officeBranch: branch as OfficeBranch
+      officeBranch: branch as OfficeBranch,
+      ...(user?.userType === UserType.ADMIN && { approverId: String(user.id) })
     });
   }
 
@@ -126,7 +127,7 @@ export default function CreatePackageDialog() {
                   </FormItem>
                 )}
               />
-              
+
               <div className="space-y-1">
                 <FormLabel>Inclusions</FormLabel>
                 <MultiSelect

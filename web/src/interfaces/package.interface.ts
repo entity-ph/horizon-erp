@@ -59,6 +59,7 @@ export interface ICreatePackage {
   inclusions: string[];
   exclusions: string[];
   remarks: string;
+  approverId?: string;
   officeBranch: OfficeBranch;
 }
 

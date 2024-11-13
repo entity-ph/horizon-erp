@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import CommonToast from "@/components/common/toast";
 import { Button } from "@/components/ui/button";
-import { OfficeBranch } from "@/interfaces/user.interface";
+import { OfficeBranch, UserType } from "@/interfaces/user.interface";
 import { createSupplier, ICreateSupplier } from "@/api/mutations/supplier.mutation";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/providers/auth-provider";
@@ -70,8 +70,9 @@ export default function CreateSupplierDialog({ openDialog, setOpenDialog }: ICre
 		createSupplierMutate({
 			...values,
 			officeBranch: branch as OfficeBranch,
-			creatorId: String(session?.user?.id)
-		})
+			creatorId: String(session?.user?.id),
+			...(session?.user?.userType === UserType.ADMIN && { approverId: String(session.user.id) })
+		});
 	}
 
 	return (

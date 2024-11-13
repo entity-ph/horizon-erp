@@ -23,12 +23,9 @@ const formSchema = z.object({
   }, {
     message: 'Invalid quantity'
   }),
-  unitPrice: z.string().refine(value => {
-    const numberValue = Number(value);
-    return !isNaN(numberValue) && numberValue > 0;
-  }, {
+  unitPrice: z.preprocess((value) => parseFloat(value as string), z.number().positive({
     message: 'Invalid unit price'
-  }),
+  })),
   total: z.number().refine(value => value > 0, {
     message: 'Invalid total'
   }),
@@ -54,8 +51,8 @@ export default function AddSalesAgreementItemDialog({ salesAgreementId }: Props)
   const unitPrice = form.watch('unitPrice');
 
   useEffect(() => {
-    const total = (Number(quantity) * Number(unitPrice));
-    form.setValue('total', total);
+    const total = (Number(quantity) * Number(unitPrice)).toFixed(2);
+    form.setValue('total', Number(total));
   }, [quantity, unitPrice])
 
 
@@ -112,7 +109,7 @@ export default function AddSalesAgreementItemDialog({ salesAgreementId }: Props)
                   <FormItem>
                     <FormLabel>Particulars:</FormLabel>
                     <FormControl>
-                      <MultiInput { ...field } placeholder="Enter particulars" />
+                      <MultiInput {...field} placeholder="Enter particulars" />
                     </FormControl>
                     <FormMessage className="text-[10px]" />
                   </FormItem>

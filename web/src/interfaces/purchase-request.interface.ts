@@ -85,6 +85,7 @@ export interface ICreatePurchaseRequest {
   classificationType: string;
   currency?: Currency
   other?: string;
+  approverId?: string;
 }
 
 export interface IUpdatePurchaseRequest {

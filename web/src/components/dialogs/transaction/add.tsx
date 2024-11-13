@@ -151,7 +151,7 @@ export default function CreateTransactionDialog({ openDialog, setOpenDialog, suc
 			createTransactionMutate({
 				creatorId: String(session.user?.id),
 				id: data.id,
-				branch: branch as OfficeBranch
+				branch: branch as OfficeBranch,
 			})
 		}
 	});
@@ -172,7 +172,8 @@ export default function CreateTransactionDialog({ openDialog, setOpenDialog, suc
 			createClientMutate({
 				...values,
 				officeBranch: branch as OfficeBranch,
-				creatorId: String(session?.user?.id)
+				creatorId: String(session?.user?.id),
+				approverId: String(session?.user?.id)
 			})
 		}
 	}

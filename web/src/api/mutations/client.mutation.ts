@@ -13,6 +13,7 @@ export interface ICreateClient {
   department?: string
   officeBranch?: OfficeBranch;
   notes?: string;
+  approverId?: string;
   creatorId: string;
 }
 export interface IUpdateClient {

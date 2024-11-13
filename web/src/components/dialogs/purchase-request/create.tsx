@@ -102,9 +102,8 @@ export default function CreatePurchaseRequestDialog() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createMutate({
-      ...values
-    })
+    const payload = { ...values, approverId: user?.userType === UserType.ADMIN ? String(user.id) : undefined };
+    createMutate(payload);
   }
 
   function renderSelectedCompany(supplierId?: string) {
