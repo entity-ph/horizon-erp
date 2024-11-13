@@ -17,6 +17,7 @@ export interface ISalesAgreement {
   creator?: IUser;
   approver?: IUser;
   updatedAt: Date;
+  createdAt: Date;
 }
 
 export enum TypeOfClient {

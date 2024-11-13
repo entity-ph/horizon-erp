@@ -2,10 +2,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../../ui/checkbox";
 import { IPackage } from "@/interfaces/package.interface";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { format } from "date-fns";
 import EditPackageDialog from "@/components/dialogs/package/edit";
 import DeletePackageDialog from "@/components/alert/package/delete";
 import { Link } from "react-router-dom";
-import { NotepadText } from "lucide-react";
+import { Calendar, NotepadText } from "lucide-react";
 import { UserType } from "@/interfaces/user.interface";
 import Constants from "@/constants";
 import { useAuth } from "@/providers/auth-provider";
@@ -71,6 +72,21 @@ export const Columns: ColumnDef<IPackage>[] = [
       </span>
     ),
   },
+  {
+    id: "createdAt",
+    header: () => <div className="flex items-center gap-x-2">
+      <p>Date Created</p>
+      <Calendar color="white" size={16} />
+    </div>,
+    cell: ({ row }) => {
+      return (
+        <span className="capitalize">
+          {format(new Date(row.original.createdAt), 'MMMM d, h:mm a')}
+        </span>
+      )
+    }
+  },
+
   {
     id: "approver",
     header: "Approved by",

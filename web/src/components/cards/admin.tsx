@@ -53,7 +53,7 @@ export const DashboardCard: React.FC<DashboardCardProps> = ({
 				{showRate && (
 					<div className="flex items-center justify-end gap-x-2 w-full mt-2">
 						<TrendingUp size={16} className="text-primary" />
-						<div className="text-primary text-xs font-semibold">{rate}%</div>
+						<div className="text-primary text-xs font-semibold">{Math.round(rate ?? 0)}%</div>
 						<p className="text-[10px] font-light">{shortLabel}</p>
 					</div>
 				)}

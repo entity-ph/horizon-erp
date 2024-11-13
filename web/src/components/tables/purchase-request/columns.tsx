@@ -1,7 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../../ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
-import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, NotepadText } from "lucide-react";
+import { format } from "date-fns";
+import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, Calendar, NotepadText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { IPurchaseRequestOrder } from "@/interfaces/purchase-request.interface";
 import EditPurchaseRequestDialog from "@/components/dialogs/purchase-request/edit";
@@ -45,7 +46,7 @@ export const Columns: ColumnDef<IPurchaseRequestOrder>[] = [
           className="text-xs"
           onClick={() => { column.toggleSorting(column.getIsSorted() === "asc") }}
         >
-          Client Name
+          Supplier Name
           {isSorted === "asc" && <ArrowUpAZ className="ml-2 h-4 w-4" />}
           {isSorted === "desc" && <ArrowDownAZ className="ml-2 h-4 w-4" />}
           {!isSorted && <ArrowUpDown className="ml-2 h-4 w-4" />}
@@ -100,7 +101,20 @@ export const Columns: ColumnDef<IPurchaseRequestOrder>[] = [
       </span>
     )
   },
-
+  {
+    id: "createdAt",
+    header: () => <div className="flex items-center gap-x-2">
+      <p>Date Created</p>
+      <Calendar color="white" size={16} />
+    </div>,
+    cell: ({ row }) => {
+      return (
+        <span className="capitalize">
+          {format(new Date(row.original.createdAt), 'MMMM d, h:mm a')}
+        </span>
+      )
+    }
+  },
   {
     id: "actions",
     header: "Actions",

@@ -1,8 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../../ui/checkbox";
+import { format } from "date-fns";
 import { ISalesAgreement } from "../../../interfaces/sales-agreement.interface";
 import ClientTypeBadge from "../../badges/client-type";
-import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, NotepadText } from "lucide-react";
+import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, Calendar, NotepadText } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditSalesAgreementDialog from "../../dialogs/sales-agreement/edit";
 import DeleteSalesAgreement from "../../alert/sales-agreement/delete";
@@ -84,6 +85,20 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
     }
   },
   {
+    id: "createdAt",
+    header: () => <div className="flex items-center gap-x-2">
+      <p>Date Created</p>
+      <Calendar color="white" size={16} />
+    </div>,
+    cell: ({ row }) => {
+      return (
+        <span className="capitalize">
+          {format(new Date(row.original.createdAt), 'MMMM d, h:mm a')}
+        </span>
+      )
+    }
+  },
+  {
     id: "approvedBy",
     header: "Approved by",
     cell: ({ row }) => {
@@ -96,6 +111,7 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
       )
     }
   },
+
   {
     id: "actions",
     header: "Actions",
