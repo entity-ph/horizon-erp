@@ -21,6 +21,7 @@ export interface IShipping {
   name: string;
   voyageNumber: string;
   dateOfTravel: Date;
+  etd: Date;
   origin: string;
   destination: string;
   travelId?: string

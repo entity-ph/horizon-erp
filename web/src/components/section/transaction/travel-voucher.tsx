@@ -109,9 +109,15 @@ export default function TravelVoucher({ travelVoucher }: TravelVoucherProps) {
                 <p className="text-sm md:text-xs font-medium">{voucher.shipping?.destination ?? "N/A"}</p>
               </div>
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-1 gap-x-4">
-                <p className="text-sm md:text-xs">Date of Travel</p>
+                <p className="text-sm md:text-xs">Date of Travel:</p>
                 <p className="text-sm md:text-xs font-medium">
                   {format(new Date(voucher.shipping?.dateOfTravel ?? new Date()), "MMMM d, yyyy")}
+                </p>
+              </div>
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-1 gap-x-4">
+                <p className="text-sm md:text-xs">ETD:</p>
+                <p className="text-sm md:text-xs font-medium">
+                  {format(new Date(voucher.shipping?.etd ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}
                 </p>
               </div>
             </div>

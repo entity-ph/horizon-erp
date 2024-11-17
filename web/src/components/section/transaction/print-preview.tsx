@@ -124,10 +124,10 @@ export default function PrintPreview({ data }: Props) {
                         <p>Date of Arrival: {format(new Date(voucher.airline?.dateOfArrival ?? new Date()), "MMMM d, yyyy")}</p>
                       </div>
                       <div>
-                        <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy")}</p>
+                        <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}</p>
                       </div>
                       <div>
-                        <p>ETA: {format(new Date(voucher.airline?.eta ?? new Date()), "MMMM d, yyyy")}</p>
+                        <p>ETA: {format(new Date(voucher.airline?.eta ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}</p>
                       </div>
                     </div>}
                   {voucher.type === TravelVoucherType.SHIPPING &&
@@ -142,6 +142,9 @@ export default function PrintPreview({ data }: Props) {
                       </div>
                       <div>
                         <p>Date of Travel: {format(new Date(voucher.shipping?.dateOfTravel ?? new Date()), "MMMM d, yyyy")}</p>
+                      </div>
+                      <div>
+                        <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}</p>
                       </div>
                     </div>}
                 </div>

@@ -12,7 +12,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "../../../ui/form"
 import CommonInput from "../../../common/input"
@@ -48,6 +47,7 @@ const formSchema = z.object({
     name: z.string().min(1, { message: "Shipping name is required" }),
     voyageNumber: z.string().min(1, { message: "Voyage number is required" }),
     dateOfTravel: z.date({ required_error: "Date of travel is required" }),
+    etd: z.date({ required_error: "Estimated time of Departure is required" }),
     origin: z.string().min(1, { message: "Origin is required" }),
     destination: z.string().min(1, { message: "Destination code is required" }),
   }).optional(),
@@ -60,10 +60,17 @@ export default function AddTravelVoucherDialog({ transactionId, openDialog, setO
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      airline: {
-        etd: new Date(new Date().setHours(0, 0, 0, 0)),
-        eta: new Date(new Date().setHours(0, 0, 0, 0)),
-      }
+      ...(selectedType === TravelVoucherType.AIRLINES && {
+        airline: {
+          etd: new Date(new Date().setHours(0, 0, 0, 0)),
+          eta: new Date(new Date().setHours(0, 0, 0, 0)),
+        }
+      }),
+      ...(selectedType === TravelVoucherType.SHIPPING && {
+        shipping: {
+          etd: new Date(new Date().setHours(0, 0, 0, 0)),
+        }
+      }),
     },
   })
 
@@ -488,6 +495,48 @@ export default function AddTravelVoucherDialog({ transactionId, openDialog, setO
                           </Popover>
                         </div>
                         <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="shipping.etd"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        <div className="flex flex-row justify-between gap-x-2 items-center">
+                          <p className="text-xs w-1/3">ETD:</p>
+                          <Popover>
+                            <FormControl>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  className={cn(
+                                    "w-full justify-between text-left text-xs font-normal",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "PPP HH:mm:ss a")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </PopoverTrigger>
+                            </FormControl>
+                            <PopoverContent className="w-auto p-0">
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                initialFocus
+                              />
+                              <div className="p-3 border-t border-border">
+                                <TimePicker { ...field }/>
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </div>
                       </FormItem>
                     )}
                   />
