@@ -274,6 +274,9 @@ export default function PrintPreview({ data }: Props) {
                     <div>
                       <p>Driver: {transport.driverName}</p>
                       <p>Contact: {transport.driverContact}</p>
+                      <p>Date of Service: {format(new Date(transport.dateOfService), 'MMMM d, yyyy')}</p>
+                      <p>Time Begins: {format(new Date(transport.timeBegins), 'MMMM d, yyyy hh:mm:ss a')}</p>
+                      <p>Time Ends: {format(new Date(transport.timeEnds), 'MMMM d, yyyy hh:mm:ss a')}</p>
                     </div>
                     {transport.remarks && <div><p>Remarks: {transport.remarks}</p></div>}
                     {transport.itineraries.length > 0 && (

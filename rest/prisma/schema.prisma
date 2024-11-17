@@ -311,6 +311,10 @@ model Transportation {
   driverContact      String
   remarks            String?
   vehiclePlateNumber String
+  attachments        String[]             @default([])
+  timeBegins         DateTime?
+  timeEnds           DateTime?
+  dateOfService      DateTime?
   serviceType        TransportServiceType
   vehicleType        VehicleType
   itineraries        TransportItinerary[]

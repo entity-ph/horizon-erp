@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../ui/select";
 import CommonInput from "../../../common/input";
-import { Car, Loader2 } from "lucide-react"
+import { CalendarIcon, Car, Loader2 } from "lucide-react"
 import { Button } from "../../../ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../../../ui/form";
 import { useForm } from "react-hook-form";
@@ -13,6 +13,11 @@ import AnimatedDiv from "../../../animated/Div";
 import { createTransportVoucher, ICreateTransportVoucher } from "../../../../api/mutations/transaction.mutation";
 import { toast } from "sonner";
 import { TransportServiceType, VehicleType } from "../../../../interfaces/transport.interface";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { TimePicker } from "@/components/common/time-picker";
+import { cn } from "@/lib/utils";
 
 interface AddTransportVoucherProps {
 	transactionId: string
@@ -37,6 +42,10 @@ const formSchema = z.object({
 	driverContact: z.string(),
 	remarks: z.string().optional(),
 	vehiclePlateNumber: z.string(),
+	attachments: z.array(z.string()).optional(),
+	timeBegins: z.date({ required_error: "Time begins is required" }),
+	timeEnds: z.date({ required_error: "Time ends is required" }),
+	dateOfService: z.date({ required_error: "Date of service is required" }),
 	serviceType: z.enum([TransportServiceType.PUDO, TransportServiceType.HALF_DAY, TransportServiceType.MULTIPLE, TransportServiceType.WHOLE_DAY]),
 	vehicleType: z.enum([VehicleType.BUS, VehicleType.SUV, VehicleType.VAN, VehicleType.SEDAN, VehicleType.COASTER])
 });
@@ -75,7 +84,11 @@ export default function AddTransportVoucherDialog({ transactionId, openDialog, s
 			remarks: values.remarks,
 			serviceType: values.serviceType,
 			vehicleType: values.vehicleType,
-			vehiclePlateNumber: values.vehiclePlateNumber
+			vehiclePlateNumber: values.vehiclePlateNumber,
+			attachments: values.attachments,
+			dateOfService: values.dateOfService,
+			timeBegins: values.timeBegins,
+			timeEnds: values.timeEnds
 		};
 		addTransportMutate(payload);
 	}
@@ -194,6 +207,131 @@ export default function AddTransportVoucherDialog({ transactionId, openDialog, s
 											<FormControl className="w-2/3">
 												<CommonInput inputProps={{ ...field }} placeholder="e.g. G202-023" containerProps={{ className: 'text-xs' }} />
 											</FormControl>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="dateOfService"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row justify-between gap-x-2 items-center">
+											<p className="text-xs w-1/3">Date of Service:</p>
+											<Popover>
+												<PopoverTrigger asChild>
+													<FormControl className="w-2/3">
+														<Button
+															variant={"outline"}
+															className={`w-full pl-3 text-left font-normal text-xs
+															${!field.value && "text-muted-foreground"}`}
+														>
+															{field.value ? (
+																format(field.value, "PPP")
+															) : (
+																<span className="text-xs">Pick a date</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</FormControl>
+												</PopoverTrigger>
+												<PopoverContent className="text-xs w-auto p-0" align="start">
+													<Calendar
+														className="text-xs"
+														mode="single"
+														selected={field.value}
+														onSelect={field.onChange}
+														initialFocus
+													/>
+												</PopoverContent>
+											</Popover>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="timeBegins"
+								render={({ field }) => (
+									<FormItem className="flex flex-col">
+										<div className="flex flex-row justify-between gap-x-2 items-center">
+											<p className="text-xs w-1/3">Time Begins:</p>
+											<Popover>
+												<FormControl>
+													<PopoverTrigger asChild>
+														<Button
+															variant="outline"
+															className={cn(
+																"w-full justify-between text-left text-xs font-normal",
+																!field.value && "text-muted-foreground"
+															)}
+														>
+															{field.value ? (
+																format(field.value, "PPP HH:mm:ss a")
+															) : (
+																<span>Pick a date time</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</PopoverTrigger>
+												</FormControl>
+												<PopoverContent className="w-auto p-0">
+													<Calendar
+														mode="single"
+														selected={field.value}
+														onSelect={field.onChange}
+														initialFocus
+													/>
+													<div className="p-3 border-t border-border">
+														<TimePicker { ...field }/>
+													</div>
+												</PopoverContent>
+											</Popover>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="timeEnds"
+								render={({ field }) => (
+									<FormItem className="flex flex-col">
+										<div className="flex flex-row justify-between gap-x-2 items-center">
+											<p className="text-xs w-1/3">Time Ends:</p>
+											<Popover>
+												<FormControl>
+													<PopoverTrigger asChild>
+														<Button
+															variant="outline"
+															className={cn(
+																"w-full justify-between text-left text-xs font-normal",
+																!field.value && "text-muted-foreground"
+															)}
+														>
+															{field.value ? (
+																format(field.value, "PPP HH:mm:ss a")
+															) : (
+																<span>Pick a date time</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</PopoverTrigger>
+												</FormControl>
+												<PopoverContent className="w-auto p-0">
+													<Calendar
+														mode="single"
+														selected={field.value}
+														onSelect={field.onChange}
+														initialFocus
+													/>
+													<div className="p-3 border-t border-border">
+														<TimePicker { ...field }/>
+													</div>
+												</PopoverContent>
+											</Popover>
 										</div>
 										<FormMessage />
 									</FormItem>

@@ -12,6 +12,10 @@ export const createTransportVoucherSchema = z.object({
       driverContact: z.string(),
       remarks: z.string().optional(),
       vehiclePlateNumber: z.string(),
+      attachments: z.array(z.string()).optional(),
+      timeBegins: z.string(),
+      timeEnds: z.string(),
+      dateOfService: z.string(),
       serviceType: z.enum([TransportServiceType.PUDO, TransportServiceType.HALF_DAY, TransportServiceType.MULTIPLE, TransportServiceType.WHOLE_DAY]),
       vehicleType: z.enum([VehicleType.BUS, VehicleType.SUV, VehicleType.VAN, VehicleType.SEDAN, VehicleType.COASTER])
     })
@@ -26,6 +30,10 @@ export const updateTransportVoucherSchema = z.object({
       driverContact: z.string(),
       remarks: z.string().optional(),
       vehiclePlateNumber: z.string(),
+      attachments: z.array(z.string()).optional(),
+      timeBegins: z.string(),
+      timeEnds: z.string(),
+      dateOfService: z.string(),
       serviceType: z.enum([TransportServiceType.PUDO, TransportServiceType.HALF_DAY, TransportServiceType.MULTIPLE, TransportServiceType.WHOLE_DAY]),
       vehicleType: z.enum([VehicleType.BUS, VehicleType.SUV, VehicleType.VAN, VehicleType.SEDAN, VehicleType.COASTER])
     })
