@@ -5,7 +5,6 @@ import { Separator } from '../../ui/separator';
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { ITransaction } from '@/interfaces/transaction.interface';
-import { AccommodationType } from '@/interfaces/accommodation.interface';
 import { TransportServiceType, VehicleType } from '@/interfaces/transport.interface';
 import logo from '../../../assets/logo.png'
 import { TravelVoucherType } from '@/interfaces/travel.interface';
@@ -150,27 +149,58 @@ export default function PrintPreview({ data }: Props) {
                 <h3 className="text-sm tracking-[18px] text-center font-medium uppercase bg-green-300 py-1">Accommodation</h3>
               </>
               {data.accommodationVoucher.map((accommodation, index) => (
-                <div className='my-2'>
-                  <p className='mb-1 text-xs'>Accommodation #{index + 1}</p>
-                  <div key={accommodation.id} className="text-xs grid grid-cols-2">
+                <div key={accommodation.id} className='my-2'>
+                  <p className='text-sm font-semibold mb-2'>Accommodation #{index + 1} - {accommodation.type}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2 text-xs text-slate-700 mb-2">
                     <div>
-                      <p>Name: {accommodation.name}</p>
-                      <p>Type: {AccommodationType[accommodation.type]}</p>
+                      <p><span className="font-semibold">Name:</span> {accommodation.name}</p>
+                      <p><span className="font-semibold">Number of Nights:</span> {accommodation.numberOfNights}</p>
                     </div>
                     <div>
-                      <p>Check-in: {format(new Date(accommodation.checkinDate), "MMMM d, yyyy")}</p>
-                      <p>Check-out: {format(new Date(accommodation.checkoutDate), "MMMM d, yyyy")}</p>
+                      <p><span className="font-semibold">Check-in:</span> {format(new Date(accommodation.checkinDate), "MMMM d, yyyy")}</p>
+                      <p><span className="font-semibold">Check-out:</span> {format(new Date(accommodation.checkoutDate), "MMMM d, yyyy")}</p>
                     </div>
                     <div>
-                      <p>Confirmation Number: {accommodation.hotelConfirmationNumber}</p>
+                      <p><span className="font-semibold">Confirmation Number:</span> {accommodation.hotelConfirmationNumber}</p>
                     </div>
                     <div>
-                      {accommodation.remarks && <p>Remarks: {accommodation.remarks}</p>}
+                      {accommodation.remarks && <p><span className="font-semibold">Remarks:</span> {accommodation.remarks}</p>}
+                    </div>
+                    <div>
+                      <p><span className="font-semibold">Pax:</span> {accommodation.pax}</p>
+                    </div>
+                    <div>
+                      <p><span className="font-semibold">Number of Rooms:</span> {accommodation.rooms.length}</p>
                     </div>
                   </div>
+                  {accommodation.rooms && (
+                    <div className="overflow-x-auto border border-slate-200 rounded-lg shadow-sm">
+                      <table className="min-w-full table-auto text-xs text-slate-600">
+                        <thead className="bg-slate-100 text-center">
+                          <tr>
+                            <th className="px-4 py-2">Room #</th>
+                            <th className="px-4 py-2">Children</th>
+                            <th className="px-4 py-2">Infants</th>
+                            <th className="px-4 py-2">Adults</th>
+                            <th className="px-4 py-2">Senior Citizens</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {accommodation.rooms && accommodation.rooms.map((room, index) => (
+                            <tr key={index} className="border-t border-slate-200 text-center">
+                              <td className="px-4 py-2">{index + 1}</td>
+                              <td className="px-4 py-2">{room.childrenCount}</td>
+                              <td className="px-4 py-2">{room.infantCount}</td>
+                              <td className="px-4 py-2">{room.adultCount}</td>
+                              <td className="px-4 py-2">{room.seniorCount}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
+              ))}            </div>
           )}
           {data.tourVoucher && data.tourVoucher.length > 0 && (
             <div className="border-t pt-4">

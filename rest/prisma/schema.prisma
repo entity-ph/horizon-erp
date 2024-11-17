@@ -248,17 +248,31 @@ enum DocumentTransactionType {
 }
 
 model Accommodation {
-  id                      String            @id @default(cuid())
+  id                      String              @id @default(cuid())
   transactionId           String
   type                    AccommodationType
   name                    String
+  rooms                   RoomAccommodation[]
+  numberOfNights          Int?
+  pax                     Int?
   checkinDate             DateTime
   checkoutDate            DateTime
   hotelConfirmationNumber String
   remarks                 String?
-  transaction             Transaction?      @relation(fields: [transactionId], references: [id], onDelete: Cascade)
-  createdAt               DateTime?         @default(now())
-  updatedAt               DateTime?         @updatedAt
+  transaction             Transaction?        @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  createdAt               DateTime?           @default(now())
+  updatedAt               DateTime?           @updatedAt
+}
+
+model RoomAccommodation {
+  id String @id @default(cuid())
+
+  childrenCount   Int?
+  adultCount      Int?
+  seniorCount     Int?
+  infantCount     Int?
+  accommodationId String?
+  accommodation   Accommodation? @relation(fields: [accommodationId], references: [id])
 }
 
 model Tour {
