@@ -16,6 +16,7 @@ import AnimatedDiv from "../../../animated/Div";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../ui/select";
 import { toast } from "sonner"
 import { createAccommodationVoucher } from "../../../../api/mutations/transaction.mutation"
+import { useEffect } from "react"
 
 interface AddAccommodationVoucherProps {
 	transactionId: string
@@ -44,6 +45,11 @@ const formSchema = z.object({
 	hotelConfirmationNumber: z.string().trim().min(1, {
 		message: "Hotel confirmation number is required."
 	}),
+	numberOfNights: z.number(),
+	pax: z.preprocess((value) => {
+		const parsedValue = parseFloat(value as string);
+		return isNaN(parsedValue) ? 0 : parsedValue;
+	}, z.number().nonnegative()).optional(),
 	remarks: z.string().optional(),
 });
 
@@ -81,6 +87,17 @@ export default function AddAccommodationVoucherDialog({ transactionId, openDialo
 			...values
 		})
 	}
+	useEffect(() => {
+		const { checkinDate, checkoutDate } = form.getValues();
+		if (checkinDate && checkoutDate) {
+			const nightDifference = Math.ceil((checkoutDate.getTime() - checkinDate.getTime()) / (1000 * 3600 * 24));
+			if (nightDifference >= 0) {
+				form.setValue("numberOfNights", nightDifference);
+			} else {
+				form.setValue("numberOfNights", 0);
+			}
+		}
+	}, [form.watch("checkinDate"), form.watch("checkoutDate")]);
 
 	return (
 		<Dialog
@@ -240,6 +257,38 @@ export default function AddAccommodationVoucherDialog({ transactionId, openDialo
 							/>
 							<FormField
 								control={form.control}
+								name="numberOfNights"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row items-center justify-between gap-x-2">
+											<p className="text-xs w-1/3">Number of Nights:</p>
+											<FormControl className="w-2/3">
+												<CommonInput disabled={true} type="number" inputProps={{ ...field }} placeholder="Number of nights" containerProps={{ className: 'text-xs' }} />
+											</FormControl>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="pax"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row items-center justify-between gap-x-2">
+											<p className="text-xs w-1/3">Number of People(Pax):</p>
+											<FormControl className="w-2/3">
+												<CommonInput type="number" inputProps={{ ...field }} placeholder="e.g. 2,4..." containerProps={{ className: 'text-xs' }} />
+											</FormControl>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+
+							<FormField
+								control={form.control}
 								name="remarks"
 								render={({ field }) => (
 									<FormItem>
@@ -253,6 +302,7 @@ export default function AddAccommodationVoucherDialog({ transactionId, openDialo
 									</FormItem>
 								)}
 							/>
+
 							<div className="flex flex-row justify-end">
 								<Button type="submit" className="text-xs" disabled={addingAccommodation}>
 									{

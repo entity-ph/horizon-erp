@@ -281,10 +281,10 @@ model Tour {
   id            String          @id @default(cuid())
   transactionId String
   remarks       String?
-  tourGuide     String
-  tourContact   String
-  driverName    String
-  driverContact String
+  tourGuide     String?
+  tourContact   String?
+  driverName    String?
+  driverContact String?
   itineraries   TourItinerary[]
   transaction   Transaction?    @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   createdAt     DateTime?       @default(now())

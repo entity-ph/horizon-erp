@@ -1,11 +1,11 @@
 export interface ITourVoucher {
   id: string;
-  tour: string;
+  // tour: string;
   remarks?: string;
-  tourGuide: string;
-  tourContact: string;
-  driverName: string;
-  driverContact: string;
+  // tourGuide: string;
+  // tourContact: string;
+  // driverName: string;
+  // driverContact: string;
   itineraries: IItinerary[]
 }
 

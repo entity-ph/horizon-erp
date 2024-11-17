@@ -6,6 +6,7 @@ import { EditAccommodationVoucherDialog } from "../../dialogs/transaction/accomm
 import { Button } from "../../ui/button";
 import { Pencil } from "lucide-react";
 import DeleteAccommodation from "@/components/alert/transactions/acccommodation/delete";
+import RoomAccommodations from "./rooms";
 
 interface IAccommodationVoucherProps {
   accommodationVoucher: IAccommodationVoucher[];
@@ -20,6 +21,7 @@ export default function AccommodationVoucher({ accommodationVoucher }: IAccommod
     setOpenEditDialog(true)
     setAccommodation(selectedAccommodation)
   }
+
 
   return (
     <div className="flex flex-col gap-y-6 p-4 sm:p-6 lg:p-0 mt-2 bg-white rounded-lg">
@@ -52,6 +54,15 @@ export default function AccommodationVoucher({ accommodationVoucher }: IAccommod
               <p className="text-sm md:text-xs">Hotel Confirmation Number:</p>
               <p className="text-sm md:text-xs font-medium">{voucher.hotelConfirmationNumber ?? "N/A"}</p>
             </div>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-1 gap-x-4">
+              <p className="text-sm md:text-xs">Number of Nights</p>
+              <p className="text-sm md:text-xs font-medium">{voucher.numberOfNights ?? 0}</p>
+            </div>
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-1 gap-x-4">
+              <p className="text-sm md:text-xs">Total Pax:</p>
+              <p className="text-sm md:text-xs font-medium">{voucher.pax ?? 0}</p>
+            </div>
+
 
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-y-1 gap-x-4">
               <p className="text-sm md:text-xs">ETD:</p>
@@ -71,6 +82,8 @@ export default function AccommodationVoucher({ accommodationVoucher }: IAccommod
               <p className="text-sm md:text-xs font-medium">{voucher.remarks ?? "N/A"}</p>
             </div>
           </div>
+          <RoomAccommodations data={voucher?.rooms} accommodationId={voucher?.id} />
+
           {index < accommodationVoucher.length - 1 && <Separator className="my-4" />}
         </div>
       ))}

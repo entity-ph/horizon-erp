@@ -7,10 +7,22 @@ export interface IAccommodationVoucher {
   type: AccommodationType;
   checkinDate: Date;
   checkoutDate: Date;
+  numberOfNights: number;
+  pax: number;
   hotelConfirmationNumber: string;
+  rooms: IRoomAccommodation[]
   remarks?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface IRoomAccommodation {
+  id: string
+  childrenCount: number
+  adultCount: number
+  infantCount: number
+  seniorCount: number
+
 }
 
 

@@ -54,10 +54,6 @@ export default function AddTourVoucherDialog({ transactionId, openDialog, setOpe
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const payload: ICreateTourVoucher = {
 			transactionId,
-			tourGuide: values.tourGuide,
-			tourContact: values.tourContact,
-			driverName: values.driverName,
-			driverContact: values.driverContact,
 			remarks: values.remarks,
 		};
 		addTourMutate(payload);

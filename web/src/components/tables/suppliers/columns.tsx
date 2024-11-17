@@ -70,15 +70,15 @@ export const Columns: ColumnDef<ISupplier>[] = [
 	{
 		id: "address",
 		header: () => (
-			<div className="flex items-center gap-x-2 w-32 truncate">
+			<div className="flex items-center gap-x-2 truncate">
 				<p className="truncate">Address</p>
 				<Map color="white" size={16} />
 			</div>
 		),
 		cell: ({ row }) => {
 			return (
-				<div className="flex items-center gap-2">
-					<span className="text-xs truncate">
+				<div className="flex items-center gap-2 w-[320px]">
+					<span className="text-xs">
 						{row.original.address}
 					</span>
 				</div>
