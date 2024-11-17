@@ -46,6 +46,11 @@ const formSchema = z.object({
 	hotelConfirmationNumber: z.string().trim().min(1, {
 		message: "Hotel confirmation number is required."
 	}),
+	numberOfNights: z.number(),
+	pax: z.preprocess((value) => {
+		const parsedValue = parseFloat(value as string);
+		return isNaN(parsedValue) ? 0 : parsedValue;
+	}, z.number().nonnegative()).optional(),
 	remarks: z.string().optional(),
 });
 
@@ -57,6 +62,18 @@ export function EditAccommodationVoucherDialog({ selectedAccommodation, openDial
 		defaultValues: {
 		},
 	})
+	useEffect(() => {
+		const { checkinDate, checkoutDate } = form.getValues();
+		if (checkinDate && checkoutDate) {
+			const nightDifference = Math.ceil((checkoutDate.getTime() - checkinDate.getTime()) / (1000 * 3600 * 24));
+			if (nightDifference >= 0) {
+				form.setValue("numberOfNights", nightDifference);
+			} else {
+				form.setValue("numberOfNights", 0);
+			}
+		}
+	}, [form.watch("checkinDate"), form.watch("checkoutDate")]);
+
 
 	const { mutate: updateAccommodationMutate, isPending: updatingAccommodation } = useMutation({
 		mutationFn: async (data: IUpdateAccommodationVoucher) => await updateAccommodationVoucher(data),
@@ -90,6 +107,7 @@ export function EditAccommodationVoucherDialog({ selectedAccommodation, openDial
 				name: selectedAccommodation.name,
 				hotelConfirmationNumber: selectedAccommodation.hotelConfirmationNumber,
 				remarks: selectedAccommodation.remarks ?? "N/A",
+				pax: selectedAccommodation.pax ?? 0,
 				checkinDate: new Date(selectedAccommodation.checkinDate),
 				checkoutDate: new Date(selectedAccommodation.checkoutDate),
 			});
@@ -252,6 +270,37 @@ export function EditAccommodationVoucherDialog({ selectedAccommodation, openDial
 									</FormItem>
 								)}
 							/>
+							<FormField
+								control={form.control}
+								name="numberOfNights"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row items-center justify-between gap-x-2">
+											<p className="text-xs w-1/3">Number of Nights:</p>
+											<FormControl className="w-2/3">
+												<CommonInput disabled={true} type="number" inputProps={{ ...field }} placeholder="Number of nights" containerProps={{ className: 'text-xs' }} />
+											</FormControl>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="pax"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row items-center justify-between gap-x-2">
+											<p className="text-xs w-1/3">Number of People(Pax):</p>
+											<FormControl className="w-2/3">
+												<CommonInput type="number" inputProps={{ ...field }} placeholder="e.g. 2,4..." containerProps={{ className: 'text-xs' }} />
+											</FormControl>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
 							<FormField
 								control={form.control}
 								name="remarks"

@@ -108,7 +108,11 @@ export async function fetchTransaction({ id }: IFetchTransaction) {
           shipping: true
         }
       },
-      accommodationVoucher: true,
+      accommodationVoucher: {
+        include: {
+          rooms: true
+        }
+      },
       transportVoucher: {
         include: {
           itineraries: true

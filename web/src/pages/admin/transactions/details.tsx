@@ -6,7 +6,7 @@ import TravelVoucher from "@/components/section/transaction/travel-voucher";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import SelectSalesAgreementDialog from "@/components/dialogs/transaction/horizon-only/sales-agreement";
-import { Car, Hotel, MapPin, PlaneIcon } from "lucide-react";
+import { Car, Hotel, PlaneIcon } from "lucide-react";
 import Loader from "@/components/animated/Loader";
 import AddAccommodationVoucherDialog from "@/components/dialogs/transaction/accommodation-voucher/add";
 import AccommodationVoucher from "@/components/section/transaction/accommodation-voucher";
@@ -134,19 +134,7 @@ export default function ManageTransaction() {
                   )}
                 </TabsContent>
                 <TabsContent value={tabs[3].value} className="flex-1">
-                  <div className="flex justify-end">
-                    <Button variant="outline" className="text-xs gap-x-2 text-primary" onClick={() => setOpenAddTourDialog(true)}>
-                      Add
-                      <MapPin />
-                    </Button>
-                  </div>
-                  {transaction?.tourVoucher?.length ? (
-                    <TourVoucher tourVoucher={transaction?.tourVoucher} />
-                  ) : (
-                    <div className="flex justify-center p-5">
-                      <p className="text-gray-400 text-xs">Transaction does not include any tour voucher.</p>
-                    </div>
-                  )}
+                  <TourVoucher tourVoucher={transaction?.tourVoucher} transactionId={transaction?.id} />
                 </TabsContent>
                 <TabsContent value={tabs[4].value} className="flex-1">
                   <div className="flex justify-end">

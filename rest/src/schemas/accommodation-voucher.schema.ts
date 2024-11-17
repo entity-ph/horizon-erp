@@ -12,6 +12,7 @@ export const createAccommodationVoucherSchema = z.object({
       hotelConfirmationNumber: z.string(),
       checkinDate: z.string(),
       checkoutDate: z.string(),
+      numberOfNights: z.number().optional(),
       remarks: z.string().optional(),
     })
 });
@@ -27,6 +28,8 @@ export const updateAccommodationVoucherSchema = z.object({
       checkinDate: z.string(),
       checkoutDate: z.string(),
       remarks: z.string().optional(),
+      numberOfNights: z.number().optional(),
+      pax: z.number().optional(),
     })
 });
 
