@@ -34,6 +34,8 @@ const formSchema = z.object({
   airline: z.object({
     name: z.string().min(1, { message: "Airline name is required" }),
     code: z.string().min(1, { message: "Airline code is required" }),
+    dateOfTravel: z.date({ required_error: "Date of travel is required" }),
+    dateOfArrival: z.date({ required_error: "Date of arrival is required" }),
     etd: z.date({ required_error: "Estimated time of Departure is required" }),
     eta: z.date({ required_error: "Estimated time of Arrival is required" }),
     origin: z.string().min(1, { message: "Origin is required" }),
@@ -210,6 +212,84 @@ export default function AddTravelVoucherDialog({ transactionId, openDialog, setO
                         <FormControl className="w-2/3">
                           <CommonInput inputProps={{ ...field }} placeholder="Enter destination" containerProps={{ className: 'text-xs' }} />
                         </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="airline.dateOfTravel"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex flex-row justify-between gap-x-2 items-center">
+                        <p className="text-xs w-1/3">Date of Travel:</p>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl className="w-2/3">
+                              <Button
+                                variant={"outline"}
+                                className={`w-full pl-3 text-left font-normal text-xs
+                                ${!field.value && "text-muted-foreground"}`}
+                              >
+                                {field.value ? (
+                                  format(field.value, "PPP")
+                                ) : (
+                                  <span className="text-xs">Pick a date</span>
+                                )}
+                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="text-xs w-auto p-0" align="start">
+                            <Calendar
+                              className="text-xs"
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="airline.dateOfArrival"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex flex-row justify-between gap-x-2 items-center">
+                        <p className="text-xs w-1/3">Date of Arrival:</p>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl className="w-2/3">
+                              <Button
+                                variant={"outline"}
+                                className={`w-full pl-3 text-left font-normal text-xs
+                                ${!field.value && "text-muted-foreground"}`}
+                              >
+                                {field.value ? (
+                                  format(field.value, "PPP")
+                                ) : (
+                                  <span className="text-xs">Pick a date</span>
+                                )}
+                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="text-xs w-auto p-0" align="start">
+                            <Calendar
+                              className="text-xs"
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
                       </div>
                       <FormMessage />
                     </FormItem>

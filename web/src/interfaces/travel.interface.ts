@@ -7,6 +7,8 @@ export interface IAirline {
   id: string;
   name: string
   code: string
+  dateOfTravel: Date
+  dateOfArrival: Date
   etd: Date
   eta: Date
   origin: string

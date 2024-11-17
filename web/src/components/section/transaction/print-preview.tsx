@@ -119,6 +119,12 @@ export default function PrintPreview({ data }: Props) {
                         <p>Destination: {voucher.airline?.destination}</p>
                       </div>
                       <div>
+                        <p>Date of Travel: {format(new Date(voucher.airline?.dateOfTravel ?? new Date()), "MMMM d, yyyy")}</p>
+                      </div>
+                      <div>
+                        <p>Date of Arrival: {format(new Date(voucher.airline?.dateOfArrival ?? new Date()), "MMMM d, yyyy")}</p>
+                      </div>
+                      <div>
                         <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy")}</p>
                       </div>
                       <div>

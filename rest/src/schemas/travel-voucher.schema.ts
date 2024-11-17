@@ -19,6 +19,8 @@ export const createTravelVoucherSchema = z.object({
         code: z.string(),
         origin: z.string(),
         destination: z.string(),
+        dateOfTravel: z.string(),
+        dateOfArrival: z.string(),
         etd: z.string(),
         eta: z.string(),
       }).optional()
@@ -42,6 +44,8 @@ export const updateTravelVoucherSchema = z.object({
         code: z.string(),
         origin: z.string(),
         destination: z.string(),
+        dateOfTravel: z.string(),
+        dateOfArrival: z.string(),
         etd: z.string(),
         eta: z.string(),
       }).optional()

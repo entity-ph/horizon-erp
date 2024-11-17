@@ -45,6 +45,8 @@ export interface IAirlines {
 export interface ICreateAirlines {
   name: string;
   code: string;
+  dateOfTravel: Date;
+  dateOfArrival: Date;
   etd: Date;
   eta: Date;
   origin: string;
@@ -55,6 +57,8 @@ export interface IUpdateAirlines {
   id: string;
   name: string;
   code: string;
+  dateOfTravel: Date;
+  dateOfArrival: Date;
   etd: Date;
   eta: Date;
   origin: string;
