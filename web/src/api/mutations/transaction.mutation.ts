@@ -102,10 +102,6 @@ export async function createAccommodationVoucher(payload: ICreateAccommodationVo
 
 export interface ICreateTourVoucher {
   transactionId: string
-  tourGuide: string
-  tourContact: string
-  driverName: string
-  driverContact: string
   remarks?: string
 }
 
@@ -228,10 +224,6 @@ export async function deleteAccommodationVoucher(id: string) {
 
 export interface IUpdateTourVoucher {
   id: string
-  tourGuide: string
-  tourContact: string
-  driverName: string
-  driverContact: string
   remarks?: string
 }
 export interface ICreateTransportVoucher {

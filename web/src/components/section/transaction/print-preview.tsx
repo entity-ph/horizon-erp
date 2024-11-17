@@ -212,17 +212,6 @@ export default function PrintPreview({ data }: Props) {
                 <div className='my-2'>
                   <p className='mb-1 text-xs'>Tour #{index + 1}</p>
                   <div key={tour.id} className="text-xs grid grid-cols-2">
-                    <div>
-                      <p>Tour: {tour.tour}</p>
-                      <p>Tour Guide: {tour.tourGuide}</p>
-                    </div>
-                    <div>
-                      <p>Tour Contact: {tour.tourContact}</p>
-                      <p>Driver: {tour.driverName}</p>
-                    </div>
-                    <div>
-                      <p>Driver Contact: {tour.driverContact}</p>
-                    </div>
                     {tour.itineraries.length > 0 && (
                       <div className="col-span-2 my-2">
                         <h4 className="font-semibold mb-1">Itineraries</h4>
@@ -248,7 +237,12 @@ export default function PrintPreview({ data }: Props) {
                         </table>
                       </div>
                     )}
+
                   </div>
+                  <div className='flex w-full text-xs'>
+                    <p><p className='font-semibold'>Remarks:</p> {tour.remarks}</p>
+                  </div>
+
                 </div>))}
             </div>
           )}

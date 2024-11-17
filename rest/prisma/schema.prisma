@@ -196,17 +196,19 @@ model Travel {
 }
 
 model Airlines {
-  id          String    @id @default(cuid())
-  travelId    String?   @unique
-  name        String
-  code        String
-  etd         DateTime
-  eta         DateTime
-  origin      String
-  destination String
-  travel      Travel?   @relation(fields: [travelId], references: [id], onDelete: Cascade)
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @updatedAt
+  id            String    @id @default(cuid())
+  travelId      String?   @unique
+  name          String
+  code          String
+  dateOfTravel  DateTime?
+  dateOfArrival DateTime?
+  etd           DateTime
+  eta           DateTime
+  origin        String
+  destination   String
+  travel        Travel?   @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime? @updatedAt
 }
 
 model Shipping {
@@ -279,10 +281,10 @@ model Tour {
   id            String          @id @default(cuid())
   transactionId String
   remarks       String?
-  tourGuide     String
-  tourContact   String
-  driverName    String
-  driverContact String
+  tourGuide     String?
+  tourContact   String?
+  driverName    String?
+  driverContact String?
   itineraries   TourItinerary[]
   transaction   Transaction?    @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   createdAt     DateTime?       @default(now())

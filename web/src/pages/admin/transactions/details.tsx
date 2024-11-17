@@ -134,19 +134,7 @@ export default function ManageTransaction() {
                   )}
                 </TabsContent>
                 <TabsContent value={tabs[3].value} className="flex-1">
-                  <div className="flex justify-end">
-                    <Button variant="outline" className="text-xs gap-x-2 text-primary" onClick={() => setOpenAddTourDialog(true)}>
-                      Add
-                      <MapPin />
-                    </Button>
-                  </div>
-                  {transaction?.tourVoucher?.length ? (
-                    <TourVoucher tourVoucher={transaction?.tourVoucher} />
-                  ) : (
-                    <div className="flex justify-center p-5">
-                      <p className="text-gray-400 text-xs">Transaction does not include any tour voucher.</p>
-                    </div>
-                  )}
+                  <TourVoucher tourVoucher={transaction?.tourVoucher} transactionId={transaction?.id} />
                 </TabsContent>
                 <TabsContent value={tabs[4].value} className="flex-1">
                   <div className="flex justify-end">

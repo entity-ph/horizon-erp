@@ -20,10 +20,6 @@ interface EditTourVoucherProps {
 	setOpenDialog: (open: boolean) => void
 }
 const formSchema = z.object({
-	tourGuide: z.string(),
-	tourContact: z.string(),
-	driverName: z.string(),
-	driverContact: z.string(),
 	remarks: z.string().optional(),
 });
 
@@ -56,10 +52,6 @@ export function EditTourVoucherDialog({ selectedTour, openDialog, setOpenDialog 
 	useEffect(() => {
 		if (selectedTour) {
 			form.reset({
-				tourGuide: selectedTour.tourGuide || '',
-				tourContact: selectedTour.tourContact || '',
-				driverName: selectedTour.driverName || '',
-				driverContact: selectedTour.driverContact || '',
 				remarks: selectedTour.remarks || '',
 			});
 		}
@@ -68,10 +60,6 @@ export function EditTourVoucherDialog({ selectedTour, openDialog, setOpenDialog 
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const payload: IUpdateTourVoucher = {
 			id: selectedTour.id,
-			tourGuide: values.tourGuide,
-			tourContact: values.tourContact,
-			driverName: values.driverName,
-			driverContact: values.driverContact,
 			remarks: values.remarks,
 		};
 		updateTourMutate(payload);
@@ -95,66 +83,6 @@ export function EditTourVoucherDialog({ selectedTour, openDialog, setOpenDialog 
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 						<AnimatedDiv animationType="SlideInFromLeft" className="space-y-2" slideEntrancePoint={-50} duration={0.1}>
-							<FormField
-								control={form.control}
-								name="tourGuide"
-								render={({ field }) => (
-									<FormItem>
-										<div className="flex flex-row items-center justify-between gap-x-2">
-											<p className="text-xs w-1/3">Tour Guide Name</p>
-											<FormControl className="w-2/3">
-												<CommonInput inputProps={{ ...field }} placeholder="Name of Tour Guide" containerProps={{ className: 'text-xs' }} />
-											</FormControl>
-										</div>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="tourContact"
-								render={({ field }) => (
-									<FormItem>
-										<div className="flex flex-row items-center justify-between gap-x-2">
-											<p className="text-xs w-1/3">Tour Guide Contact #</p>
-											<FormControl className="w-2/3">
-												<CommonInput inputProps={{ ...field }} placeholder="e.g. 09239293 ..." containerProps={{ className: 'text-xs' }} />
-											</FormControl>
-										</div>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="driverName"
-								render={({ field }) => (
-									<FormItem>
-										<div className="flex flex-row items-center justify-between gap-x-2">
-											<p className="text-xs w-1/3">Driver Name</p>
-											<FormControl className="w-2/3">
-												<CommonInput inputProps={{ ...field }} placeholder="Name of Driver" containerProps={{ className: 'text-xs' }} />
-											</FormControl>
-										</div>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-							<FormField
-								control={form.control}
-								name="driverContact"
-								render={({ field }) => (
-									<FormItem>
-										<div className="flex flex-row items-center justify-between gap-x-2">
-											<p className="text-xs w-1/3">Driver Contact #</p>
-											<FormControl className="w-2/3">
-												<CommonInput inputProps={{ ...field }} placeholder="e.g. 09239293 ..." containerProps={{ className: 'text-xs' }} />
-											</FormControl>
-										</div>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
 							<FormField
 								control={form.control}
 								name="remarks"

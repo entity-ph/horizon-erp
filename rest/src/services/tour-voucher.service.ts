@@ -2,10 +2,10 @@ import prisma from "../utils/db.utils";
 
 export interface ICreateTourVoucher {
   transactionId: string
-  tourGuide: string
-  tourContact: string
-  driverName: string
-  driverContact: string
+  tourGuide?: string
+  tourContact?: string
+  driverName?: string
+  driverContact?: string
   itineraries: ICreateTourItinerary[]
   remarks?: string
 }
@@ -24,10 +24,10 @@ export async function createTourVoucher(data: ICreateTourVoucher) {
   return await prisma.tour.create({
     data: {
       transactionId: data.transactionId,
-      tourGuide: data.tourGuide,
-      tourContact: data.tourContact,
-      driverName: data.driverName,
-      driverContact: data.driverContact,
+      // tourGuide: data.tourGuide,
+      // tourContact: data.tourContact,
+      // driverName: data.driverName,
+      // driverContact: data.driverContact,
       remarks: data.remarks,
     },
   });
