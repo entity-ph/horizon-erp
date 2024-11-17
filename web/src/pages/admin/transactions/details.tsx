@@ -6,7 +6,7 @@ import TravelVoucher from "@/components/section/transaction/travel-voucher";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import SelectSalesAgreementDialog from "@/components/dialogs/transaction/horizon-only/sales-agreement";
-import { Car, Hotel, MapPin, PlaneIcon } from "lucide-react";
+import { Car, Hotel, PlaneIcon } from "lucide-react";
 import Loader from "@/components/animated/Loader";
 import AddAccommodationVoucherDialog from "@/components/dialogs/transaction/accommodation-voucher/add";
 import AccommodationVoucher from "@/components/section/transaction/accommodation-voucher";
