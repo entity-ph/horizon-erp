@@ -12,6 +12,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../../../ui/form"
 import CommonInput from "../../../common/input"
@@ -22,6 +23,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createTravelVoucher, ICreateTravelVoucher } from "../../../../api/mutations/transaction.mutation"
 import { toast } from "sonner"
 import { useState } from "react"
+import { TimePicker } from "@/components/common/time-picker"
+import { cn } from "@/lib/utils"
 
 
 interface AddTravelVoucherProps {
@@ -57,6 +60,10 @@ export default function AddTravelVoucherDialog({ transactionId, openDialog, setO
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      airline: {
+        etd: new Date(new Date().setHours(0, 0, 0, 0)),
+        eta: new Date(new Date().setHours(0, 0, 0, 0)),
+      }
     },
   })
 
@@ -299,38 +306,41 @@ export default function AddTravelVoucherDialog({ transactionId, openDialog, setO
                   control={form.control}
                   name="airline.etd"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col">
                       <div className="flex flex-row justify-between gap-x-2 items-center">
                         <p className="text-xs w-1/3">ETD:</p>
                         <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl className="w-2/3">
+                          <FormControl>
+                            <PopoverTrigger asChild>
                               <Button
-                                variant={"outline"}
-                                className={`w-full pl-3 text-left font-normal text-xs
-                                ${!field.value && "text-muted-foreground"}`}
+                                variant="outline"
+                                className={cn(
+                                  "w-full justify-between text-left text-xs font-normal",
+                                  !field.value && "text-muted-foreground"
+                                )}
                               >
                                 {field.value ? (
-                                  format(field.value, "PPP")
+                                  format(field.value, "PPP HH:mm:ss a")
                                 ) : (
-                                  <span className="text-xs">Pick a date</span>
+                                  <span>Pick a date</span>
                                 )}
                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                               </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="text-xs w-auto p-0" align="start">
+                            </PopoverTrigger>
+                          </FormControl>
+                          <PopoverContent className="w-auto p-0">
                             <Calendar
-                              className="text-xs"
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
                               initialFocus
                             />
+                            <div className="p-3 border-t border-border">
+                              <TimePicker { ...field }/>
+                            </div>
                           </PopoverContent>
                         </Popover>
                       </div>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -338,38 +348,41 @@ export default function AddTravelVoucherDialog({ transactionId, openDialog, setO
                   control={form.control}
                   name="airline.eta"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex flex-col">
                       <div className="flex flex-row justify-between gap-x-2 items-center">
                         <p className="text-xs w-1/3">ETA:</p>
                         <Popover>
-                          <PopoverTrigger asChild>
-                            <FormControl className="w-2/3">
+                          <FormControl>
+                            <PopoverTrigger asChild>
                               <Button
-                                variant={"outline"}
-                                className={`w-full pl-3 text-left font-normal text-xs
-                        ${!field.value && "text-muted-foreground"}`}
+                                variant="outline"
+                                className={cn(
+                                  "w-full justify-between text-left text-xs font-normal",
+                                  !field.value && "text-muted-foreground"
+                                )}
                               >
                                 {field.value ? (
-                                  format(field.value, "PPP")
+                                  format(field.value, "PPP HH:mm:ss a")
                                 ) : (
-                                  <span className="text-xs">Pick a date</span>
+                                  <span>Pick a date</span>
                                 )}
                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                               </Button>
-                            </FormControl>
-                          </PopoverTrigger>
-                          <PopoverContent className="text-xs w-auto p-0" align="start">
+                            </PopoverTrigger>
+                          </FormControl>
+                          <PopoverContent className="w-auto p-0">
                             <Calendar
-                              className="text-xs"
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
                               initialFocus
                             />
+                            <div className="p-3 border-t border-border">
+                              <TimePicker { ...field }/>
+                            </div>
                           </PopoverContent>
                         </Popover>
                       </div>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
