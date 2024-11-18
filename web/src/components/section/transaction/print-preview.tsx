@@ -270,6 +270,7 @@ export default function PrintPreview({ data }: Props) {
                       <p>Vehicle Type: {VehicleType[transport.vehicleType]}</p>
                       <p>Vehicle Plate: {transport.vehiclePlateNumber}</p>
                       <p>Service Type: {TransportServiceType[transport.serviceType]}</p>
+                      <p>Description: {transport.description}</p>
                     </div>
                     <div>
                       <p>Driver: {transport.driverName}</p>

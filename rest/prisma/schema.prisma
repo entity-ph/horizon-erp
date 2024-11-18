@@ -312,6 +312,7 @@ model Transportation {
   remarks            String?
   vehiclePlateNumber String
   attachments        String[]             @default([])
+  description        String               @default("")
   timeBegins         DateTime?
   timeEnds           DateTime?
   dateOfService      DateTime?

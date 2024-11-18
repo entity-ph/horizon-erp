@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { TimePicker } from "@/components/common/time-picker";
 import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
 interface AddTransportVoucherProps {
 	transactionId: string
@@ -43,6 +44,7 @@ const formSchema = z.object({
 	remarks: z.string().optional(),
 	vehiclePlateNumber: z.string(),
 	attachments: z.array(z.string()).optional(),
+	description: z.string(),
 	timeBegins: z.date({ required_error: "Time begins is required" }),
 	timeEnds: z.date({ required_error: "Time ends is required" }),
 	dateOfService: z.date({ required_error: "Date of service is required" }),
@@ -85,6 +87,7 @@ export default function AddTransportVoucherDialog({ transactionId, openDialog, s
 			serviceType: values.serviceType,
 			vehicleType: values.vehicleType,
 			vehiclePlateNumber: values.vehiclePlateNumber,
+			description: values.description,
 			attachments: values.attachments,
 			dateOfService: values.dateOfService,
 			timeBegins: values.timeBegins,
@@ -332,6 +335,25 @@ export default function AddTransportVoucherDialog({ transactionId, openDialog, s
 													</div>
 												</PopoverContent>
 											</Popover>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="description"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row items-center justify-between gap-x-2">
+											<p className="text-xs w-1/3">Description:</p>
+											<FormControl className="w-2/3">
+												<Textarea
+													{...field}
+													placeholder="Start writing description..."
+													className="w-full bg-slate-100 border-none text-[12px] resize-none focus-visible:ring-0"
+												/>
+											</FormControl>
 										</div>
 										<FormMessage />
 									</FormItem>

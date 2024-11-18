@@ -10,6 +10,7 @@ export interface ITransportVoucher {
   vehicleType: VehicleType
   itineraries: IItinerary[]
   attachments?: string[];
+  description: string;
   dateOfService: Date;
   timeBegins: Date;
   timeEnds: Date;

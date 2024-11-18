@@ -96,6 +96,11 @@ export default function TransportVoucher({ transportVoucher }: ITransportVoucher
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+              <p className="text-xs font-medium">Description:</p>
+              <p className="text-xs text-gray-700">{voucher.description}</p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
               <p className="text-xs font-medium">Remarks:</p>
               <p className="text-xs text-gray-700">{voucher.remarks ?? "N/A"}</p>
             </div>

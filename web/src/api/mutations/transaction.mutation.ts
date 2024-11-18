@@ -241,6 +241,7 @@ export interface ICreateTransportVoucher {
   serviceType: TransportServiceType
   vehicleType: VehicleType
   attachments?: string[];
+  description: string;
   timeBegins: Date;
   timeEnds: Date;
   dateOfService: Date;
@@ -254,6 +255,7 @@ export interface IUpdateTransportVoucher {
   serviceType: TransportServiceType
   vehicleType: VehicleType
   attachments?: string[];
+  description: string;
   timeBegins?: Date;
   timeEnds?: Date;
   dateOfService?: Date;
