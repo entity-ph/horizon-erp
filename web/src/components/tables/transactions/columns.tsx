@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../../ui/checkbox";
-import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, ListTodo, NotepadText, TicketCheck } from "lucide-react";
+import { format } from "date-fns";
+import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, Calendar, ListTodo, NotepadText, TicketCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ITransaction, VoucherTypes } from "@/interfaces/transaction.interface";
 import { VoucherBadge } from "@/components/badges/voucher-type";
@@ -82,15 +83,16 @@ export const Columns: ColumnDef<ITransaction>[] = [
 		}
 	},
 	{
-		id: "purchaseOrderId",
-		header: "PO Serial #",
+		id: "createdAt",
+		header: () => <div className="flex items-center gap-x-2">
+			<p>Date Created</p>
+			<Calendar color="white" size={16} />
+		</div>,
 		cell: ({ row }) => {
 			return (
-				<div className="flex items-center gap-2">
-					<span className="text-xs">
-						{row.original.purchaseOrder?.serialNumber ?? <span className="italic text-gray-300">No purchase order attached</span>}
-					</span>
-				</div>
+				<span className="capitalize">
+					{format(new Date(row.original.createdAt ?? ""), 'MMMM d, h:mm a')}
+				</span>
 			)
 		}
 	},

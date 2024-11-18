@@ -94,7 +94,7 @@ export default function AddPurchaseRequestItemDialog({ purchaseRequestId }: Prop
           <Plus size={18} />
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[700px] max-h-[560px] overflow-auto">
+      <DialogContent className="max-w-[700px] max-h-[90vh] overflow-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FilePlus size={24} className="text-secondary" />

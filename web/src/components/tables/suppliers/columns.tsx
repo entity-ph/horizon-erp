@@ -5,9 +5,10 @@ import Constants from "@/constants";
 import { ISupplier } from "@/api/mutations/supplier.mutation";
 import EditSupplierDialog from "@/components/dialogs/suppliers/edit";
 import DeleteSupplierDialog from "@/components/alert/supplier/delete";
-import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, CircleCheck, ListTodo, Map, MapPinHouse, Phone } from "lucide-react";
+import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, CircleCheck, ListTodo, Map, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Columns: ColumnDef<ISupplier>[] = [
 	{
@@ -100,17 +101,20 @@ export const Columns: ColumnDef<ISupplier>[] = [
 		}
 	},
 	{
-		id: "officeBranch",
-		header: () => <div className="flex items-center gap-x-2 w-[130px]">
-			<p>Office Branch</p>
-			<MapPinHouse color="white" size={16} />
-		</div>,
+		id: "createdBy",
+		header: "Created By",
 		cell: ({ row }) => {
+			if (!row.original.creator) return;
+			const { firstName, lastName, avatar } = row.original.creator;
 			return (
-				<div className="flex ">
-					<span className="text-xs">
-						{row.original.officeBranch}
-					</span>
+				<div className="flex items-center gap-2">
+					<Avatar>
+						<AvatarImage src={avatar} className="object-cover" />
+						<AvatarFallback>
+							{firstName[0].toUpperCase()}
+						</AvatarFallback>
+					</Avatar>
+					<span>{`${firstName} ${lastName}`}</span>
 				</div>
 			)
 		}

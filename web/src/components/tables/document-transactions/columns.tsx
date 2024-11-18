@@ -10,6 +10,7 @@ import { IDocumentTransaction } from "@/api/queries/document-transaction.query";
 import { DocumentTransactionBadge } from "@/components/badges/document-transaction-type";
 import DeleteDocumentTransaction from "@/components/alert/document-transactions/delete";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Columns: ColumnDef<IDocumentTransaction>[] = [
 	{
@@ -52,6 +53,25 @@ export const Columns: ColumnDef<IDocumentTransaction>[] = [
 			)
 		},
 		enableSorting: true,
+	},
+	{
+		id: "createdBy",
+		header: "Created By",
+		cell: ({ row }) => {
+			if (!row.original.preparedBy) return;
+			const { firstName, lastName, avatar } = row.original.preparedBy;
+			return (
+				<div className="flex items-center gap-2">
+					<Avatar>
+						<AvatarImage src={avatar} className="object-cover" />
+						<AvatarFallback>
+							{firstName[0].toUpperCase()}
+						</AvatarFallback>
+					</Avatar>
+					<span>{`${firstName} ${lastName}`}</span>
+				</div>
+			)
+		}
 	},
 	{
 		id: "dtsNumber",

@@ -2,7 +2,7 @@ import { BookUser, CircleCheck, Loader2, SquareMenu, UserPlus, X } from "lucide-
 import { z } from "zod"
 import { Dialog, DialogContent, DialogTitle, DialogHeader } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AnimatedDiv from "@/components/animated/Div";
 import { Form, FormItem, FormControl, FormField, FormMessage, FormLabel } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
@@ -94,6 +94,7 @@ export default function CreateTransactionDialog({ openDialog, setOpenDialog, suc
 	const { session, branch } = useAuth()
 	const { PermissionsCanEdit } = Constants;
 	const canEdit = session?.user?.permission && PermissionsCanEdit.includes(session?.user?.permission);
+	const buttonRef = useRef<HTMLDivElement | null>(null);
 
 
 	const isApproved = true
@@ -165,6 +166,13 @@ export default function CreateTransactionDialog({ openDialog, setOpenDialog, suc
 	}
 	const handleSelectClient = (client: IClient) => {
 		setSelectedClient(client);
+		if (buttonRef.current) {
+			buttonRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'end',
+			});
+		}
+
 	};
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
@@ -346,7 +354,8 @@ export default function CreateTransactionDialog({ openDialog, setOpenDialog, suc
 												<FormMessage />
 											</FormItem>
 										)}
-									/>									<div className="flex flex-row items-center gap-x-2 justify-end">
+									/>
+									<div ref={buttonRef} className="flex flex-row items-center gap-x-2 justify-end">
 										<Button className="text-xs bg-muted-foreground" onClick={() => {
 											setSelection({
 												step: 0,
@@ -411,7 +420,7 @@ export default function CreateTransactionDialog({ openDialog, setOpenDialog, suc
 									)}
 								</div>
 							</div>
-							<div className="flex flex-row items-center gap-x-2 justify-end">
+							<div className="flex flex-row items-center gap-x-2 justify-end mt-2" ref={buttonRef}>
 								<Button className="text-xs bg-muted-foreground" onClick={() => {
 									setSelection({
 										step: 0,

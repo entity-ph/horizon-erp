@@ -10,6 +10,7 @@ import { IClient } from "@/api/mutations/client.mutation";
 import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, CircleCheck, ListTodo, Mail, MapPinHouse, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Columns: ColumnDef<IClient>[] = [
 	{
@@ -112,6 +113,25 @@ export const Columns: ColumnDef<IClient>[] = [
 					<span className="text-xs">
 						{row.original.department}
 					</span>
+				</div>
+			)
+		}
+	},
+	{
+		id: "createdBy",
+		header: "Created By",
+		cell: ({ row }) => {
+			if (!row.original.creator) return;
+			const { firstName, lastName, avatar } = row.original.creator;
+			return (
+				<div className="flex items-center gap-2">
+					<Avatar>
+						<AvatarImage src={avatar} className="object-cover" />
+						<AvatarFallback>
+							{firstName[0].toUpperCase()}
+						</AvatarFallback>
+					</Avatar>
+					<span>{`${firstName} ${lastName}`}</span>
 				</div>
 			)
 		}

@@ -11,6 +11,7 @@ import { useAuth } from "@/providers/auth-provider";
 import { UserType } from "@/interfaces/user.interface";
 import Constants from "@/constants";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Columns: ColumnDef<ISalesAgreement>[] = [
   {
@@ -55,6 +56,25 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
     enableSorting: true,
   },
   {
+    id: "preparedBy",
+    header: "Prepared By",
+    cell: ({ row }) => {
+      if (!row.original.creator) return;
+      const { firstName, lastName, avatar } = row.original.creator;
+      return (
+        <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage src={avatar} className="object-cover" />
+            <AvatarFallback>
+              {firstName[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <span>{`${firstName} ${lastName}`}</span>
+        </div>
+      )
+    }
+  },
+  {
     id: "serialNumber ",
     header: "Ser. No.",
     cell: ({ row }) => (
@@ -73,18 +93,6 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
     )
   },
   {
-    id: "preparedBy",
-    header: "Prepared by",
-    cell: ({ row }) => {
-      const creator = row.original.creator;
-      return (
-        <span className="capitalize">
-          {`${creator?.firstName} ${creator?.lastName}`}
-        </span>
-      )
-    }
-  },
-  {
     id: "createdAt",
     header: () => <div className="flex items-center gap-x-2">
       <p>Date Created</p>
@@ -100,14 +108,20 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
   },
   {
     id: "approvedBy",
-    header: "Approved by",
+    header: "Approved By",
     cell: ({ row }) => {
-      const approver = row.original.approver;
-      const approvedBy = `${approver?.firstName || ''} ${approver?.lastName || ''}`
+      if (!row.original.approver) return;
+      const { firstName, lastName, avatar } = row.original.approver;
       return (
-        <span className="capitalize">
-          {approvedBy}
-        </span>
+        <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage src={avatar} className="object-cover" />
+            <AvatarFallback>
+              {firstName[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <span>{`${firstName} ${lastName}`}</span>
+        </div>
       )
     }
   },

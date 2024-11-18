@@ -77,7 +77,7 @@ export default function CreateSupplierDialog({ openDialog, setOpenDialog }: ICre
 
 	return (
 		<Dialog open={openDialog} onOpenChange={() => { setOpenDialog(false) }}>
-			<DialogContent className="max-w-[700px] max-h-[520px] overflow-auto">
+			<DialogContent className="max-w-[700px] max-h-[90vh] overflow-auto">
 				<DialogTitle>
 					<DialogHeader className="flex flex-row items-center gap-x-2">
 						<ContactRound className="text-secondary" />

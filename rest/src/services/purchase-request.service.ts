@@ -50,6 +50,7 @@ export async function findPurchaseRequests({ skip, take, search, branch, type, c
     whereInput = {
       ...whereInput,
       OR: [
+        { serialNumber: { contains: search, mode: "insensitive" } },
         {
           supplier: {
             name: { contains: search, mode: "insensitive" }
