@@ -49,6 +49,20 @@ export default function DocumentDetails({ documentTransactionData: data }: Docum
 	useEffect(() => {
 		if (data.documents) {
 			setSelectedDocuments(data.documents);
+
+			const newDocuments = data.documents.map((document: string) => ({
+				value: document,
+				label: document,
+			}));
+
+			const updatedOptions = [
+				...documentOptions,
+				...newDocuments.filter(
+					(newDoc) => !documentOptions.some((opt) => opt.value === newDoc.value)
+				),
+			];
+
+			setDocumentOptions(updatedOptions);
 		}
 	}, [data]);
 
