@@ -7,6 +7,8 @@ export interface IAirline {
   id: string;
   name: string
   code: string
+  dateOfTravel: Date
+  dateOfArrival: Date
   etd: Date
   eta: Date
   origin: string
@@ -19,6 +21,7 @@ export interface IShipping {
   name: string;
   voyageNumber: string;
   dateOfTravel: Date;
+  etd: Date;
   origin: string;
   destination: string;
   travelId?: string

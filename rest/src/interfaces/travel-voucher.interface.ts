@@ -45,6 +45,8 @@ export interface IAirlines {
 export interface ICreateAirlines {
   name: string;
   code: string;
+  dateOfTravel: Date;
+  dateOfArrival: Date;
   etd: Date;
   eta: Date;
   origin: string;
@@ -55,6 +57,8 @@ export interface IUpdateAirlines {
   id: string;
   name: string;
   code: string;
+  dateOfTravel: Date;
+  dateOfArrival: Date;
   etd: Date;
   eta: Date;
   origin: string;
@@ -74,6 +78,7 @@ export interface ICreateShipping {
   name: string;
   voyageNumber: string;
   dateOfTravel: Date;
+  etd: Date;
   origin: string;
   destination: string;
   travelId: string;
@@ -83,6 +88,7 @@ export interface IUpdateShipping {
   name: string;
   voyageNumber: string;
   dateOfTravel: Date;
+  etd: Date;
   origin: string;
   destination: string;
 }

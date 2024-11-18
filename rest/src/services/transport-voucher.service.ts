@@ -9,6 +9,11 @@ export interface ICreateTransportVoucher {
   vehiclePlateNumber: string
   serviceType: TransportServiceType
   vehicleType: VehicleType
+  attachments?: string[];
+  description: string;
+  timeBegins?: Date;
+  timeEnds?: Date;
+  dateOfService?: Date;
 }
 export interface IUpdateTransportVoucher {
   id: string
@@ -18,6 +23,11 @@ export interface IUpdateTransportVoucher {
   vehiclePlateNumber: string
   serviceType: TransportServiceType
   vehicleType: VehicleType
+  attachments?: string[];
+  description: string;
+  timeBegins?: Date;
+  timeEnds?: Date;
+  dateOfService?: Date;
 }
 
 export async function createTransportVoucher(data: ICreateTransportVoucher) {

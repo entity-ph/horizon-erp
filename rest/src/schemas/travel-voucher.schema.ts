@@ -11,6 +11,7 @@ export const createTravelVoucherSchema = z.object({
       shipping: z.object({
         voyageNumber: z.string(),
         dateOfTravel: z.string(),
+        etd: z.string(),
         name: z.string(),
         origin: z.string()
       }).optional(),
@@ -19,6 +20,8 @@ export const createTravelVoucherSchema = z.object({
         code: z.string(),
         origin: z.string(),
         destination: z.string(),
+        dateOfTravel: z.string(),
+        dateOfArrival: z.string(),
         etd: z.string(),
         eta: z.string(),
       }).optional()
@@ -33,6 +36,7 @@ export const updateTravelVoucherSchema = z.object({
         id: z.string(),
         voyageNumber: z.string(),
         dateOfTravel: z.string(),
+        etd: z.string(),
         name: z.string(),
         origin: z.string()
       }).optional(),
@@ -42,6 +46,8 @@ export const updateTravelVoucherSchema = z.object({
         code: z.string(),
         origin: z.string(),
         destination: z.string(),
+        dateOfTravel: z.string(),
+        dateOfArrival: z.string(),
         etd: z.string(),
         eta: z.string(),
       }).optional()

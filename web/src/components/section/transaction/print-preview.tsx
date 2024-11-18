@@ -118,10 +118,16 @@ export default function PrintPreview({ data }: Props) {
                         <p>Destination: {voucher.airline?.destination}</p>
                       </div>
                       <div>
-                        <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy")}</p>
+                        <p>Date of Travel: {format(new Date(voucher.airline?.dateOfTravel ?? new Date()), "MMMM d, yyyy")}</p>
                       </div>
                       <div>
-                        <p>ETA: {format(new Date(voucher.airline?.eta ?? new Date()), "MMMM d, yyyy")}</p>
+                        <p>Date of Arrival: {format(new Date(voucher.airline?.dateOfArrival ?? new Date()), "MMMM d, yyyy")}</p>
+                      </div>
+                      <div>
+                        <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}</p>
+                      </div>
+                      <div>
+                        <p>ETA: {format(new Date(voucher.airline?.eta ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}</p>
                       </div>
                     </div>}
                   {voucher.type === TravelVoucherType.SHIPPING &&
@@ -136,6 +142,9 @@ export default function PrintPreview({ data }: Props) {
                       </div>
                       <div>
                         <p>Date of Travel: {format(new Date(voucher.shipping?.dateOfTravel ?? new Date()), "MMMM d, yyyy")}</p>
+                      </div>
+                      <div>
+                        <p>ETD: {format(new Date(voucher.airline?.etd ?? new Date()), "MMMM d, yyyy hh:mm:ss a")}</p>
                       </div>
                     </div>}
                 </div>
@@ -261,10 +270,14 @@ export default function PrintPreview({ data }: Props) {
                       <p>Vehicle Type: {VehicleType[transport.vehicleType]}</p>
                       <p>Vehicle Plate: {transport.vehiclePlateNumber}</p>
                       <p>Service Type: {TransportServiceType[transport.serviceType]}</p>
+                      <p>Description: {transport.description}</p>
                     </div>
                     <div>
                       <p>Driver: {transport.driverName}</p>
                       <p>Contact: {transport.driverContact}</p>
+                      <p>Date of Service: {format(new Date(transport.dateOfService), 'MMMM d, yyyy')}</p>
+                      <p>Time Begins: {format(new Date(transport.timeBegins), 'MMMM d, yyyy hh:mm:ss a')}</p>
+                      <p>Time Ends: {format(new Date(transport.timeEnds), 'MMMM d, yyyy hh:mm:ss a')}</p>
                     </div>
                     {transport.remarks && <div><p>Remarks: {transport.remarks}</p></div>}
                     {transport.itineraries.length > 0 && (

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../../ui/select";
 import CommonInput from "../../../common/input";
-import { Car, Loader2 } from "lucide-react"
+import { CalendarIcon, Car, Loader2 } from "lucide-react"
 import { Button } from "../../../ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "../../../ui/form";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,12 @@ import { IUpdateTransportVoucher, updateTransportVoucher } from "../../../../api
 import { toast } from "sonner";
 import { ITransportVoucher, TransportServiceType, VehicleType } from "../../../../interfaces/transport.interface";
 import { useEffect } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import { TimePicker } from "@/components/common/time-picker";
+import { Textarea } from "@/components/ui/textarea";
 
 interface EditTransportVoucherProps {
 	selectedTransport: ITransportVoucher
@@ -38,6 +44,11 @@ const formSchema = z.object({
 	driverContact: z.string(),
 	remarks: z.string().optional(),
 	vehiclePlateNumber: z.string(),
+	attachments: z.array(z.string()).optional(),
+	description: z.string(),
+	timeBegins: z.date({ required_error: "Time begins is required" }),
+	timeEnds: z.date({ required_error: "Time ends is required" }),
+	dateOfService: z.date({ required_error: "Date of service is required" }),
 	serviceType: z.enum([TransportServiceType.PUDO, TransportServiceType.HALF_DAY, TransportServiceType.MULTIPLE, TransportServiceType.WHOLE_DAY]),
 	vehicleType: z.enum([VehicleType.BUS, VehicleType.SUV, VehicleType.VAN, VehicleType.SEDAN, VehicleType.COASTER])
 });
@@ -76,7 +87,12 @@ export function EditTransportVoucherDialog({ selectedTransport, openDialog, setO
 				remarks: selectedTransport.remarks,
 				vehiclePlateNumber: selectedTransport.vehiclePlateNumber,
 				serviceType: selectedTransport.serviceType,
-				vehicleType: selectedTransport.vehicleType
+				vehicleType: selectedTransport.vehicleType,
+				attachments: selectedTransport.attachments,
+				description: selectedTransport.description,
+				dateOfService: new Date(selectedTransport.dateOfService),
+				timeBegins: new Date(selectedTransport.timeBegins),
+				timeEnds: new Date(selectedTransport.timeEnds)
 			})
 		}
 	}, [form, selectedTransport])
@@ -89,7 +105,12 @@ export function EditTransportVoucherDialog({ selectedTransport, openDialog, setO
 			remarks: values.remarks,
 			serviceType: values.serviceType,
 			vehicleType: values.vehicleType,
-			vehiclePlateNumber: values.vehiclePlateNumber
+			vehiclePlateNumber: values.vehiclePlateNumber,
+			attachments: values.attachments,
+			description: values.description,
+			dateOfService: new Date(values.dateOfService),
+			timeBegins: new Date(values.timeBegins),
+			timeEnds: new Date(values.timeEnds)
 		};
 		updateTransportMutate(payload);
 	}
@@ -207,6 +228,150 @@ export function EditTransportVoucherDialog({ selectedTransport, openDialog, setO
 											<p className="text-xs w-1/3">Vehicle Plate Number</p>
 											<FormControl className="w-2/3">
 												<CommonInput inputProps={{ ...field }} placeholder="e.g. G202-023" containerProps={{ className: 'text-xs' }} />
+											</FormControl>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="dateOfService"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row justify-between gap-x-2 items-center">
+											<p className="text-xs w-1/3">Date of Service:</p>
+											<Popover>
+												<PopoverTrigger asChild>
+													<FormControl className="w-2/3">
+														<Button
+															variant={"outline"}
+															className={`w-full pl-3 text-left font-normal text-xs
+															${!field.value && "text-muted-foreground"}`}
+														>
+															{field.value ? (
+																format(field.value, "PPP")
+															) : (
+																<span className="text-xs">Pick a date</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</FormControl>
+												</PopoverTrigger>
+												<PopoverContent className="text-xs w-auto p-0" align="start">
+													<Calendar
+														className="text-xs"
+														mode="single"
+														selected={field.value}
+														onSelect={field.onChange}
+														initialFocus
+													/>
+												</PopoverContent>
+											</Popover>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="timeBegins"
+								render={({ field }) => (
+									<FormItem className="flex flex-col">
+										<div className="flex flex-row justify-between gap-x-2 items-center">
+											<p className="text-xs w-1/3">Time Begins:</p>
+											<Popover>
+												<FormControl>
+													<PopoverTrigger asChild>
+														<Button
+															variant="outline"
+															className={cn(
+																"w-full justify-between text-left text-xs font-normal",
+																!field.value && "text-muted-foreground"
+															)}
+														>
+															{field.value ? (
+																format(field.value, "PPP HH:mm:ss a")
+															) : (
+																<span>Pick a date time</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</PopoverTrigger>
+												</FormControl>
+												<PopoverContent className="w-auto p-0">
+													<Calendar
+														mode="single"
+														selected={field.value}
+														onSelect={field.onChange}
+														initialFocus
+													/>
+													<div className="p-3 border-t border-border">
+														<TimePicker { ...field }/>
+													</div>
+												</PopoverContent>
+											</Popover>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="timeEnds"
+								render={({ field }) => (
+									<FormItem className="flex flex-col">
+										<div className="flex flex-row justify-between gap-x-2 items-center">
+											<p className="text-xs w-1/3">Time Ends:</p>
+											<Popover>
+												<FormControl>
+													<PopoverTrigger asChild>
+														<Button
+															variant="outline"
+															className={cn(
+																"w-full justify-between text-left text-xs font-normal",
+																!field.value && "text-muted-foreground"
+															)}
+														>
+															{field.value ? (
+																format(field.value, "PPP HH:mm:ss a")
+															) : (
+																<span>Pick a date time</span>
+															)}
+															<CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+														</Button>
+													</PopoverTrigger>
+												</FormControl>
+												<PopoverContent className="w-auto p-0">
+													<Calendar
+														mode="single"
+														selected={field.value}
+														onSelect={field.onChange}
+														initialFocus
+													/>
+													<div className="p-3 border-t border-border">
+														<TimePicker { ...field }/>
+													</div>
+												</PopoverContent>
+											</Popover>
+										</div>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								control={form.control}
+								name="description"
+								render={({ field }) => (
+									<FormItem>
+										<div className="flex flex-row items-center justify-between gap-x-2">
+											<p className="text-xs w-1/3">Description:</p>
+											<FormControl className="w-2/3">
+												<Textarea
+													{...field}
+													placeholder="Start writing description..."
+													className="w-full bg-slate-100 border-none text-[12px] resize-none focus-visible:ring-0"
+												/>
 											</FormControl>
 										</div>
 										<FormMessage />

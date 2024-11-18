@@ -38,6 +38,8 @@ export async function deleteTransaction(id: string) {
 export interface ICreateAirline {
   name: string;
   code: string;
+  dateOfTravel: Date;
+  dateOfArrival: Date;
   etd: Date;
   eta: Date;
   origin: string;
@@ -49,6 +51,7 @@ export interface ICreateShipping {
   origin: string;
   destination: string;
   dateOfTravel: Date;
+  etd: Date;
 }
 
 export interface ICreateTravelVoucher {
@@ -141,6 +144,8 @@ export interface IUpdateAirline {
   id: string;
   name: string;
   code: string;
+  dateOfTravel: Date;
+  dateOfArrival: Date;
   etd: Date;
   eta: Date;
   origin: string;
@@ -153,6 +158,7 @@ export interface IUpdateShipping {
   origin: string;
   destination: string;
   dateOfTravel: Date;
+  etd: Date;
 }
 
 export interface IUpdateTravelVoucher {
@@ -234,6 +240,11 @@ export interface ICreateTransportVoucher {
   vehiclePlateNumber: string
   serviceType: TransportServiceType
   vehicleType: VehicleType
+  attachments?: string[];
+  description: string;
+  timeBegins: Date;
+  timeEnds: Date;
+  dateOfService: Date;
 }
 export interface IUpdateTransportVoucher {
   id: string
@@ -243,6 +254,11 @@ export interface IUpdateTransportVoucher {
   vehiclePlateNumber: string
   serviceType: TransportServiceType
   vehicleType: VehicleType
+  attachments?: string[];
+  description: string;
+  timeBegins?: Date;
+  timeEnds?: Date;
+  dateOfService?: Date;
 }
 
 export async function createTransportVoucher(payload: ICreateTransportVoucher) {

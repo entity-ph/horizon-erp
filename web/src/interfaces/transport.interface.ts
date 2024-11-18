@@ -2,7 +2,6 @@ import { IItinerary } from "./tour.interface";
 
 export interface ITransportVoucher {
   id: string
-
   driverName: string;
   driverContact: string;
   remarks?: string;
@@ -10,6 +9,11 @@ export interface ITransportVoucher {
   serviceType: TransportServiceType
   vehicleType: VehicleType
   itineraries: IItinerary[]
+  attachments?: string[];
+  description: string;
+  dateOfService: Date;
+  timeBegins: Date;
+  timeEnds: Date;
 }
 
 export enum TransportServiceType {
