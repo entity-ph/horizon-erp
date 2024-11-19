@@ -108,7 +108,7 @@ export default function TourVoucher({ tourVoucher, transactionId }: ITourVoucher
             {voucher.itineraries?.map((itinerary, idx) => (
               <div key={idx} className="space-y-4 border-2 rounded-xl p-4">
                 <div className="flex flex-row justify-between items-center">
-                  <p className="text-xs text-primary font-semibold">Itinerary #{index + 1}</p>
+                  <p className="text-xs text-primary font-semibold">Itinerary #{idx + 1}</p>
                   <div className="flex flex-row gap-x-2 items-center ">
                     <Button size="icon" variant="ghost" className="text-xs gap-x-2" onClick={() => handleEditItinerary(itinerary)}>
                       <Pencil size={14} />
@@ -122,9 +122,9 @@ export default function TourVoucher({ tourVoucher, transactionId }: ITourVoucher
                     <p className="text-xs text-gray-700">{itinerary.title ?? "N/A"}</p>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+                  <div className="flex flex-row justify-between gap-x-20">
                     <p className="text-xs font-medium">Description:</p>
-                    <p className="text-xs text-gray-700">{itinerary.description ?? "N/A"}</p>
+                    <p className="text-xs text-gray-700 ">{itinerary.description ?? "N/A"}</p>
                   </div>
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
