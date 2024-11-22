@@ -16,6 +16,8 @@ const Layout: React.FC = () => {
 	useEffect(() => {
 		if (session.user?.userType === UserType.EMPLOYEE) {
 			setBranch(session.user.officeBranch as OfficeBranch)
+		} else {
+			setBranch(OfficeBranch.CEBU)
 		}
 	}, [])
 
