@@ -157,6 +157,7 @@ const Disbursements = [
           { label: "Electricity", code: "ELCOPX" },
           { label: "Gasoline", code: "GASOPX" },
           { label: "Repairs and Maintainance", code: "RPROPX" },
+          { label: "Office Supplies", code: "OSOPX" },
         ]
       },
       {
