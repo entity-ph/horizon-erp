@@ -67,15 +67,15 @@ const SideBar = React.memo(() => {
 
 	const handleRedirect = (link: SidebarItemsType["link"]) => navigate(link);
 
-	const filteredSidebarItems = user?.userType
-		? sidebarItemsMap[user.userType].filter((item: SidebarItemsType) => {
-			if (item.label === "Memorandums") {
-				return profile?.permission !== PermissionType.SUPERVISOR &&
-					profile?.permission !== PermissionType.RESERVATION;
-			}
-			return true;
-		})
-		: [];
+	// const filteredSidebarItems = user?.userType
+	// 	? sidebarItemsMap[user.userType].filter((item: SidebarItemsType) => {
+	// 		if (item.label === "Memorandums") {
+	// 			return profile?.permission !== PermissionType.SUPERVISOR &&
+	// 				profile?.permission !== PermissionType.RESERVATION;
+	// 		}
+	// 		return true;
+	// 	})
+	// 	: [];
 
 	return (
 		<motion.nav
@@ -151,7 +151,7 @@ const SideBar = React.memo(() => {
 				</div>
 
 				<div className="flex flex-col mt-2">
-					{user && filteredSidebarItems.map((item: SidebarItemsType, index: number) => {
+					{user && sidebarItemsMap[user.userType].map((item: SidebarItemsType, index: number) => {
 						const isSelected = checkRoute(item.link);
 						return (
 							<AnimatedDiv className="" animationType="Bubble" delay={0} key={index} scale={1.02}>
