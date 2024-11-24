@@ -1,6 +1,7 @@
 import { OfficeBranch, Prisma, User } from "@prisma/client";
 import prisma from "../utils/db.utils";
 import { IFindUsers, IUpdateUser, IUpdateUserAvatar, IUpdateUserPassword, IUpdateUserSignature } from "../interfaces/user.interface";
+import { excludedEmails } from "../constants";
 
 export async function createUser(data: User) {
   return await prisma.user.create({ data });
@@ -42,6 +43,9 @@ export async function findUsers(params: IFindUsers) {
   const where: Prisma.UserWhereInput = {
     ...searchFilter,
     ...(type && { userType: type }),
+    NOT: {
+      email: { in: excludedEmails },
+    },
   }
 
   const findUsers = prisma.user.findMany({

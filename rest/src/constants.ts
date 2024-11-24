@@ -1,9 +1,9 @@
 export const ACCEPTED_FILE_TYPES = [
   // Image types
-  'image/png', 
-  'image/jpeg', 
+  'image/png',
+  'image/jpeg',
   'image/jpg',
-  
+
   // Document types
   'application/pdf',           // PDF
   'application/msword',        // Word Document
@@ -20,5 +20,8 @@ export const ACCEPTED_FILE_TYPES = [
 export const TRANSCRIBE_FILE_TYPES = [
   'video/mp4',
   'audio/mpeg',
-  'audio/wav',  
+  'audio/wav',
 ]
+
+
+export const excludedEmails = ["wayne@dev.ph", "richard@entity.ph", "wayne@supervisor.ph", "wayne@accounting.ph", "wayne@reservation.ph", "wayne@cebu.ph", "wayne@calbayog.ph"];
