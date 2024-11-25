@@ -6,16 +6,13 @@ import { useReactToPrint } from 'react-to-print';
 import { IMemorandum } from '@/api/queries/memorandums.query';
 import UpdateMemorandumDialog from '@/components/dialogs/memorandum/edit';
 import logo from '../../../assets/logo.png';
-import stamp from '../../../assets/approved.png';
 import draftToHtml from 'draftjs-to-html';
 import { format } from 'date-fns';
-import { OfficeBranch, UserType } from '@/interfaces/user.interface';
+import { OfficeBranch, PermissionType, UserType } from '@/interfaces/user.interface';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { approveMemorandum } from '@/api/mutations/memorandum.mutation';
 import { useAuth } from '@/providers/auth-provider';
 import { toast } from 'sonner';
-import AnimatedDiv from '@/components/animated/Div';
-import Constants from '@/constants';
 import { RenderHeaderText } from '@/components/common/header';
 
 interface Props {
@@ -76,7 +73,6 @@ export default function MemorandumPreview({ data }: Props) {
 
 	const isCreatorAdmin = data.creator.userType === UserType.ADMIN;
 	const isApproved = Boolean(data.approver);
-	const { PermissionsCanEdit } = Constants;
 
 	return (
 		<div className="w-[750px] bg-white border-[1px]">
@@ -102,7 +98,7 @@ export default function MemorandumPreview({ data }: Props) {
 						</Button>
 					)}
 
-					{(user?.permission && PermissionsCanEdit.includes(user.permission)) && (
+					{(user?.permission === PermissionType.SUPER_ADMIN) && (
 						<Button onClick={() => setOpenEditMemo(true)} size={'sm'} className='gap-1'>
 							<Pencil size={16} />
 							<span>Edit</span>
@@ -124,16 +120,6 @@ export default function MemorandumPreview({ data }: Props) {
 			</div>
 			<Separator />
 			<div ref={contentRef} className='p-10 min-h-[900px] mb-4 relative'>
-				{(data.approver || data.creator.userType === UserType.ADMIN) &&
-					<AnimatedDiv
-						animationType='Approve'
-						className='absolute right-0 top-15'
-					>
-						<img src={stamp}
-							className='object-contain w-[240px] h-[150px] rotate-90 approved-stamp'
-						/>
-					</AnimatedDiv>
-				}
 				<div className='text-center text-black flex flex-col items-center'>
 					<img src={logo} className='object-contain w-[220px] h-[150px] self-center' />
 					{RenderHeaderText(data.creator.officeBranch as OfficeBranch)}
