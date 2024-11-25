@@ -38,10 +38,10 @@ function createTourVoucher(data) {
         return yield db_utils_1.default.tour.create({
             data: {
                 transactionId: data.transactionId,
-                tourGuide: data.tourGuide,
-                tourContact: data.tourContact,
-                driverName: data.driverName,
-                driverContact: data.driverContact,
+                // tourGuide: data.tourGuide,
+                // tourContact: data.tourContact,
+                // driverName: data.driverName,
+                // driverContact: data.driverContact,
                 remarks: data.remarks,
             },
         });

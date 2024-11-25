@@ -12,6 +12,11 @@ exports.createTransportVoucherSchema = zod_1.z.object({
         driverContact: zod_1.z.string(),
         remarks: zod_1.z.string().optional(),
         vehiclePlateNumber: zod_1.z.string(),
+        attachments: zod_1.z.array(zod_1.z.string()).optional(),
+        description: zod_1.z.string(),
+        timeBegins: zod_1.z.string(),
+        timeEnds: zod_1.z.string(),
+        dateOfService: zod_1.z.string(),
         serviceType: zod_1.z.enum([client_1.TransportServiceType.PUDO, client_1.TransportServiceType.HALF_DAY, client_1.TransportServiceType.MULTIPLE, client_1.TransportServiceType.WHOLE_DAY]),
         vehicleType: zod_1.z.enum([client_1.VehicleType.BUS, client_1.VehicleType.SUV, client_1.VehicleType.VAN, client_1.VehicleType.SEDAN, client_1.VehicleType.COASTER])
     })
@@ -25,6 +30,11 @@ exports.updateTransportVoucherSchema = zod_1.z.object({
         driverContact: zod_1.z.string(),
         remarks: zod_1.z.string().optional(),
         vehiclePlateNumber: zod_1.z.string(),
+        attachments: zod_1.z.array(zod_1.z.string()).optional(),
+        description: zod_1.z.string(),
+        timeBegins: zod_1.z.string(),
+        timeEnds: zod_1.z.string(),
+        dateOfService: zod_1.z.string(),
         serviceType: zod_1.z.enum([client_1.TransportServiceType.PUDO, client_1.TransportServiceType.HALF_DAY, client_1.TransportServiceType.MULTIPLE, client_1.TransportServiceType.WHOLE_DAY]),
         vehicleType: zod_1.z.enum([client_1.VehicleType.BUS, client_1.VehicleType.SUV, client_1.VehicleType.VAN, client_1.VehicleType.SEDAN, client_1.VehicleType.COASTER])
     })

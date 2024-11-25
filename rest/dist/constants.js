@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TRANSCRIBE_FILE_TYPES = exports.ACCEPTED_FILE_TYPES = void 0;
+exports.MemoAudience = exports.excludedEmails = exports.TRANSCRIBE_FILE_TYPES = exports.ACCEPTED_FILE_TYPES = void 0;
 exports.ACCEPTED_FILE_TYPES = [
     // Image types
     'image/png',
@@ -20,4 +20,17 @@ exports.TRANSCRIBE_FILE_TYPES = [
     'video/mp4',
     'audio/mpeg',
     'audio/wav',
+];
+exports.excludedEmails = ["wayne@dev.ph", "richard@entity.ph", "wayne@supervisor.ph", "wayne@accounting.ph", "wayne@reservation.ph", "wayne@cebu.ph", "wayne@calbayog.ph"];
+exports.MemoAudience = [
+    'All Employees',
+    'Supervisor Cebu',
+    'Supervisor Calbayog',
+    'All Supervisor',
+    'Accounting Cebu',
+    'Accounting Calbayog',
+    'All Accounting',
+    'Reservation Cebu',
+    'Reservation Calbayog',
+    'All Drivers'
 ];

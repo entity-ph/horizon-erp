@@ -12,6 +12,7 @@ exports.createTravelVoucherSchema = zod_1.z.object({
         shipping: zod_1.z.object({
             voyageNumber: zod_1.z.string(),
             dateOfTravel: zod_1.z.string(),
+            etd: zod_1.z.string(),
             name: zod_1.z.string(),
             origin: zod_1.z.string()
         }).optional(),
@@ -20,6 +21,8 @@ exports.createTravelVoucherSchema = zod_1.z.object({
             code: zod_1.z.string(),
             origin: zod_1.z.string(),
             destination: zod_1.z.string(),
+            dateOfTravel: zod_1.z.string(),
+            dateOfArrival: zod_1.z.string(),
             etd: zod_1.z.string(),
             eta: zod_1.z.string(),
         }).optional()
@@ -33,6 +36,7 @@ exports.updateTravelVoucherSchema = zod_1.z.object({
             id: zod_1.z.string(),
             voyageNumber: zod_1.z.string(),
             dateOfTravel: zod_1.z.string(),
+            etd: zod_1.z.string(),
             name: zod_1.z.string(),
             origin: zod_1.z.string()
         }).optional(),
@@ -42,6 +46,8 @@ exports.updateTravelVoucherSchema = zod_1.z.object({
             code: zod_1.z.string(),
             origin: zod_1.z.string(),
             destination: zod_1.z.string(),
+            dateOfTravel: zod_1.z.string(),
+            dateOfArrival: zod_1.z.string(),
             etd: zod_1.z.string(),
             eta: zod_1.z.string(),
         }).optional()

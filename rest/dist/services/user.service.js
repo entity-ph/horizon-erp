@@ -33,6 +33,7 @@ exports.updateUserAvatar = updateUserAvatar;
 exports.updateUserPassword = updateUserPassword;
 exports.updateUserSignature = updateUserSignature;
 const db_utils_1 = __importDefault(require("../utils/db.utils"));
+const constants_1 = require("../constants");
 function createUser(data) {
     return __awaiter(this, void 0, void 0, function* () {
         return yield db_utils_1.default.user.create({ data });
@@ -72,7 +73,9 @@ function findUsers(params) {
                 })),
             };
         }
-        const where = Object.assign(Object.assign({}, searchFilter), (type && { userType: type }));
+        const where = Object.assign(Object.assign(Object.assign({}, searchFilter), (type && { userType: type })), { NOT: {
+                email: { in: constants_1.excludedEmails },
+            } });
         const findUsers = db_utils_1.default.user.findMany({
             where: Object.assign(Object.assign({}, where), { officeBranch: branch }),
             include: {
