@@ -25,3 +25,16 @@ export const TRANSCRIBE_FILE_TYPES = [
 
 
 export const excludedEmails = ["wayne@dev.ph", "richard@entity.ph", "wayne@supervisor.ph", "wayne@accounting.ph", "wayne@reservation.ph", "wayne@cebu.ph", "wayne@calbayog.ph"];
+
+export const MemoAudience = [
+  'All Employees',
+  'Supervisor Cebu',
+  'Supervisor Calbayog',
+  'All Supervisor',
+  'Accounting Cebu',
+  'Accounting Calbayog',
+  'All Accounting',
+  'Reservation Cebu',
+  'Reservation Calbayog',
+  'All Drivers'
+]
