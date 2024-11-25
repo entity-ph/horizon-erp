@@ -28,7 +28,7 @@ const EmployeeSidebarItems: Array<SidebarItemsType> = [
   { label: "Purchase Requests", icon: "Sales", link: "/employee/purchase-requests" },
   { label: "Clients", icon: "Leads", link: "/employee/clients" },
   { label: "Suppliers", icon: "Suppliers", link: "/employee/suppliers" },
-  // { label: "Memorandums", icon: "Memorandum", link: "/employee/memorandum" },
+  { label: "Memorandums", icon: "Memorandum", link: "/employee/memorandum" },
   { label: "Document Transactions", icon: "Documents", link: "/employee/document-transactions" },
   { label: "Profile", icon: "Profile", link: "/employee/profile" },
 ]
