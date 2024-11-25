@@ -16,6 +16,8 @@ import { IMemorandum } from "@/api/queries/memorandums.query";
 import React, { Suspense, useEffect, useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Constants from "@/constants";
 
 
 const Editor = React.lazy(() =>
@@ -114,13 +116,24 @@ export default function UpdateMemorandumDialog({ openDialog, setOpenDialog, memo
 										<FormItem>
 											<div className="flex flex-row items-center justify-between gap-x-2">
 												<p className="text-xs w-1/3">To:</p>
-												<FormControl className="w-2/3">
-													<CommonInput
-														inputProps={{ ...field }}
-														placeholder="e.g. John Doe"
-														containerProps={{ className: 'text-xs' }}
-													/>
-												</FormControl>
+												<Select onValueChange={field.onChange} value={field.value}>
+													<FormControl>
+														<SelectTrigger className="bg-slate-100 border-none text-[12px]">
+															<SelectValue placeholder="Select an audience" />
+														</SelectTrigger>
+													</FormControl>
+													<SelectContent>
+														{Constants.MemoAudience.map((value, index) => (
+															<SelectItem
+																key={index}
+																value={value}
+																className="text-[12px]"
+															>
+																{value}
+															</SelectItem>
+														))}
+													</SelectContent>
+												</Select>
 											</div>
 											<FormMessage />
 										</FormItem>

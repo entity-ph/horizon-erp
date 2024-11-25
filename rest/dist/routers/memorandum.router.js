@@ -18,6 +18,7 @@ const validate_middleware_1 = require("../middlewares/validate.middleware");
 const memorandum_schema_1 = require("../schemas/memorandum.schema");
 const authorize_middleware_1 = require("../middlewares/authorize.middleware");
 const client_1 = require("@prisma/client");
+const memo_utils_1 = require("../utils/memo.utils");
 const memorandumRouter = express_1.default.Router();
 memorandumRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -32,7 +33,10 @@ memorandumRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 memorandumRouter.get('/', (0, validate_middleware_1.validate)(memorandum_schema_1.getMemorandumsSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
+        const userPermission = (_a = req.user) === null || _a === void 0 ? void 0 : _a.permission;
+        const userBranch = (_b = req.user) === null || _b === void 0 ? void 0 : _b.officeBranch;
         const { skip, take, search, branch } = req.query;
         const filters = {
             skip: skip ? Number(skip) : undefined,
@@ -40,11 +44,13 @@ memorandumRouter.get('/', (0, validate_middleware_1.validate)(memorandum_schema_
             search: search ? String(search) : undefined,
             branch: branch ? String(branch) : undefined,
         };
-        const memorandums = yield (0, memorandum_service_1.fetchMemorandums)(filters);
-        if (!memorandums) {
-            throw new Error('Failed to get memorandums');
-        }
-        return res.status(200).json(memorandums);
+        const { memorandumData, total } = yield (0, memorandum_service_1.fetchMemorandums)(filters);
+        const filteredMemorandums = memorandumData.filter(item => (0, memo_utils_1.canAccessMemo)({
+            memoAudience: item.to,
+            userPermission: userPermission,
+            userBranch: userBranch
+        }));
+        return res.status(200).json({ memorandumData: filteredMemorandums, total });
     }
     catch (error) {
         return res.status(500).json({
@@ -53,11 +59,24 @@ memorandumRouter.get('/', (0, validate_middleware_1.validate)(memorandum_schema_
     }
 }));
 memorandumRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     try {
+        const userPermission = (_a = req.user) === null || _a === void 0 ? void 0 : _a.permission;
+        const userBranch = (_b = req.user) === null || _b === void 0 ? void 0 : _b.officeBranch;
         const id = req.params.id;
         const memorandum = yield (0, memorandum_service_1.findMemorandumById)(id);
         if (!memorandum) {
             return res.status(404).json({ message: 'Memorandum not found' });
+        }
+        const canAccess = (0, memo_utils_1.canAccessMemo)({
+            memoAudience: memorandum === null || memorandum === void 0 ? void 0 : memorandum.to,
+            userPermission: userPermission,
+            userBranch: userBranch
+        });
+        if (!canAccess) {
+            return res.status(403).json({
+                message: 'Access denied. You do not have sufficient permissions.'
+            });
         }
         return res.status(200).json(memorandum);
     }

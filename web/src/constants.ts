@@ -315,6 +315,19 @@ const PackageExclusions = [
 
 const HotelCategories = ['5 Star', '4 Star', '3 Star', '2 Star'];
 
+const MemoAudience = [
+  'All Employees',
+  'Supervisor Cebu',
+  'Supervisor Calbayog',
+  'All Supervisor',
+  'Accounting Cebu',
+  'Accounting Calbayog',
+  'All Accounting',
+  'Reservation Cebu',
+  'Reservation Calbayog',
+  'All Drivers'
+]
+
 const Constants = {
   VersionNumber,
   AdminSidebarItems,
@@ -333,7 +346,8 @@ const Constants = {
   SupplierCategories,
   HotelCategories,
   PackageInclusions,
-  PackageExclusions
+  PackageExclusions,
+  MemoAudience
 }
 
 export default Constants

@@ -3,7 +3,8 @@ import { createMemorandum, deleteMemorandum, fetchMemorandums, fetchMemorandumSu
 import { validate } from '../middlewares/validate.middleware';
 import { getMemorandumsSchema } from '../schemas/memorandum.schema';
 import { authorize } from '../middlewares/authorize.middleware';
-import { UserType } from '@prisma/client';
+import { OfficeBranch, PermissionType, UserType } from '@prisma/client';
+import { canAccessMemo } from '../utils/memo.utils';
 
 const memorandumRouter = express.Router();
 
@@ -20,6 +21,8 @@ memorandumRouter.post('/', async (req: Request, res: Response) => {
 
 memorandumRouter.get('/', validate(getMemorandumsSchema), async (req: Request, res: Response) => {
   try {
+    const userPermission = req.user?.permission as PermissionType;
+    const userBranch = req.user?.officeBranch as OfficeBranch;
 
     const { skip, take, search, branch } = req.query;
 
@@ -30,12 +33,14 @@ memorandumRouter.get('/', validate(getMemorandumsSchema), async (req: Request, r
       branch: branch ? String(branch) : undefined,
     };
 
-    const memorandums = await fetchMemorandums(filters);
+    const {memorandumData, total} = await fetchMemorandums(filters);
+    const filteredMemorandums = memorandumData.filter(item => canAccessMemo({
+      memoAudience: item.to,
+      userPermission: userPermission,
+      userBranch: userBranch
+    }));
 
-    if (!memorandums) {
-      throw new Error('Failed to get memorandums')
-    }
-    return res.status(200).json(memorandums);
+    return res.status(200).json({memorandumData: filteredMemorandums, total});
 
   } catch (error) {
     return res.status(500).json({
@@ -46,11 +51,25 @@ memorandumRouter.get('/', validate(getMemorandumsSchema), async (req: Request, r
 
 memorandumRouter.get('/:id', async (req: Request, res: Response) => {
   try {
+    const userPermission = req.user?.permission as PermissionType;
+    const userBranch = req.user?.officeBranch as OfficeBranch;
     const id = req.params.id;
 
     const memorandum = await findMemorandumById(id);
+    
     if (!memorandum) {
       return res.status(404).json({ message: 'Memorandum not found' });
+    }
+
+    const canAccess = canAccessMemo({
+      memoAudience: memorandum?.to,
+      userPermission: userPermission,
+      userBranch: userBranch
+    })
+    if (!canAccess) {
+      return res.status(403).json({
+        message: 'Access denied. You do not have sufficient permissions.'
+      });
     }
 
     return res.status(200).json(memorandum);
@@ -61,8 +80,6 @@ memorandumRouter.get('/:id', async (req: Request, res: Response) => {
     })
   }
 })
-
-
 
 memorandumRouter.put('/:id', async (req: Request, res: Response) => {
   try {

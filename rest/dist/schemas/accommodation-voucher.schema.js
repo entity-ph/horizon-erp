@@ -13,6 +13,7 @@ exports.createAccommodationVoucherSchema = zod_1.z.object({
         hotelConfirmationNumber: zod_1.z.string(),
         checkinDate: zod_1.z.string(),
         checkoutDate: zod_1.z.string(),
+        numberOfNights: zod_1.z.number().optional(),
         remarks: zod_1.z.string().optional(),
     })
 });
@@ -27,5 +28,7 @@ exports.updateAccommodationVoucherSchema = zod_1.z.object({
         checkinDate: zod_1.z.string(),
         checkoutDate: zod_1.z.string(),
         remarks: zod_1.z.string().optional(),
+        numberOfNights: zod_1.z.number().optional(),
+        pax: zod_1.z.number().optional(),
     })
 });
