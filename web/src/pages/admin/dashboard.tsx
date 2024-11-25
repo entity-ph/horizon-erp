@@ -130,7 +130,7 @@ export default function Dashboard() {
 
         <div className="flex flex-col md:flex-row lg:flex-row gap-2 p-2 mt-2">
           <div className="w-full">
-            <DatePickerWithRange onDateChange={handleDateChange} />
+            <DatePickerWithRange onDateChange={handleDateChange} inMonths />
             <div className="w-full flex flex-col lg:flex-row space-x-4 lg:justify-between items-start space-y-4 lg:space-y-0">
               <div className="w-full ">
                 {isLoading ? (
@@ -149,7 +149,7 @@ export default function Dashboard() {
             <Button variant="outline" size="icon" className="absolute top-14 right-4" onClick={togglePieChart}>
               <ArrowRightLeft size={16} />
             </Button>
-            <DatePickerWithRange onDateChange={handlePieChartDateChange} />
+            <DatePickerWithRange onDateChange={handlePieChartDateChange} inMonths />
             {pieToggle === 'clients' &&
               <ClientPieChart clientsData={clientsData ?? []} />
             }

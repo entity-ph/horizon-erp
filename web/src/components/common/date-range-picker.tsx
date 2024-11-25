@@ -1,4 +1,4 @@
-import { addDays, format } from "date-fns";
+import { addDays, format, subMonths } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
 
@@ -14,17 +14,20 @@ import { useState, useEffect } from "react";
 
 interface DatePickerWithRangeProps extends React.HTMLAttributes<HTMLDivElement> {
   onDateChange?: (range: DateRange | undefined) => void;
+  inMonths?: boolean
 }
 
 export function DatePickerWithRange({
   className,
+  inMonths,
   onDateChange,
 }: DatePickerWithRangeProps) {
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: addDays(new Date(), -7),
-    to: new Date(),
+  const [date, setDate] = useState<DateRange | undefined>(() => {
+    const today = new Date();
+    return inMonths
+      ? { from: subMonths(today, 1), to: today }
+      : { from: addDays(today, -7), to: today };
   });
-
   useEffect(() => {
     if (onDateChange) {
       onDateChange(date);
