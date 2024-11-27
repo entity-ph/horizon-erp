@@ -76,3 +76,16 @@ export async function fetchMemorandumSummary(): Promise<IMemorandumSummary> {
     throw new Error(message || 'Something went wrong');
   }
 }
+
+export async function fetchAudiences() {
+  try {
+    const response = await api.get('/api/v1/memorandums/audience');
+    return response.data;
+  } catch (error) {
+    let message;
+    if (error instanceof AxiosError) {
+      message = error.response?.data.message;
+    }
+    throw new Error(message || 'Something went wrong');
+  }
+}

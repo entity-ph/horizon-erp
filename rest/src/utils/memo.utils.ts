@@ -4,12 +4,16 @@ type CanAccessMemoParams = {
   userPermission: PermissionType,
   userBranch: OfficeBranch,
   memoAudience: string
+  userFirstName?: string
+  userLastName?: string
 }
 
 export const canAccessMemo = ({
   userPermission,
   userBranch,
   memoAudience,
+  userFirstName,
+  userLastName,
 }: CanAccessMemoParams): boolean => {
   const branchSpecificAudiences = {
     [PermissionType.ACCOUNTING]: {
@@ -52,6 +56,14 @@ export const canAccessMemo = ({
 
   // Rule 4: Department-wide audience access
   if (departmentWideAudiences[userPermission] === memoAudience) {
+    return true;
+  }
+
+  if (
+    userFirstName &&
+    userLastName &&
+    memoAudience === `${userFirstName} ${userLastName}`
+  ) {
     return true;
   }
 
