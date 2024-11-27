@@ -18,12 +18,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Constants from "@/constants";
-
+import { SelectUserPopover } from "@/components/popover/select-user";
 
 const Editor = React.lazy(() =>
 	import('react-draft-wysiwyg').then((mod) => ({ default: mod.Editor }))
 );
-
 
 interface IUpdateMemorandumProps {
 	memorandumData: IMemorandum
@@ -35,11 +34,11 @@ const formSchema = z.object({
 	to: z.string().trim().min(1, {
 		message: "To is required",
 	}),
+	singleAudienceId: z.string().optional(),
 	subject: z.string().min(1, {
 		message: "Subject is required",
 	}),
-}
-);
+});
 
 export default function UpdateMemorandumDialog({ openDialog, setOpenDialog, memorandumData }: IUpdateMemorandumProps) {
 	const queryClient = useQueryClient();
@@ -73,10 +72,19 @@ export default function UpdateMemorandumDialog({ openDialog, setOpenDialog, memo
 		},
 	});
 
+	const selectedAudience = form.watch("to");
+
+	useEffect(() => {
+		if (selectedAudience !== 'Individual') {
+			form.setValue("singleAudienceId", '');
+		}
+	}, [selectedAudience])
+
 	useEffect(() => {
 		if (memorandumData) {
 			form.reset({
 				to: memorandumData.to,
+				singleAudienceId: memorandumData?.singleAudienceId,
 				subject: memorandumData.subject,
 			})
 			const contentState = convertFromRaw(JSON.parse(memorandumData.contents as string));
@@ -88,6 +96,12 @@ export default function UpdateMemorandumDialog({ openDialog, setOpenDialog, memo
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const contentState = editorState.getCurrentContent()
 		const contents = JSON.stringify(convertToRaw(contentState))
+
+		if (values.to === 'Individual' && !values.singleAudienceId) {
+			form.setError('singleAudienceId', {message: 'Required'})
+			return
+		}
+
 		updateMemoMutate({
 			id: String(memorandumData.id),
 			contents,
@@ -139,6 +153,23 @@ export default function UpdateMemorandumDialog({ openDialog, setOpenDialog, memo
 										</FormItem>
 									)}
 								/>
+
+								{selectedAudience === 'Individual' && (
+									<FormField
+										control={form.control}
+										name="singleAudienceId"
+										render={({ field }) => (
+											<FormItem>
+												<div className="flex flex-row items-center justify-between gap-x-2">
+													<p className="text-xs w-1/3">To:</p>
+													<SelectUserPopover value={field.value} onValueChange={field.onChange}/>
+												</div>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								)}
+
 								<FormField
 									control={form.control}
 									name="subject"

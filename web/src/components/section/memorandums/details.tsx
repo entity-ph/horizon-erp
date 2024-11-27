@@ -143,7 +143,11 @@ export default function MemorandumPreview({ data }: Props) {
 						<div className='w-full  flex items-end gap-1 text-[14px]'>
 							<span className='leading-[14px]'>To:</span>
 							<div className='flex-1 leading-[14px]'>
-								<span>{data.to}</span>
+								{data?.singleAudience ? (
+									<span>{`${data.singleAudience.firstName} ${data.singleAudience.lastName}`}</span>
+								) : (
+									<span>{data.to}</span>
+								)}
 							</div>
 						</div>
 						<div className='w-full  flex items-end gap-1 text-[14px]'>

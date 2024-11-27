@@ -1,4 +1,4 @@
-import { OfficeBranch, Prisma } from "@prisma/client";
+import { Memorandum, OfficeBranch, Prisma, User } from "@prisma/client";
 import prisma from "../utils/db.utils";
 import { getNextMemorandumNumber } from "../utils/generate-number";
 import moment from "moment";
@@ -6,11 +6,11 @@ import moment from "moment";
 export interface ICreateMemorandum {
   to: string
   subject: string
+  singleAudienceId?: string
   contents: string
   creatorId: string
   branch?: string
 }
-
 
 export async function createMemorandum({ branch, ...data }: ICreateMemorandum) {
   const lastMemo = await prisma.memorandum.findFirst({
@@ -99,14 +99,47 @@ export async function fetchMemorandums({ skip, take, search, branch }: IFindMemo
 
   return { memorandumData, total };
 }
+
+interface ExtendedMemorandum extends Memorandum {
+  singleAudience?: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatar: string | null;
+  };
+} 
 export async function findMemorandumById(id: string) {
-  return await prisma.memorandum.findUnique({
+  const data = await prisma.memorandum.findUnique({
     where: { id },
     include: {
       creator: true,
       approver: true
     }
   });
+  
+  if (!data) return null;
+
+  let memorandum: ExtendedMemorandum = { ...data };
+  if (data.singleAudienceId) {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: data.singleAudienceId
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        avatar: true,
+      }
+    })
+
+    if (user) {
+      memorandum.singleAudience = user;
+    }
+  }
+  return memorandum
 }
 
 export async function fetchMemorandumSummary() {

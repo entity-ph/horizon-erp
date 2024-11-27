@@ -12,13 +12,14 @@ import { toast } from "sonner";
 import CommonToast from "@/components/common/toast";
 import { Button } from "@/components/ui/button";
 import { createMemorandum, ICreateMemorandum } from "@/api/mutations/memorandum.mutation";
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { EditorState, convertToRaw } from 'draft-js'
 import { useAuth } from "@/providers/auth-provider";
 import { OfficeBranch } from "@/interfaces/user.interface";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Constants from "@/constants";
+import { SelectUserPopover } from "@/components/popover/select-user";
 
 const Editor = React.lazy(() =>
 	import('react-draft-wysiwyg').then((mod) => ({ default: mod.Editor }))
@@ -35,11 +36,11 @@ const formSchema = z.object({
 	to: z.string().trim().min(1, {
 		message: "To is required",
 	}),
+	singleAudienceId: z.string().optional(),
 	subject: z.string().trim().min(1, {
 		message: "Subject is required",
 	}),
-}
-);
+});
 
 export default function CreateMemorandumDialog({ openDialog, setOpenDialog, creatorId, successNavigate }: ICreateMemorandumProps) {
 	const queryClient = useQueryClient();
@@ -74,9 +75,23 @@ export default function CreateMemorandumDialog({ openDialog, setOpenDialog, crea
 		},
 	});
 
+	const selectedAudience = form.watch("to");
+
+	useEffect(() => {
+		if (selectedAudience !== 'Individual') {
+			form.setValue("singleAudienceId", undefined);
+		}
+	}, [selectedAudience])
+
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		const contentState = editorState.getCurrentContent()
 		const contents = JSON.stringify(convertToRaw(contentState))
+
+		if (values.to === 'Individual' && !values.singleAudienceId) {
+			form.setError('singleAudienceId', {message: 'Required'})
+			return
+		}
+
 		createMemoMutate({
 			creatorId,
 			contents,
@@ -129,6 +144,23 @@ export default function CreateMemorandumDialog({ openDialog, setOpenDialog, crea
 										</FormItem>
 									)}
 								/>
+
+								{selectedAudience === 'Individual' && (
+									<FormField
+										control={form.control}
+										name="singleAudienceId"
+										render={({ field }) => (
+											<FormItem>
+												<div className="flex flex-row items-center justify-between gap-x-2">
+													<p className="text-xs w-1/3">To:</p>
+													<SelectUserPopover value={field.value} onValueChange={field.onChange}/>
+												</div>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								)}
+
 								<FormField
 									control={form.control}
 									name="subject"

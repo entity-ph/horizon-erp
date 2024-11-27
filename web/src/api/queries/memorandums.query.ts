@@ -12,6 +12,8 @@ interface IFetchMemorandums {
 export interface IMemorandum {
   id: string
   memorandumNumber: string
+  singleAudienceId?: string 
+  singleAudience?: IUser 
   to: string
   subject: string
   contents: string

@@ -119,6 +119,7 @@ model Memorandum {
   id               String        @id @default(cuid())
   memorandumNumber String
   to               String
+  singleAudienceId String?
   subject          String
   contents         String
   creatorId        String

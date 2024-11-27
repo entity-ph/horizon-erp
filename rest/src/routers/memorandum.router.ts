@@ -5,6 +5,7 @@ import { getMemorandumsSchema } from '../schemas/memorandum.schema';
 import { authorize } from '../middlewares/authorize.middleware';
 import { OfficeBranch, PermissionType, UserType } from '@prisma/client';
 import { canAccessMemo } from '../utils/memo.utils';
+import { findUserById } from '../services/user.service';
 
 const memorandumRouter = express.Router();
 
