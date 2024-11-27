@@ -151,3 +151,13 @@ export async function updateMemorandumApprover({ id, approverId }: IUpdateMemora
     data: { approverId }
   });
 }
+
+export async function fetchAllUsersAsAudience() {
+  return await prisma.user.findMany({
+    select: {
+      firstName: true,
+      lastName: true
+    }
+  })
+
+}

@@ -1,10 +1,11 @@
 import express, { Request, Response } from 'express';
-import { createMemorandum, deleteMemorandum, fetchMemorandums, fetchMemorandumSummary, findMemorandumById, updateMemorandum, updateMemorandumApprover } from '../services/memorandum.service';
+import { createMemorandum, deleteMemorandum, fetchAllUsersAsAudience, fetchMemorandums, fetchMemorandumSummary, findMemorandumById, updateMemorandum, updateMemorandumApprover } from '../services/memorandum.service';
 import { validate } from '../middlewares/validate.middleware';
 import { getMemorandumsSchema } from '../schemas/memorandum.schema';
 import { authorize } from '../middlewares/authorize.middleware';
 import { OfficeBranch, PermissionType, UserType } from '@prisma/client';
 import { canAccessMemo } from '../utils/memo.utils';
+import { findUserById } from '../services/user.service';
 
 const memorandumRouter = express.Router();
 
@@ -24,6 +25,8 @@ memorandumRouter.get('/', validate(getMemorandumsSchema), async (req: Request, r
     const userPermission = req.user?.permission as PermissionType;
     const userBranch = req.user?.officeBranch as OfficeBranch;
 
+    console.log('req user', req.user)
+
     const { skip, take, search, branch } = req.query;
 
     const filters = {
@@ -33,14 +36,31 @@ memorandumRouter.get('/', validate(getMemorandumsSchema), async (req: Request, r
       branch: branch ? String(branch) : undefined,
     };
 
-    const {memorandumData, total} = await fetchMemorandums(filters);
+    const { memorandumData, total } = await fetchMemorandums(filters);
     const filteredMemorandums = memorandumData.filter(item => canAccessMemo({
-      memoAudience: item.to,
       userPermission: userPermission,
-      userBranch: userBranch
-    }));
+      userBranch: userBranch,
+      memoAudience: item.to,
+      userFirstName: req?.user?.firstName,
+      userLastName: req?.user?.lastName,
+    }))
 
-    return res.status(200).json({memorandumData: filteredMemorandums, total});
+    return res.status(200).json({ memorandumData: filteredMemorandums, total });
+
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal server error'
+    })
+  }
+})
+
+memorandumRouter.get('/audience', async (req: Request, res: Response) => {
+  try {
+    const users = await fetchAllUsersAsAudience()
+
+
+    if (!users) { return res.status(404).json({ message: 'No users found' }) }
+    return res.status(200).json(users)
 
   } catch (error) {
     return res.status(500).json({
@@ -53,19 +73,23 @@ memorandumRouter.get('/:id', async (req: Request, res: Response) => {
   try {
     const userPermission = req.user?.permission as PermissionType;
     const userBranch = req.user?.officeBranch as OfficeBranch;
+
     const id = req.params.id;
 
     const memorandum = await findMemorandumById(id);
-    
+
     if (!memorandum) {
       return res.status(404).json({ message: 'Memorandum not found' });
     }
 
+
     const canAccess = canAccessMemo({
-      memoAudience: memorandum?.to,
       userPermission: userPermission,
-      userBranch: userBranch
-    })
+      userBranch: userBranch,
+      memoAudience: memorandum.to,
+      userFirstName: req?.user?.firstName,
+      userLastName: req?.user?.lastName,
+    });
     if (!canAccess) {
       return res.status(403).json({
         message: 'Access denied. You do not have sufficient permissions.'

@@ -325,7 +325,8 @@ const MemoAudience = [
   'All Accounting',
   'Reservation Cebu',
   'Reservation Calbayog',
-  'All Drivers'
+  'All Drivers',
+  'Individual',
 ]
 
 const Constants = {

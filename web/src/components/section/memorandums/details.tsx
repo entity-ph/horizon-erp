@@ -1,14 +1,13 @@
-import { Loader2, Pencil, Printer, ThumbsUp } from 'lucide-react';
+import { Loader2, Printer, ThumbsUp } from 'lucide-react';
 import { Button } from '../../ui/button';
 import { Separator } from '../../ui/separator';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import { IMemorandum } from '@/api/queries/memorandums.query';
-import UpdateMemorandumDialog from '@/components/dialogs/memorandum/edit';
 import logo from '../../../assets/logo.png';
 import draftToHtml from 'draftjs-to-html';
 import { format } from 'date-fns';
-import { OfficeBranch, PermissionType, UserType } from '@/interfaces/user.interface';
+import { OfficeBranch, UserType } from '@/interfaces/user.interface';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { approveMemorandum } from '@/api/mutations/memorandum.mutation';
 import { useAuth } from '@/providers/auth-provider';
@@ -22,7 +21,6 @@ interface Props {
 export default function MemorandumPreview({ data }: Props) {
 	const contentRef = useRef<HTMLDivElement | null>(null);
 	const reactToPrintFn = useReactToPrint({ contentRef });
-	const [openEditMemo, setOpenEditMemo] = useState(false);
 	const { firstName, lastName } = data.creator;
 	const { session: { user } } = useAuth();
 	const queryClient = useQueryClient();
@@ -98,12 +96,6 @@ export default function MemorandumPreview({ data }: Props) {
 						</Button>
 					)}
 
-					{(user?.permission === PermissionType.SUPER_ADMIN) && (
-						<Button onClick={() => setOpenEditMemo(true)} size={'sm'} className='gap-1'>
-							<Pencil size={16} />
-							<span>Edit</span>
-						</Button>
-					)}
 
 					{user?.userType === UserType.ADMIN && (
 						<Button
@@ -183,11 +175,6 @@ export default function MemorandumPreview({ data }: Props) {
 					</div>
 				</div>
 			</div>
-			<UpdateMemorandumDialog
-				openDialog={openEditMemo}
-				setOpenDialog={setOpenEditMemo}
-				memorandumData={data}
-			/>
 		</div>
 	);
 }

@@ -7,7 +7,7 @@ import { Form, FormItem, FormControl, FormField, FormMessage } from "@/component
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CommonInput from "@/components/common/input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import CommonToast from "@/components/common/toast";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,8 @@ import { useAuth } from "@/providers/auth-provider";
 import { OfficeBranch } from "@/interfaces/user.interface";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Constants from "@/constants";
+import { fetchAudiences } from "@/api/queries/memorandums.query";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const Editor = React.lazy(() =>
 	import('react-draft-wysiwyg').then((mod) => ({ default: mod.Editor }))
@@ -45,6 +47,7 @@ export default function CreateMemorandumDialog({ openDialog, setOpenDialog, crea
 	const queryClient = useQueryClient();
 	const [editorState, setEditorState] = useState(() => EditorState.createEmpty())
 	const { branch } = useAuth()
+	const [useFetchedAudiences, setUseFetchedAudiences] = useState(false);
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -53,6 +56,11 @@ export default function CreateMemorandumDialog({ openDialog, setOpenDialog, crea
 	const handleOnEditorStateChange = (editorState: EditorState) => {
 		setEditorState(editorState)
 	}
+	const { data: audiencesNames, isLoading } = useQuery({
+		queryKey: ['audience'],
+		queryFn: async () => await fetchAudiences(
+		)
+	});
 
 	const { mutate: createMemoMutate, isPending: creatingMemo } = useMutation({
 		mutationFn: async (data: ICreateMemorandum) => await createMemorandum(data),
@@ -99,31 +107,67 @@ export default function CreateMemorandumDialog({ openDialog, setOpenDialog, crea
 					<AnimatedDiv animationType="SlideInFromLeft" slideEntrancePoint={-20}>
 						<Form {...form}>
 							<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+
 								<FormField
 									control={form.control}
 									name="to"
 									render={({ field }) => (
 										<FormItem>
-											<div className="flex flex-row items-center justify-between gap-x-2">
-												<p className="text-xs w-1/3">To:</p>
-												<Select onValueChange={field.onChange} value={field.value}>
-													<FormControl>
-														<SelectTrigger className="bg-slate-100 border-none text-[12px]">
-															<SelectValue placeholder="Select an audience" />
-														</SelectTrigger>
-													</FormControl>
-													<SelectContent>
-														{Constants.MemoAudience.map((value, index) => (
-															<SelectItem
-																key={index}
-																value={value}
-																className="text-[12px]"
-															>
-																{value}
-															</SelectItem>
-														))}
-													</SelectContent>
-												</Select>
+											<div className="space-y-4">
+												<div className="flex items-center space-x-2">
+													<Checkbox
+														id="select-user"
+														checked={useFetchedAudiences}
+														onCheckedChange={(checked) => {
+															setUseFetchedAudiences(checked as boolean);
+															field.onChange(""); // Reset the selected value when toggling
+														}}
+													/>
+													<label
+														htmlFor="select-user"
+														className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+													>
+														Select Individual User
+													</label>
+												</div>
+
+												{(useFetchedAudiences && !isLoading) ? (
+													<Select onValueChange={field.onChange} value={field.value}>
+														<FormControl>
+															<SelectTrigger className="bg-slate-100 border-none text-[12px]">
+																<SelectValue placeholder="Select a User" />
+															</SelectTrigger>
+														</FormControl>
+														<SelectContent>
+															{(audiencesNames || []).map(
+																(audience: { firstName: string; lastName: string }, index: number) => (
+																	<SelectItem
+																		key={index}
+																		value={`${audience.firstName} ${audience.lastName}`}
+																		className="text-[12px]"
+																	>
+																		{`${audience.firstName} ${audience.lastName}`}
+																	</SelectItem>
+																)
+															)}
+														</SelectContent>
+													</Select>
+												) : (
+													<Select onValueChange={field.onChange} value={field.value}>
+														<FormControl>
+															<SelectTrigger className="bg-slate-100 border-none text-[12px]">
+																<SelectValue placeholder="Select from LIST" />
+															</SelectTrigger>
+														</FormControl>
+														<SelectContent>
+															{Constants.MemoAudience.map((value, index) => (
+																<SelectItem key={index} value={value} className="text-[12px]">
+																	{value}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+												)}
 											</div>
 											<FormMessage />
 										</FormItem>
