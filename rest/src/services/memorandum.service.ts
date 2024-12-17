@@ -76,7 +76,6 @@ export async function fetchMemorandums({ skip, take, search, branch }: IFindMemo
   const memorandums = prisma.memorandum.findMany({
     where: {
       ...whereInput,
-      branch: branch as OfficeBranch
     },
     skip: skip ?? 0,
     take: take ?? 10,
