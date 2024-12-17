@@ -58,6 +58,7 @@ dotenv.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5001;
 const allowedOrigins = [
+    // 'https://horizon.entity.ph',
     'https://edge.horizonexpress.ph',
     'http://localhost:5173',
 ];

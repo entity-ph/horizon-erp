@@ -29,23 +29,49 @@ accommodationVoucherRouter.post('/', (0, validate_middleware_1.validate)(accommo
         res.status(500).json(error);
     }
 }));
-accommodationVoucherRouter.put('/:id', (0, validate_middleware_1.validate)(accommodation_voucher_schema_1.updateAccommodationVoucherSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+accommodationVoucherRouter.post('/:id/room', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const accommodationVoucher = yield (0, accommodation_voucher_service_1.updateAccommodationVoucher)(id, req.body);
+        const accommodationVoucher = yield (0, accommodation_voucher_service_1.createRoomAccommodation)(id, req.body);
         if (!accommodationVoucher) {
-            throw new Error('Failed to create accommodation voucher');
+            throw new Error('Failed to create accommodation room');
         }
-        res.status(200).json({ message: "Successfully created accommodation voucher" });
+        res.status(200).json({ message: "Successfully created accommodation room" });
     }
     catch (error) {
         res.status(500).json(error);
     }
 }));
-accommodationVoucherRouter.delete('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+accommodationVoucherRouter.put('/:id/room/:roomId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { roomId } = req.params;
+    try {
+        const accommodationVoucher = yield (0, accommodation_voucher_service_1.updateRoomAccommodation)(Object.assign({ id: roomId }, req.body));
+        if (!accommodationVoucher) {
+            throw new Error('Failed to update accommodation room');
+        }
+        res.status(200).json({ message: "Successfully updated accommodation room" });
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+}));
+accommodationVoucherRouter.put('/:id', (0, validate_middleware_1.validate)(accommodation_voucher_schema_1.updateAccommodationVoucherSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const accommodationVoucher = yield (0, accommodation_voucher_service_1.deleteAccommodationVoucher)(id);
+        const accommodationVoucher = yield (0, accommodation_voucher_service_1.updateAccommodationVoucher)(id, req.body);
+        if (!accommodationVoucher) {
+            throw new Error('Failed to update accommodation voucher');
+        }
+        res.status(200).json({ message: "Successfully updated accommodation voucher" });
+    }
+    catch (error) {
+        res.status(500).json(error);
+    }
+}));
+accommodationVoucherRouter.delete('/:id/room/:roomId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { roomId } = req.params;
+    try {
+        const accommodationVoucher = yield (0, accommodation_voucher_service_1.deleteRoomAccommodation)(roomId);
         if (!accommodationVoucher) {
             throw new Error('Failed to delete accommodation voucher');
         }

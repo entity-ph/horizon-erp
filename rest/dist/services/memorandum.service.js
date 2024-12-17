@@ -30,6 +30,7 @@ exports.fetchMemorandums = fetchMemorandums;
 exports.findMemorandumById = findMemorandumById;
 exports.fetchMemorandumSummary = fetchMemorandumSummary;
 exports.updateMemorandumApprover = updateMemorandumApprover;
+exports.fetchAllUsersAsAudience = fetchAllUsersAsAudience;
 const client_1 = require("@prisma/client");
 const db_utils_1 = __importDefault(require("../utils/db.utils"));
 const generate_number_1 = require("../utils/generate-number");
@@ -82,7 +83,7 @@ function fetchMemorandums(_a) {
             };
         }
         const memorandums = db_utils_1.default.memorandum.findMany({
-            where: Object.assign(Object.assign({}, whereInput), { branch: branch }),
+            where: Object.assign({}, whereInput),
             skip: skip !== null && skip !== void 0 ? skip : 0,
             take: take !== null && take !== void 0 ? take : 10,
             orderBy: {
@@ -144,6 +145,16 @@ function updateMemorandumApprover(_a) {
         return yield db_utils_1.default.memorandum.update({
             where: { id },
             data: { approverId }
+        });
+    });
+}
+function fetchAllUsersAsAudience() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield db_utils_1.default.user.findMany({
+            select: {
+                firstName: true,
+                lastName: true
+            }
         });
     });
 }

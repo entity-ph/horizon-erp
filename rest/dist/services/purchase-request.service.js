@@ -75,6 +75,7 @@ function findPurchaseRequests(_a) {
         };
         if (search) {
             whereInput = Object.assign(Object.assign({}, whereInput), { OR: [
+                    { serialNumber: { contains: search, mode: "insensitive" } },
                     {
                         supplier: {
                             name: { contains: search, mode: "insensitive" }

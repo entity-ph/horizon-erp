@@ -119,7 +119,11 @@ function fetchTransaction(_a) {
                         shipping: true
                     }
                 },
-                accommodationVoucher: true,
+                accommodationVoucher: {
+                    include: {
+                        rooms: true
+                    }
+                },
                 transportVoucher: {
                     include: {
                         itineraries: true

@@ -58,7 +58,7 @@ function getNextSerialNumber(lastSerialNumber, branch) {
 }
 function getNextPurchaseRequestNumber(lastSerialNumber, officeBranch) {
     const today = (0, dayjs_1.default)().format('MMDDYYYY');
-    let newNumber = officeBranch === 'CEBU' ? 551 : 2451;
+    let newNumber = officeBranch === 'CEBU' ? 551 : 2551;
     if (lastSerialNumber) {
         const numericPart = parseInt(lastSerialNumber.slice(2, 7));
         newNumber = numericPart + 1;
