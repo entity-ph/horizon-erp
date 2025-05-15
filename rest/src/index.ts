@@ -41,6 +41,7 @@ const port = process.env.PORT || 5001;
 
 const allowedOrigins = [
   // 'https://horizon.entity.ph',
+  'https://api.horizon.entity.ph',
   'https://edge.horizonexpress.ph',
   'http://localhost:5173',
 ];
