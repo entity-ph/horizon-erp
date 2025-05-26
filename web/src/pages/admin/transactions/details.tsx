@@ -77,7 +77,7 @@ export default function ManageTransaction() {
                             {transaction?.salesAgreement ?
                               <div>
                                 <a
-                                  href={`${window.location.origin}/admin/sales-agreement/${transaction.salesAgreement.id}`}
+                                  href={`${window.location.origin}/admin/sales-agreements/${transaction.salesAgreement.id}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-xs text-green-600 underline hover:text-blue-800"

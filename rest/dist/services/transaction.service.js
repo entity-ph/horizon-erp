@@ -132,7 +132,8 @@ function fetchTransaction(_a) {
                 salesAgreement: {
                     include: {
                         creator: true,
-                        salesAgreementItems: true
+                        salesAgreementItems: true,
+                        client: true
                     }
                 },
                 purchaseOrder: {

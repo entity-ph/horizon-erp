@@ -25,6 +25,7 @@ packageAirfareRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, f
         });
     }
     catch (error) {
+        console.log('error', error);
         res.status(500).json(error);
     }
 }));
@@ -39,6 +40,7 @@ packageAirfareRouter.put('/:id', (req, res) => __awaiter(void 0, void 0, void 0,
         });
     }
     catch (error) {
+        console.log('error', error);
         res.status(500).json(error);
     }
 }));

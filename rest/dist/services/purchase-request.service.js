@@ -106,6 +106,7 @@ function findPurchaseRequests(_a) {
                         userType: true
                     }
                 },
+                approver: true,
                 supplier: true,
                 _count: {
                     select: {
@@ -148,6 +149,13 @@ function findPurchaseRequestById(id) {
                 salesAgreement: true,
                 transaction: true,
                 purchaseOrderItems: {
+                    include: {
+                        purchaseRequestOrder: {
+                            include: {
+                                approver: true
+                            }
+                        }
+                    },
                     orderBy: {
                         createdAt: 'desc'
                     }

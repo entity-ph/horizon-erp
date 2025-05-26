@@ -13,6 +13,7 @@ packageAirfareRouter.post('/', async (req: Request, res: Response) => {
     });
 
   } catch (error) {
+    console.log('error', error)
     res.status(500).json(error);
   }
 });
@@ -21,7 +22,7 @@ packageAirfareRouter.put('/:id', async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
 
-    const updated = await updatePackageAirfare({id, ...req.body});
+    const updated = await updatePackageAirfare({ id, ...req.body });
     if (!updated) throw new Error('Failed to update package airfare');
 
     res.status(200).json({
@@ -29,6 +30,7 @@ packageAirfareRouter.put('/:id', async (req: Request, res: Response) => {
     });
 
   } catch (error) {
+    console.log('error', error)
     res.status(500).json(error);
   }
 });
