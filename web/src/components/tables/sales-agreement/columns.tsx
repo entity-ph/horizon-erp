@@ -141,7 +141,7 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
               className="cursor-pointer hover:text-primary"
             />
           </Link>
-          {user?.permission && PermissionsCanEdit.includes(user?.permission) && (
+          {user?.permission && PermissionsCanEdit.includes(user?.permission) || !row.original.approverId && (
             <EditSalesAgreementDialog
               data={row.original}
             />

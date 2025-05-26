@@ -44,13 +44,13 @@ export const Columns: ColumnDef<IPackageAccommodation>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const {session: {user}} = useAuth();
-      const {PermissionsCanEdit, PermissionsCanDelete} = Constants;
+      const { session: { user } } = useAuth();
+      const { PermissionsCanEdit, PermissionsCanDelete } = Constants;
       const accommodation = row.original;
       return (
         <div className="flex items-center gap-4">
-          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) && (
-            <UpdatePackageAccommodationDialog packageAccommodation={accommodation}/>
+          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) || !row?.original?.package?.approver && (
+            <UpdatePackageAccommodationDialog packageAccommodation={accommodation} />
           )}
           {(user?.permission && PermissionsCanDelete.includes(user?.permission)) && (
             <DeletePackageAccommodationDialog id={row.original.id} />

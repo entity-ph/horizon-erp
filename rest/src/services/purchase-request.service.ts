@@ -84,6 +84,7 @@ export async function findPurchaseRequests({ skip, take, search, branch, type, c
           userType: true
         }
       },
+      approver: true,
       supplier: true,
       _count: {
         select: {
@@ -129,6 +130,13 @@ export async function findPurchaseRequestById(id: string) {
       salesAgreement: true,
       transaction: true,
       purchaseOrderItems: {
+        include: {
+          purchaseRequestOrder: {
+            include: {
+              approver: true
+            }
+          }
+        },
         orderBy: {
           createdAt: 'desc'
         }

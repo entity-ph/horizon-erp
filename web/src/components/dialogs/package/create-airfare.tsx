@@ -32,14 +32,15 @@ const formSchema = z.object({
   }),
   flightDetails: z.string().trim().min(1, {
     message: "Flight details is required"
-  })
+  }),
+  rate: z.coerce.number().optional()
 });
 
 interface Props {
   packageId: string;
 }
 
-export default function CreatePackageAirfareDialog({packageId}: Props) {
+export default function CreatePackageAirfareDialog({ packageId }: Props) {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
@@ -47,7 +48,8 @@ export default function CreatePackageAirfareDialog({packageId}: Props) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       airline: '',
-      flightDetails: ''
+      flightDetails: '',
+      rate: 0,
     }
   });
 
@@ -123,6 +125,20 @@ export default function CreatePackageAirfareDialog({packageId}: Props) {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="rate"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Rate</FormLabel>
+                    <FormControl>
+                      <CommonInput type="number" inputProps={{ ...field }} placeholder="Rate" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
             </div>
             <div className="flex gap-2 justify-end">
               <DialogClose>

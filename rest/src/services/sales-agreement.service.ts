@@ -142,11 +142,25 @@ export async function findSalesAgreementById(id: string) {
         }
       },
       client: true,
-      purchaseRequestOrders: true,
+      purchaseRequestOrders: {
+        include: {
+          approver: true,
+          creator: true,
+          supplier: true,
+          salesAgreement: true
+        }
+      },
       transaction: true,
       salesAgreementItems: {
         orderBy: {
           createdAt: 'desc'
+        },
+        include: {
+          salesAgreement: {
+            include: {
+              approver: true
+            }
+          }
         }
       },
       _count: {

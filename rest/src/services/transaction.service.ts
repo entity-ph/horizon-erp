@@ -121,7 +121,8 @@ export async function fetchTransaction({ id }: IFetchTransaction) {
       salesAgreement: {
         include: {
           creator: true,
-          salesAgreementItems: true
+          salesAgreementItems: true,
+          client: true
         }
       },
       purchaseOrder: {

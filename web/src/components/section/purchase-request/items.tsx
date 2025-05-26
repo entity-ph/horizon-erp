@@ -7,9 +7,10 @@ import AddPurchaseRequestItemDialog from '@/components/dialogs/purchase-request/
 interface Props {
   data: IPurchaseRequestOrderItem[],
   purchaseRequestId: string;
+  isEditable: boolean;
 }
 
-export default function PurchaseRequestItems({ data, purchaseRequestId }: Props) {
+export default function PurchaseRequestItems({ data, purchaseRequestId, isEditable }: Props) {
   return (
     <div className='p-4'>
       <div className="border border-slate-200 rounded-lg">
@@ -17,9 +18,10 @@ export default function PurchaseRequestItems({ data, purchaseRequestId }: Props)
           <h1 className='text-[12px] font-semibold'>
             Items
           </h1>
-          <AddPurchaseRequestItemDialog
-            purchaseRequestId={purchaseRequestId}
-          />
+          {isEditable &&
+            <AddPurchaseRequestItemDialog
+              purchaseRequestId={purchaseRequestId}
+            />}
         </div>
         <Separator />
         <DataTable

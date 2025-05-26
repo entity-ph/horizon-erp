@@ -25,15 +25,24 @@ export const Columns: ColumnDef<IPackageAirfare>[] = [
     )
   },
   {
+    id: "flightDetails",
+    header: "Rate",
+    cell: ({ row }) => (
+      <span className="capitalize">
+        {row.original.rate}
+      </span>
+    )
+  },
+  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const {session: {user}} = useAuth();
-      const {PermissionsCanEdit, PermissionsCanDelete} = Constants;
+      const { session: { user } } = useAuth();
+      const { PermissionsCanEdit, PermissionsCanDelete } = Constants;
       return (
         <div className="flex items-center gap-4">
-          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) && (
-            <UpdatePackageAirfareDialog data={row.original}/>
+          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) || !row?.original?.package?.approver && (
+            <UpdatePackageAirfareDialog data={row.original} />
           )}
           {(user?.permission && PermissionsCanDelete.includes(user?.permission)) && (
             <DeletePackageAirfareDialog id={row.original.id} />

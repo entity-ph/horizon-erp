@@ -76,6 +76,15 @@ export default function ManageTransaction() {
                           <CardContent className="p-4 justify-center  rounded-lg">
                             {transaction?.salesAgreement ?
                               <div>
+                                <a
+                                  href={`${window.location.origin}/admin/sales-agreement/${transaction.salesAgreement.id}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs text-green-600 underline hover:text-blue-800"
+                                >
+                                  View Sales Agreement ({transaction.salesAgreement.serialNumber})
+                                </a>
+
                                 <div className="flex justify-between items-center px-4">
                                   <p className="text-xs">Sales Agreement #: <span className="font-semibold">{transaction.salesAgreement.serialNumber}</span></p>
                                   <Button variant="outline" className="text-xs gap-x-2 text-primary" onClick={() => setOpenSelectSalesAgreement(true)}>

@@ -22,9 +22,7 @@ import { tabs } from "@/components/section/transaction/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { ClipboardPlus } from "lucide-react";
 import SalesAgreementInfo from "@/components/section/sales-agreement/info";
-import PurchaseRequestInfo from "@/components/section/purchase-request/info";
 import SalesAgreementItems from "@/components/section/sales-agreement/items";
-import PurchaseRequestItems from "@/components/section/purchase-request/items";
 import { Accordion, AccordionItem, AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
 import ClientDetails from "@/components/section/transaction/lead";
 
@@ -80,6 +78,15 @@ export default function ManageTransaction() {
                           <CardContent className="p-0 justify-center border-none border-2 rounded-lg">
                             {transaction?.salesAgreement ?
                               <div>
+                                <a
+                                  href={`${window.location.origin}/employee/sales-agreements/${transaction.salesAgreement.id}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs text-green-600 underline hover:text-blue-800"
+                                >
+                                  View Sales Agreement ({transaction.salesAgreement.serialNumber})
+                                </a>
+
                                 <div className="flex justify-between items-center px-4">
                                   <p className="text-xs">Sales Agreement #: <span className="font-semibold">{transaction.salesAgreement.serialNumber}</span></p>
                                   <Button variant="outline" className="text-xs gap-x-2 text-primary" onClick={() => setOpenSelectSalesAgreement(true)}>
@@ -103,34 +110,6 @@ export default function ManageTransaction() {
                           </CardContent>
                         </Card>
 
-                      </AccordionContent>
-                    </AccordionItem>
-                    <AccordionItem value="item-2">
-                      <AccordionTrigger>Purchase Request</AccordionTrigger>
-                      <AccordionContent>
-                        <Card className="w-full p-4">
-                          <CardContent className="p-4 justify-center  rounded-lg">
-                            {transaction?.purchaseOrder ?
-                              <div>
-                                <div className="flex justify-between items-center px-4">
-                                  <p className="text-xs">Purchase Request Order #: <span className="font-semibold">{transaction.purchaseOrder.serialNumber}</span></p>
-                                  <Button variant="outline" className="text-xs gap-x-2 text-primary" onClick={() => setOpenSelectPurchaseRequest(true)}>
-                                    Update
-                                    <ClipboardPlus size={14} />
-                                  </Button>
-                                </div>
-                                <PurchaseRequestInfo data={transaction?.purchaseOrder} />
-                                <PurchaseRequestItems data={transaction.purchaseOrder.purchaseOrderItems} purchaseRequestId={transaction.purchaseOrder.id} />
-                              </div>
-                              :
-                              <div className="rounded-lg border-[1px] h-[200px] flex flex-row items-center justify-center text-muted-foreground gap-2 hover:bg-green-50 cursor-pointer"
-                                onClick={() => setOpenSelectPurchaseRequest(true)}
-                              >
-                                <p className="text-xs">Add purchase request order</p>
-                                <ClipboardPlus />
-                              </div>}
-                          </CardContent>
-                        </Card>
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>

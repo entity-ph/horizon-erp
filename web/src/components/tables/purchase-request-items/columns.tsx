@@ -16,7 +16,7 @@ export const Columns: ColumnDef<IPurchaseRequestOrderItem>[] = [
             {item}
           </li>
         ))}
-      </ul> 
+      </ul>
     ),
   },
   {
@@ -49,14 +49,14 @@ export const Columns: ColumnDef<IPurchaseRequestOrderItem>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const {PermissionsCanDelete, PermissionsCanEdit} = Constants;
-      const {session: {user}} = useAuth();
+      const { PermissionsCanDelete, PermissionsCanEdit } = Constants;
+      const { session: { user } } = useAuth();
       return (
-        <div className="flex items-center gap-4"> 
+        <div className="flex items-center gap-4">
           {(user?.permission && PermissionsCanDelete.includes(user.permission)) && (
-            <DeletePurchaseRequestItem purchaseRequestId={row.original.id}/>
+            <DeletePurchaseRequestItem purchaseRequestId={row.original.id} />
           )}
-           {(user?.permission && PermissionsCanEdit.includes(user.permission)) && (
+          {(user?.permission && PermissionsCanEdit.includes(user.permission)) || !row.original.purchaseRequestOrder?.approver && (
             <EditPurchaseRequestItemDialog data={row.original} />
           )}
         </div>

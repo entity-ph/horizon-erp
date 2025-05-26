@@ -178,6 +178,7 @@ export default function PrintPreview({ data }: Props) {
                 <thead>
                   <tr>
                     <th className="px-4 py-2 border-r border-gray-300 border-b">Airline</th>
+                    <th className="px-4 py-2 border-r border-gray-300 border-b">Rate</th>
                     <th className="px-4 py-2 border-r border-gray-300 border-b">Flight details</th>
                   </tr>
                 </thead>
@@ -189,6 +190,9 @@ export default function PrintPreview({ data }: Props) {
                           <tr key={index} className='border'>
                             <td className="px-4 py-2 border-r border-gray-300 text-center">
                               {item.airline}
+                            </td>
+                            <td className="px-4 py-2 border-r border-gray-300 text-center">
+                              {item.rate}
                             </td>
                             <td className="px-4 py-2 border-r border-gray-300 text-center">
                               {item.flightDetails}

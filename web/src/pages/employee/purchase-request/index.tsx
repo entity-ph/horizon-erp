@@ -41,6 +41,7 @@ export default function PurchaseRequests() {
     })
   });
 
+
   const handleClearFilters = () => {
     setTypeFilter("");
     setClassificationFilter("");

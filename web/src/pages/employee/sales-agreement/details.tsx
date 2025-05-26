@@ -7,6 +7,7 @@ import SalesAgreementInfo from "../../../components/section/sales-agreement/info
 import SalesAgreementItems from "../../../components/section/sales-agreement/items";
 import { fetchSalesAgreement } from "@/api/queries/sales-agreements.queries";
 import Loader from "@/components/animated/Loader";
+import PurchaseRequestInfo from "@/components/section/purchase-request/info";
 
 export default function SalesAgreementDetails() {
   const { id } = useParams();
@@ -47,6 +48,27 @@ export default function SalesAgreementDetails() {
               </div>
               <Separator className="bg-slate-200" />
               <SalesAgreementInfo data={data} />
+
+              {data.purchaseRequestOrders.length !== 0 &&
+                <div className="p-4 border rounded-lg">
+                  <h1 className="text-[12px] font-semibold">Purchase Requests Attached</h1>
+                  {
+                    data.purchaseRequestOrders.map((po, index) => (
+                      <>
+                        <a
+                          href={`${window.location.origin}/employee/purchase-requests/${po.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-green-600 underline hover:text-blue-800"
+                        >
+                          View Purchase Request ({po.serialNumber})
+                        </a>
+                        <PurchaseRequestInfo data={po} key={index} />
+                      </>
+                    ))
+                  }
+                </div>}
+
               <SalesAgreementItems
                 approverId={data.approverId}
                 data={data.salesAgreementItems}

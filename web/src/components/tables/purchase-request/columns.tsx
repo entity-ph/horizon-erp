@@ -116,6 +116,25 @@ export const Columns: ColumnDef<IPurchaseRequestOrder>[] = [
     }
   },
   {
+    id: "approvedBy",
+    header: "Approved By",
+    cell: ({ row }) => {
+      if (!row.original.approver) return;
+      const { firstName, lastName, avatar } = row.original.approver;
+      return (
+        <div className="flex items-center gap-2">
+          <Avatar>
+            <AvatarImage src={avatar} className="object-cover" />
+            <AvatarFallback>
+              {firstName[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <span>{`${firstName} ${lastName}`}</span>
+        </div>
+      )
+    }
+  },
+  {
     id: "actions",
     header: "Actions",
     enableHiding: false,
@@ -130,7 +149,7 @@ export const Columns: ColumnDef<IPurchaseRequestOrder>[] = [
               className="cursor-pointer hover:text-primary"
             />
           </Link>
-          {(user?.permission && PermissionsCanEdit.includes(user.permission)) && (
+          {(user?.permission && PermissionsCanEdit.includes(user.permission)) || !row.original.approver && (
             <EditPurchaseRequestDialog
               data={row.original}
             />

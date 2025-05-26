@@ -47,6 +47,7 @@ export default function PurchaseRequestDetails() {
               <Separator className="bg-slate-200" />
               <PurchaseRequestInfo data={data} />
               <PurchaseRequestItems
+                isEditable={!data.approver}
                 data={data.purchaseOrderItems}
                 purchaseRequestId={data.id}
               />

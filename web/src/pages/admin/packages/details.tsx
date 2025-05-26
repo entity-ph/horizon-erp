@@ -12,8 +12,8 @@ import PrintPreview from "@/components/section/package/print-preview";
 
 export default function PackageDetails() {
   const { id } = useParams();
-  const {session: {user}} = useAuth();
-  const {PermissionsCanEdit} = Constants;
+  const { session: { user } } = useAuth();
+  const { PermissionsCanEdit } = Constants;
 
   const { data, isLoading } = useQuery({
     queryKey: ['package-details', id],
@@ -52,10 +52,10 @@ export default function PackageDetails() {
                 )}
               </div>
               <Separator className="bg-slate-200" />
-              <PackageInfo data={data}/>
+              <PackageInfo data={data} />
             </section>
 
-            <PrintPreview data={data}/>
+            <PrintPreview data={data} />
           </>
         ) : (
           <div className="h-[90vh] bg-white w-full rounded-lg" />

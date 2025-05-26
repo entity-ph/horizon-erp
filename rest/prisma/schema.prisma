@@ -57,6 +57,7 @@ model Transaction {
   approver             User?                 @relation("ApprovedTransactions", fields: [approverId], references: [id])
   clientId             String
   client               Client                @relation(fields: [clientId], references: [id])
+  status               String?
   createdAt            DateTime?             @default(now())
   updatedAt            DateTime?             @updatedAt
 }
@@ -212,15 +213,15 @@ model Airlines {
 }
 
 model Shipping {
-  id           String   @id @default(cuid())
-  travelId     String?  @unique
+  id           String    @id @default(cuid())
+  travelId     String?   @unique
   name         String
   voyageNumber String
   dateOfTravel DateTime
   etd          DateTime?
   origin       String
   destination  String
-  travel       Travel?  @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  travel       Travel?   @relation(fields: [travelId], references: [id], onDelete: Cascade)
 }
 
 model DocumentTransaction {
@@ -370,6 +371,7 @@ model PackageAccommodation {
 model PackageAirfare {
   id            String    @id @default(cuid())
   packageId     String
+  rate          Float?
   airline       String
   flightDetails String
   package       Package   @relation(fields: [packageId], references: [id])

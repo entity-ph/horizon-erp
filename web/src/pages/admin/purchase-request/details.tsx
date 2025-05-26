@@ -13,8 +13,8 @@ import Constants from "@/constants";
 
 export default function PurchaseRequestDetails() {
   const { id } = useParams();
-  const {session: {user}} = useAuth();
-  const {PermissionsCanEdit} = Constants;
+  const { session: { user } } = useAuth();
+  const { PermissionsCanEdit } = Constants;
 
   const { data, isLoading } = useQuery({
     queryKey: ['purchase-request-details', id],
@@ -55,6 +55,7 @@ export default function PurchaseRequestDetails() {
               <Separator className="bg-slate-200" />
               <PurchaseRequestInfo data={data} />
               <PurchaseRequestItems
+                isEditable={!data.approver}
                 data={data.purchaseOrderItems}
                 purchaseRequestId={data.id}
               />

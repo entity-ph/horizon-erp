@@ -16,7 +16,7 @@ export const Columns: ColumnDef<ISalesAgreementItem>[] = [
             {item}
           </li>
         ))}
-      </ul> 
+      </ul>
     ),
   },
   {
@@ -63,7 +63,7 @@ export const Columns: ColumnDef<ISalesAgreementItem>[] = [
       const { PermissionsCanEdit, PermissionsCanDelete } = Constants;
       return (
         <div className="flex items-center gap-4">
-          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) && (
+          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) || !row.original.salesAgreement?.approver && (
             <EditSalesAgreementItemDialog data={row.original} />
           )}
           {(user?.permission && PermissionsCanDelete.includes(user?.permission)) && (
