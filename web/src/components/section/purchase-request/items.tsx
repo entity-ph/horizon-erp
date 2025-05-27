@@ -10,7 +10,7 @@ interface Props {
   isEditable: boolean;
 }
 
-export default function PurchaseRequestItems({ data, purchaseRequestId, isEditable }: Props) {
+export default function PurchaseRequestItems({ data, purchaseRequestId }: Props) {
   return (
     <div className='p-4'>
       <div className="border border-slate-200 rounded-lg">
@@ -18,10 +18,9 @@ export default function PurchaseRequestItems({ data, purchaseRequestId, isEditab
           <h1 className='text-[12px] font-semibold'>
             Items
           </h1>
-          {isEditable &&
-            <AddPurchaseRequestItemDialog
-              purchaseRequestId={purchaseRequestId}
-            />}
+          <AddPurchaseRequestItemDialog
+            purchaseRequestId={purchaseRequestId}
+          />
         </div>
         <Separator />
         <DataTable
