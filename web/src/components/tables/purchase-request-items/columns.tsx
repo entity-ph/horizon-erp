@@ -56,7 +56,7 @@ export const Columns: ColumnDef<IPurchaseRequestOrderItem>[] = [
           {(user?.permission && PermissionsCanDelete.includes(user.permission)) && (
             <DeletePurchaseRequestItem purchaseRequestId={row.original.id} />
           )}
-          {(user?.permission && PermissionsCanEdit.includes(user.permission)) || !row.original.purchaseRequestOrder?.approver && (
+          {(user?.permission && PermissionsCanEdit.includes(user.permission)) && (
             <EditPurchaseRequestItemDialog data={row.original} />
           )}
         </div>
