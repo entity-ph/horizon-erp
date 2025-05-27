@@ -24,7 +24,7 @@ export default function SalesAgreementItems({ data, salesAgreementId, approverId
           <h1 className='text-[12px] font-semibold'>
             Items
           </h1>
-          {((user?.userType === UserType.EMPLOYEE && !approverId) || user?.userType === UserType.ADMIN) || !approverId && (
+          {((user?.userType === UserType.EMPLOYEE && !approverId) || user?.userType === UserType.ADMIN) && (
             <AddSalesAgreementItemDialog salesAgreementId={salesAgreementId} />
           )}
         </div>
