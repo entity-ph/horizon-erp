@@ -57,7 +57,7 @@ model Transaction {
   approver             User?                 @relation("ApprovedTransactions", fields: [approverId], references: [id])
   clientId             String
   client               Client                @relation(fields: [clientId], references: [id])
-  status               String?
+  status               Status?               @default(ACTIVE)
   createdAt            DateTime?             @default(now())
   updatedAt            DateTime?             @updatedAt
 }
@@ -73,6 +73,7 @@ model SalesAgreement {
   salesAgreementItems   SalesAgreementItem[]
   purchaseRequestOrders PurchaseRequestOrder[]
   transaction           Transaction?
+  status                Status?                @default(ACTIVE)
   client                Client                 @relation(fields: [clientId], references: [id])
   creator               User                   @relation("CreateSalesAgreements", fields: [creatorId], references: [id])
   approver              User?                  @relation("ApproveSalesAgreements", fields: [approverId], references: [id])
@@ -105,6 +106,7 @@ model PurchaseRequestOrder {
   other              String?
   approverId         String?
   currency           Currency?
+  status             Status?                    @default(ACTIVE)
   purchaseOrderItems PurchaseRequestOrderItem[]
   transaction        Transaction?
   supplierId         String
@@ -124,6 +126,7 @@ model Memorandum {
   contents         String
   creatorId        String
   branch           OfficeBranch?
+  status           Status?       @default(ACTIVE)
   creator          User          @relation("PreparedMemorandums", fields: [creatorId], references: [id])
   approverId       String?
   approver         User?         @relation("ApprovedMemorandums", fields: [approverId], references: [id])
@@ -232,6 +235,7 @@ model DocumentTransaction {
   clientId             String
   client               Client                  @relation(fields: [clientId], references: [id])
   preparedById         String
+  status               Status?                 @default(ACTIVE)
   preparedBy           User                    @relation("PreparedDocumentTransactions", fields: [preparedById], references: [id])
   transmittedById      String?
   transmittedBy        User?                   @relation("TransmittedDocumentTransactions", fields: [transmittedById], references: [id])
@@ -344,6 +348,7 @@ model Package {
   packageNumber  String
   sequenceNumber Int                    @unique @default(autoincrement())
   name           String
+  status         Status?                @default(ACTIVE)
   inclusions     String[]
   exclusions     String[]
   remarks        String
@@ -448,4 +453,9 @@ enum OfficeBranch {
 enum Currency {
   USD
   PHP
+}
+
+enum Status {
+  ACTIVE
+  VOID
 }

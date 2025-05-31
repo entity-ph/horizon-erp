@@ -1,5 +1,6 @@
 import { IPurchaseRequestOrder } from "@/interfaces/purchase-request.interface"
 import { Currency } from "@/interfaces/sales-agreement-item.interface"
+import { useLocation } from "react-router-dom"
 
 interface Props {
   data: IPurchaseRequestOrder
@@ -11,6 +12,15 @@ const currencyMap: Record<Currency, string> = {
 }
 
 export default function PurchaseRequestInfo({ data }: Props) {
+
+  const location = useLocation()
+
+  const basePath = location.pathname.includes('/admin')
+    ? '/admin'
+    : location.pathname.includes('/employee')
+      ? '/employee'
+      : ''
+
   return (
     <>
       <div className="grid grid-cols-3 gap-4 p-4">
@@ -35,7 +45,14 @@ export default function PurchaseRequestInfo({ data }: Props) {
             Sales agreement no.
           </span>
           <h3 className="text-[12px]">
-            {data.salesAgreement?.serialNumber}
+            <a
+              href={`${window.location.origin}${basePath}/sales-agreements/${data.salesAgreement?.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-green-600 underline hover:text-blue-800"
+            >
+              {data.salesAgreement?.serialNumber}
+            </a>
           </h3>
         </div>
         <div>

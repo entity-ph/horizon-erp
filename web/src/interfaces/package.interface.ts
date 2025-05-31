@@ -10,6 +10,7 @@ export interface IPackage {
   inclusions: string[];
   exclusions: string[];
   remarks: string;
+  status: 'ACTIVE' | 'VOID';
   accommodations?: IPackageAccommodation[];
   airfares?: IPackageAirfare[];
   officeBranch: OfficeBranch;

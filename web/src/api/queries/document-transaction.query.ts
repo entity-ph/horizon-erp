@@ -26,7 +26,7 @@ export interface IDocumentTransaction {
   client: IClient
   recievedByOutsider: string
   recievedFromOutsider: string
-
+  status: 'ACTIVE' | 'VOID'
   createdAt: Date
   updatedAt: Date
 }
