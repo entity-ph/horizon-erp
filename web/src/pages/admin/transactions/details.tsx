@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import TopBar from "@/components/section/topbar";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { fetchTransaction } from "@/api/queries/transaction";
 import TravelVoucher from "@/components/section/transaction/travel-voucher";
 import { useState } from "react";
@@ -24,6 +24,17 @@ import SalesAgreementInfo from "@/components/section/sales-agreement/info";
 import SalesAgreementItems from "@/components/section/sales-agreement/items";
 import ClientDetails from "@/components/section/transaction/lead";
 import { Accordion, AccordionItem, AccordionContent, AccordionTrigger } from "@/components/ui/accordion";
+import { useAuth } from "@/providers/auth-provider";
+import Constants from "@/constants";
+import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { updateTransactionVoucherStatus } from "@/api/mutations/transaction.mutation";
 
 export default function ManageTransaction() {
   const { id } = useParams();
@@ -32,6 +43,27 @@ export default function ManageTransaction() {
   const [openAddTourDialog, setOpenAddTourDialog] = useState(false);
   const [openAddTransportDialog, setOpenAddTransportDialog] = useState(false);
   const [openSelectSalesAgreement, setOpenSelectSalesAgreement] = useState(false);
+
+  const queryClient = useQueryClient();
+  const { session: { user } } = useAuth();
+  const { PermissionsCanEdit } = Constants;
+
+  const { mutate: updateStatusMutate, isPending: isStatusUpdating } = useMutation({
+    mutationFn: updateTransactionVoucherStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["transaction", id] });
+      toast.success("Transaction status updated successfully", {
+        position: "top-center",
+        className: "text-primary"
+      });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message, {
+        position: "top-center",
+        className: "text-destructive"
+      });
+    }
+  });
 
   const { data: transaction, isLoading } = useQuery({
     queryKey: ["transaction", id],
@@ -65,6 +97,26 @@ export default function ManageTransaction() {
                   ))}
                 </TabsList>
                 <TabsContent value={tabs[0].value} className="flex gap-y-2 flex-col">
+                  {transaction && user?.permission && PermissionsCanEdit.includes(user.permission) && (
+                    <div className="flex justify-end items-center gap-2">
+                      <label className="text-xs font-medium">Status:</label>
+                      <Select
+                        value={transaction.status}
+                        onValueChange={(status) => {
+                          updateStatusMutate({ id: String(id), status: status as "ACTIVE" | "VOID" });
+                        }}
+                        disabled={isStatusUpdating}
+                      >
+                        <SelectTrigger className="w-[120px] h-8 text-xs">
+                          <SelectValue placeholder="Select status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="ACTIVE">ACTIVE</SelectItem>
+                          <SelectItem value="VOID">VOID</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
                   {transaction?.client &&
                     <ClientDetails clientData={transaction.client} forSelection={false} />
                   }

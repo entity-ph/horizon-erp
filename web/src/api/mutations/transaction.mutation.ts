@@ -337,3 +337,22 @@ export async function approveTransaction(id: string) {
   }
 }
 
+export interface IUpdateTransactionVoucherStatus {
+  id: string
+  status?: 'ACTIVE' | 'VOID'
+}
+
+export async function updateTransactionVoucherStatus({ id, status }: IUpdateTransactionVoucherStatus) {
+  try {
+    const response = await api.put(`/api/v1/transactions/${id}/status`, { status });
+    return response.data;
+  } catch (error) {
+    let message;
+    if (error instanceof AxiosError) {
+      message = error.response?.data.message;
+    }
+    throw new Error(message || 'Failed to update package status');
+  }
+}
+
+

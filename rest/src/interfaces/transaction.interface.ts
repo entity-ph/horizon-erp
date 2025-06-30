@@ -18,3 +18,8 @@ export interface IUpdateTransactionApprover {
   id: string;
   approverId: string;
 }
+
+export interface IUpdateTransactionVoucherStatus {
+  id: string;
+  status: 'ACTIVE' | 'VOID'
+}

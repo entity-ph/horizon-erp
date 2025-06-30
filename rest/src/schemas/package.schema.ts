@@ -69,3 +69,9 @@ export const updatePackageSchema = z.object({
   })
 });
 
+export const updatePackageStatusSchema = z.object({
+  body: z.object({
+    status: z.enum(['ACTIVE', 'VOID']),
+  }),
+});
+

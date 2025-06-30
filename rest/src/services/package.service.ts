@@ -1,8 +1,8 @@
 import prisma from "../utils/db.utils";
-import { ICreatePackage, IFindPackages, IUpdatePackage } from "../interfaces/package.interface";
+import { ICreatePackage, IFindPackages, IUpdatePackage, IUpdatePackageStatus } from "../interfaces/package.interface";
 import { getNextPackageNumber } from "../utils/generate-number";
 
-export async function createPackage({officeBranch, ...data}: ICreatePackage) {
+export async function createPackage({ officeBranch, ...data }: ICreatePackage) {
   const latestPackage = await prisma.package.findFirst({
     where: {
       officeBranch
@@ -15,20 +15,26 @@ export async function createPackage({officeBranch, ...data}: ICreatePackage) {
   const packageNumber = getNextPackageNumber(latestPackage?.packageNumber || null, officeBranch);
 
   return await prisma.package.create({
-    data: {packageNumber, officeBranch, ...data}
+    data: { packageNumber, officeBranch, ...data }
   });
 }
 
-export async function updatePackage({id, ...data}: IUpdatePackage) {
+export async function updatePackage({ id, ...data }: IUpdatePackage) {
   return await prisma.package.update({
-    where: {id},
+    where: { id },
     data
+  });
+}
+export async function updatePackageStatus({ id, status }: IUpdatePackageStatus) {
+  return await prisma.package.update({
+    where: { id },
+    data: { status },
   });
 }
 
 export async function deletePackage(id: string) {
   return await prisma.package.delete({
-    where: {id},
+    where: { id },
   });
 }
 
@@ -73,9 +79,9 @@ export async function findPackages(params: IFindPackages) {
   return { packages, total }
 }
 
-export const findPackageById = async(id: string) => {
+export const findPackageById = async (id: string) => {
   return await prisma.package.findUnique({
-    where: {id},
+    where: { id },
     include: {
       accommodations: true,
       airfares: true,

@@ -102,3 +102,7 @@ export interface IUpdatePackageAirfare {
   rate?: number;
   flightDetails: string;
 }
+export interface IUpdatePackageStatus {
+  id: string;
+  status: 'ACTIVE' | 'VOID';
+}

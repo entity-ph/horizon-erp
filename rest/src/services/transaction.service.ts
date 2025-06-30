@@ -1,7 +1,7 @@
 import { OfficeBranch, Prisma } from "@prisma/client";
 import prisma from "../utils/db.utils";
 import moment from "moment";
-import { IUpdateTransactionApprover } from "../interfaces/transaction.interface";
+import { IUpdateTransactionApprover, IUpdateTransactionVoucherStatus } from "../interfaces/transaction.interface";
 import { getNextTransactionNumber } from "../utils/generate-number";
 
 interface ICreateTransaction {
@@ -441,6 +441,12 @@ export async function updateTransactionApprover({ id, approverId }: IUpdateTrans
   return await prisma.transaction.update({
     where: { id },
     data: { approverId }
+  });
+}
+export async function updateTransactionVoucherStatus({ id, status }: IUpdateTransactionVoucherStatus) {
+  return await prisma.transaction.update({
+    where: { id },
+    data: { status },
   });
 }
 

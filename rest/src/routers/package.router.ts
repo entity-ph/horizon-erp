@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { validate } from '../middlewares/validate.middleware';
 import { IFindPackages } from '../interfaces/package.interface';
-import { createPackageSchema, getPackagesSchema, updatePackageSchema } from '../schemas/package.schema';
-import { createPackage, deletePackage, findPackageById, findPackages, updatePackage, updatePackageApprover } from '../services/package.service';
+import { createPackageSchema, getPackagesSchema, updatePackageSchema, updatePackageStatusSchema } from '../schemas/package.schema';
+import { createPackage, deletePackage, findPackageById, findPackages, updatePackage, updatePackageApprover, updatePackageStatus } from '../services/package.service';
 import { deletePackageAccommodationByPackageId } from '../services/package-accommodation.service';
 import { deletePackageAirfareByPackageId } from '../services/package-airfare.service';
 import { UserType } from '@prisma/client';
@@ -46,7 +46,7 @@ packageRouter.get('/:id', validate(getPackagesSchema), async (req: Request, res:
 packageRouter.post('/', validate(createPackageSchema), async (req: Request, res: Response) => {
   try {
     const creatorId = req.user?.id;
-    const created = await createPackage({creatorId, ...req.body});
+    const created = await createPackage({ creatorId, ...req.body });
     if (!created) throw new Error('Failed to create packages');
 
     res.status(200).json(created);
@@ -60,8 +60,8 @@ packageRouter.put('/:id', validate(updatePackageSchema), async (req: Request, re
   try {
     const id = req.params.id;
 
-    const updated = await updatePackage({id, ...req.body});
-    if (!updated) throw new Error('Failed to update packages');
+    const updated = await updatePackageStatus({ id, ...req.body });
+    if (!updated) throw new Error('Failed to update package status');
 
     res.status(200).json({
       message: 'Updated successfully'
@@ -114,6 +114,21 @@ packageRouter.patch('/:id/approver', async (req: Request, res: Response) => {
       message: 'Package approved successfully'
     });
 
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal server error'
+    });
+  }
+});
+
+packageRouter.put('/:id/status', validate(updatePackageStatusSchema), async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const updated = await updatePackageStatus({ id, ...req.body });
+    res.status(200).json({
+      message: 'Package status updated successfully',
+      data: updated,
+    });
   } catch (error) {
     return res.status(500).json({
       message: 'Internal server error'

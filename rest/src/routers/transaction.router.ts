@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { createTransaction, deleteTransaction, fetchRecentEntries, fetchTransaction, fetchTransactions, fetchTransactionSummary, updateTransaction, updateTransactionApprover } from '../services/transaction.service';
+import { createTransaction, deleteTransaction, fetchRecentEntries, fetchTransaction, fetchTransactions, fetchTransactionSummary, updateTransaction, updateTransactionApprover, updateTransactionVoucherStatus } from '../services/transaction.service';
 import { validate } from '../middlewares/validate.middleware';
-import { getTransactionsSchema } from '../schemas/transaction.schema';
+import { getTransactionsSchema, updateTransactionVoucherStatusSchema } from '../schemas/transaction.schema';
 import { authorize } from '../middlewares/authorize.middleware';
 import { UserType } from '@prisma/client';
 
@@ -169,6 +169,22 @@ transactionRouter.patch('/:id/approver', authorize([UserType.ADMIN]), async (req
     })
   }
 })
+
+transactionRouter.put('/:id/status', validate(updateTransactionVoucherStatusSchema), async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const updated = await updateTransactionVoucherStatus({ id, ...req.body });
+    res.status(200).json({
+      message: 'Transaction Voucher status updated successfully',
+      data: updated,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal server error'
+    });
+  }
+});
+
 
 export default transactionRouter;
 

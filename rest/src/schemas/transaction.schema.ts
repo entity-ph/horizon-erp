@@ -19,3 +19,10 @@ export const getTransactionsSchema = z.object({
     // filters: z.enum([TransactionTypeFilters.TOUR, TransactionTypeFilters.TRAVEL, TransactionTypeFilters.ACCOMMODATION, TransactionTypeFilters.TRANSPORTATION]).optional().array()
   })
 });
+
+export const updateTransactionVoucherStatusSchema = z.object({
+  body: z.object({
+    status: z.enum(['ACTIVE', 'VOID']),
+  }),
+});
+

@@ -23,3 +23,7 @@ export interface IUpdatePackage {
   exclusions: string[];
   remarks: string;
 }
+export interface IUpdatePackageStatus {
+  id: string;
+  status: 'ACTIVE' | 'VOID'
+}
