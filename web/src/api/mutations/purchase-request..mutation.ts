@@ -66,6 +66,6 @@ export async function updatePurchaseRequestStatus({ id, status }: IUpdatePurchas
     if (error instanceof AxiosError) {
       message = error.response?.data.message;
     }
-    throw new Error(message || 'Failed to update sales agreement status');
+    throw new Error(message || 'Failed to update purchase request status');
   }
 }

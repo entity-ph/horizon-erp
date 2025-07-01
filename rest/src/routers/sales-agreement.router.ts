@@ -173,6 +173,7 @@ salesAgreementRouter.put('/:id/status', validate(updateSalesAgreementStatusSchem
       data: updated,
     });
   } catch (error) {
+    console.log('error update', error)
     return res.status(500).json({
       message: 'Internal server error'
     });
