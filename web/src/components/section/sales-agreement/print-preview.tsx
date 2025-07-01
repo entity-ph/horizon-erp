@@ -391,7 +391,7 @@ export default function PrintPreview({ data }: Props) {
             </div>
 
             <div className='w-full text-[8px] space-y-0'>
-              {data.client.officeBranch === OfficeBranch.CEBU && (
+              {(data.client.officeBranch === OfficeBranch.CEBU || data.client.officeBranch === OfficeBranch.FUENTE) && (
                 <>
                   <h1 className='font-semibold mb-1'>
                     Cebu Branch Bank Information:

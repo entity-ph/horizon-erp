@@ -56,7 +56,8 @@ const formSchema = z.object({
   ]),
   officeBranch: z.enum([
     OfficeBranch.CEBU,
-    OfficeBranch.CALBAYOG
+    OfficeBranch.CALBAYOG,
+    OfficeBranch.FUENTE
   ]),
   password: z.string()
     .trim().min(8, {
@@ -96,7 +97,8 @@ const userPermissionMap: Record<UserType, Record<PermissionType, string>> = {
 
 const userOfficeBranch: Record<OfficeBranch, string> = {
   CEBU: 'Cebu',
-  CALBAYOG: 'Calbayog'
+  CALBAYOG: 'Calbayog',
+  FUENTE: 'Fuente'
 }
 
 interface Props {

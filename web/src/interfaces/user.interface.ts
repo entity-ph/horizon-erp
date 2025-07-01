@@ -28,7 +28,8 @@ export enum PermissionType {
 
 export enum OfficeBranch {
   CEBU = 'CEBU',
-  CALBAYOG = 'CALBAYOG'
+  CALBAYOG = 'CALBAYOG',
+  FUENTE = 'FUENTE'
 }
 
 export interface IUserSession {

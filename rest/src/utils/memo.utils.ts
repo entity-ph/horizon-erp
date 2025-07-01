@@ -19,14 +19,17 @@ export const canAccessMemo = ({
     [PermissionType.ACCOUNTING]: {
       [OfficeBranch.CEBU]: "Accounting Cebu",
       [OfficeBranch.CALBAYOG]: "Accounting Calbayog",
+      [OfficeBranch.FUENTE]: "Accounting Fuente",
     },
     [PermissionType.RESERVATION]: {
       [OfficeBranch.CEBU]: "Reservation Cebu",
       [OfficeBranch.CALBAYOG]: "Reservation Calbayog",
+      [OfficeBranch.FUENTE]: "Reservation Fuente",
     },
     [PermissionType.SUPERVISOR]: {
       [OfficeBranch.CEBU]: "Supervisor Cebu",
       [OfficeBranch.CALBAYOG]: "Supervisor Calbayog",
+      [OfficeBranch.FUENTE]: "Supervisor Fuente",
     },
   };
 

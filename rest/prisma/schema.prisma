@@ -448,6 +448,7 @@ enum AccommodationType {
 enum OfficeBranch {
   CEBU
   CALBAYOG
+  FUENTE
 }
 
 enum Currency {

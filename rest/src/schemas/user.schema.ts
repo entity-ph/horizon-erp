@@ -32,7 +32,8 @@ export const createUserSchema = z.object({
     ]),
     officeBranch: z.enum([
       OfficeBranch.CEBU,
-      OfficeBranch.CALBAYOG
+      OfficeBranch.CALBAYOG,
+      OfficeBranch.FUENTE,
     ]),
     password: z.string().min(8).refine((password: string) => {
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
