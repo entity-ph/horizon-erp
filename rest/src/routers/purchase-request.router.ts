@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import { validate } from '../middlewares/validate.middleware';
 import { UserType } from '@prisma/client';
-import { createPurchaseRequestSchema, findPurchaseRequestsSchema, updatePurchaseRequestSchema } from '../schemas/purchase-request.schema';
-import { createPurchaseRequest, deletePurchaseRequestById, fetchPurchaseRequestSummary, findPurchaseRequestById, findPurchaseRequests, updatePurchaseRequest, updatePurchaseRequestOrderApprover } from '../services/purchase-request.service';
+import { createPurchaseRequestSchema, findPurchaseRequestsSchema, updatePurchaseRequestSchema, updatePurchaseRequestStatusSchema } from '../schemas/purchase-request.schema';
+import { createPurchaseRequest, deletePurchaseRequestById, fetchPurchaseRequestSummary, findPurchaseRequestById, findPurchaseRequests, updatePurchaseRequest, updatePurchaseRequestOrderApprover, updatePurchaseRequestStatus } from '../services/purchase-request.service';
 import { deletePurchaseRequestItems } from '../services/purchase-request-item.service';
 import { authorize } from '../middlewares/authorize.middleware';
 import { findSupplierById } from '../services/supplier.service';
@@ -166,5 +166,22 @@ purchaseRequestRouter.patch('/:id/approver', authorize([UserType.ADMIN]), async 
     });
   }
 });
+
+purchaseRequestRouter.put('/:id/status', validate(updatePurchaseRequestStatusSchema), async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const updated = await updatePurchaseRequestStatus({ id, ...req.body });
+    res.status(200).json({
+      message: 'Purchase Request status updated successfully',
+      data: updated,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal server error'
+    });
+  }
+});
+
+
 
 export default purchaseRequestRouter;

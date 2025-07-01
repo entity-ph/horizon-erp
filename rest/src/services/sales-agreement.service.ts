@@ -1,6 +1,6 @@
 import { OfficeBranch, Prisma } from "@prisma/client";
 import prisma from "../utils/db.utils";
-import { ICreateSalesAgreement, IFindSalesAgreements, IUpdateSalesAgreement, IUpdateSalesAgreementApprover } from "../interfaces/sales-agreement.interface";
+import { ICreateSalesAgreement, IFindSalesAgreements, IUpdateSalesAgreement, IUpdateSalesAgreementApprover, IUpdateSalesAgreementStatus } from "../interfaces/sales-agreement.interface";
 import moment from "moment";
 import { getNextSerialNumber } from "../utils/generate-number";
 
@@ -221,3 +221,11 @@ export async function updateSalesAgreementApprover({ id, approverId }: IUpdateSa
     data: { approverId }
   });
 }
+
+export async function updateSalesAgreementStatus({ id, status }: IUpdateSalesAgreementStatus) {
+  return await prisma.salesAgreement.update({
+    where: { id },
+    data: { status },
+  });
+}
+

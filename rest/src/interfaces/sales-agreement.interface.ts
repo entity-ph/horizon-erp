@@ -25,3 +25,7 @@ export interface IUpdateSalesAgreementApprover {
   id: string;
   approverId: string;
 }
+export interface IUpdateSalesAgreementStatus {
+  id: string;
+  status: 'ACTIVE' | 'VOID';
+}

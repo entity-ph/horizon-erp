@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { createSalesAgreementSchema, getSalesAgreementsSchema, updateSalesAgreementSchema } from '../schemas/sales-agreement.schema';
+import { createSalesAgreementSchema, getSalesAgreementsSchema, updateSalesAgreementSchema, updateSalesAgreementStatusSchema } from '../schemas/sales-agreement.schema';
 import { validate } from '../middlewares/validate.middleware';
-import { createSalesAgreement, deleteSalesAgreementById, fetchSalesAgreementSummary, findSalesAgreementById, findSalesAgreements, updateSalesAgreement, updateSalesAgreementApprover } from '../services/sales-agreement.service';
+import { createSalesAgreement, deleteSalesAgreementById, fetchSalesAgreementSummary, findSalesAgreementById, findSalesAgreements, updateSalesAgreement, updateSalesAgreementApprover, updateSalesAgreementStatus } from '../services/sales-agreement.service';
 import { ClientType, UserType } from '@prisma/client';
 import { deleteSalesAgreementItems } from '../services/sales-agreement-item.service';
 import { authorize } from '../middlewares/authorize.middleware';
@@ -19,9 +19,9 @@ salesAgreementRouter.post('/', validate(createSalesAgreementSchema), async (req:
     }
 
     const created = await createSalesAgreement({
-      creatorId: userId, 
-      ...req.body, 
-      officeBranch: foundClient.officeBranch 
+      creatorId: userId,
+      ...req.body,
+      officeBranch: foundClient.officeBranch
     });
     if (!created) {
       throw new Error('Failed to create sales agreement')
@@ -163,5 +163,21 @@ salesAgreementRouter.patch('/:id/approver', async (req: Request, res: Response) 
     });
   }
 });
+
+salesAgreementRouter.put('/:id/status', validate(updateSalesAgreementStatusSchema), async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const updated = await updateSalesAgreementStatus({ id, ...req.body });
+    res.status(200).json({
+      message: 'Sales Agreement status updated successfully',
+      data: updated,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'Internal server error'
+    });
+  }
+});
+
 
 export default salesAgreementRouter;

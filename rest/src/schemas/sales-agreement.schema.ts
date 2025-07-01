@@ -32,3 +32,10 @@ export const getSalesAgreementsSchema = z.object({
     typeOfClient: z.enum([ClientType.GROUP, ClientType.WALK_IN, ClientType.CORPORATE, ClientType.GOVERNMENT, ClientType.INDIVIDUAL]).optional(),
   })
 });
+
+export const updateSalesAgreementStatusSchema = z.object({
+  body: z.object({
+    status: z.enum(['ACTIVE', 'VOID']),
+  }),
+});
+

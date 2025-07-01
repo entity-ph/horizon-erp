@@ -18,6 +18,7 @@ export interface ISalesAgreement {
   approver?: IUser;
   updatedAt: Date;
   createdAt: Date;
+  status: 'ACTIVE' | 'VOID';
 }
 
 export enum TypeOfClient {
@@ -38,6 +39,11 @@ export interface IUpdateSalesAgreement {
   salesAgreementId: string;
   clientId: string;
   currency: Currency;
+}
+
+export interface IUpdateSalesAgreementStatus {
+  id: string
+  status?: 'ACTIVE' | 'VOID'
 }
 
 export interface IFetchSalesAgreements {

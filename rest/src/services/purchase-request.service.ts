@@ -1,7 +1,7 @@
 import { OfficeBranch, Prisma } from "@prisma/client";
 import moment from 'moment';
 import prisma from "../utils/db.utils";
-import { ICreatePurchaseRequest, IFindPurchaseRequests, IUpdatePurchaseRequest, IUpdatePurchaseRequestApprover } from "../interfaces/purchase-request.interface";
+import { ICreatePurchaseRequest, IFindPurchaseRequests, IUpdatePurchaseRequest, IUpdatePurchaseRequestApprover, IUpdatePurchaseRequestStatus } from "../interfaces/purchase-request.interface";
 import { getNextPurchaseRequestNumber } from "../utils/generate-number";
 
 export async function createPurchaseRequest({ officeBranch, ...data }: ICreatePurchaseRequest) {
@@ -209,5 +209,12 @@ export async function updatePurchaseRequestOrderApprover({ id, approverId }: IUp
   return await prisma.purchaseRequestOrder.update({
     where: { id },
     data: { approverId }
+  });
+}
+
+export async function updatePurchaseRequestStatus({ id, status }: IUpdatePurchaseRequestStatus) {
+  return await prisma.purchaseRequestOrder.update({
+    where: { id },
+    data: { status },
   });
 }

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import TopBar from "../../../components/section/topbar";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Separator } from "../../../components/ui/separator";
 import PrintPreview from "../../../components/section/sales-agreement/print-preview";
 import SalesAgreementInfo from "../../../components/section/sales-agreement/info";
@@ -11,6 +11,9 @@ import Loader from "@/components/animated/Loader";
 import { useAuth } from "@/providers/auth-provider";
 import Constants from "@/constants";
 import PurchaseRequestInfo from "@/components/section/purchase-request/info";
+import { updateSalesAgreementStatus } from "@/api/mutations/sales-agreement.mutation";
+import { toast } from "sonner";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function SalesAgreementDetails() {
   const { id } = useParams();
@@ -23,6 +26,25 @@ export default function SalesAgreementDetails() {
       if (!id) return;
       return await fetchSalesAgreement(id)
     },
+  });
+
+  const queryClient = useQueryClient();
+
+  const { mutate: updateStatusMutate, isPending: isStatusUpdating } = useMutation({
+    mutationFn: updateSalesAgreementStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sales-agreement-details", id] });
+      toast.success("Sales agreement status updated successfully", {
+        position: "top-center",
+        className: "text-primary"
+      });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message, {
+        position: "top-center",
+        className: "text-destructive"
+      });
+    }
   });
 
 
@@ -55,6 +77,27 @@ export default function SalesAgreementDetails() {
                 )}
               </div>
               <Separator className="bg-slate-200" />
+              {data && user?.permission && PermissionsCanEdit.includes(user.permission) && (
+                <div className="flex justify-end items-center gap-2 mt-2">
+                  <label className="text-xs font-medium">Status:</label>
+                  <Select
+                    value={data.status}
+                    onValueChange={(status) => {
+                      updateStatusMutate({ id: String(id), status: status as "ACTIVE" | "VOID" });
+                    }}
+                    disabled={isStatusUpdating}
+                  >
+                    <SelectTrigger className="w-[120px] h-8 text-xs">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ACTIVE">ACTIVE</SelectItem>
+                      <SelectItem value="VOID">VOID</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
               <SalesAgreementInfo data={data} />
               {data.purchaseRequestOrders.length !== 0 &&
                 <div className="p-4 border rounded-lg">

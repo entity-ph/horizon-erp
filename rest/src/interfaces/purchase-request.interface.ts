@@ -36,3 +36,8 @@ export interface IUpdatePurchaseRequestApprover {
   id: string;
   approverId: string;
 }
+
+export interface IUpdatePurchaseRequestStatus {
+  id: string;
+  status: 'ACTIVE' | 'VOID';
+}

@@ -125,6 +125,24 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
       )
     }
   },
+  {
+    id: "status",
+    header: "Status",
+    cell: ({ row }) => {
+      const status = row.original.status;
+      const isActive = status === 'ACTIVE';
+
+      return (
+        <span
+          className={`px-2 py-1 text-xs rounded font-semibold w-fit ${isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+            }`}
+        >
+          {status}
+        </span>
+      );
+    },
+  },
+
 
   {
     id: "actions",
