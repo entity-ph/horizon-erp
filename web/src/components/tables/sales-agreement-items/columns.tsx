@@ -61,16 +61,19 @@ export const Columns: ColumnDef<ISalesAgreementItem>[] = [
     cell: ({ row }) => {
       const { session: { user } } = useAuth();
       const { PermissionsCanEdit, PermissionsCanDelete } = Constants;
+
+      const canEdit = user?.permission && PermissionsCanEdit.includes(user.permission);
+      const canDelete = user?.permission && PermissionsCanDelete.includes(user.permission);
+
       return (
         <div className="flex items-center gap-4">
-          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) || !row.original.salesAgreement?.approver && (
+          {(canEdit || !row.original.salesAgreement?.approver) && (
             <EditSalesAgreementItemDialog data={row.original} />
           )}
-          {(user?.permission && PermissionsCanDelete.includes(user?.permission)) && (
+          {canDelete && (
             <DeleteSalesAgreementItem salesAgreementItemId={row.original.id} />
           )}
         </div>
-      )
+      );
     },
-  },
-];
+  }];
