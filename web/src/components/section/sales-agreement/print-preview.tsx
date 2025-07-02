@@ -237,11 +237,6 @@ export default function PrintPreview({ data }: Props) {
                   <h1>Grand total:</h1>
                   <span>{formatCurrency(data.currency, grandTotal)}</span>
                 </div>
-                <Separator className='bg-gray-100' />
-                <div className='flex items-center justify-between'>
-                  <h1>Service fee: </h1>
-                  <span>{formatCurrency(data.currency, grandTotalServiceFee)}</span>
-                </div>
               </>
             )}
             {(selectedTemplate === 'template3') && (
