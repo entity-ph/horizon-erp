@@ -49,7 +49,7 @@ export const Columns: ColumnDef<IPackageAccommodation>[] = [
       const accommodation = row.original;
       return (
         <div className="flex items-center gap-4">
-          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) || !row?.original?.package?.approver && (
+          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) && (
             <UpdatePackageAccommodationDialog packageAccommodation={accommodation} />
           )}
           {(user?.permission && PermissionsCanDelete.includes(user?.permission)) && (

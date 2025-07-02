@@ -41,7 +41,7 @@ export const Columns: ColumnDef<IPackageAirfare>[] = [
       const { PermissionsCanEdit, PermissionsCanDelete } = Constants;
       return (
         <div className="flex items-center gap-4">
-          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) || !row?.original?.package?.approver && (
+          {(user?.permission && PermissionsCanEdit.includes(user?.permission)) && (
             <UpdatePackageAirfareDialog data={row.original} />
           )}
           {(user?.permission && PermissionsCanDelete.includes(user?.permission)) && (

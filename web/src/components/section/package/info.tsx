@@ -120,7 +120,7 @@ export default function PackageInfo({ data }: Props) {
       <div className="p-4">
         <div className="flex items-center justify-between">
           <h1 className="text-[12px] font-semibold">Accommodation</h1>
-          {!data.approver && <CreatePackageAccommodationDialog packageId={data.id ?? ''} />}
+          {<CreatePackageAccommodationDialog packageId={data.id ?? ''} />}
         </div>
         <AccommodationDataTable columns={AccommodationColumns} data={data.accommodations ?? []} />
       </div>
@@ -130,7 +130,7 @@ export default function PackageInfo({ data }: Props) {
       <div className="p-4">
         <div className="flex items-center justify-between">
           <h1 className="text-[12px] font-semibold">Airfare</h1>
-          {!data.approver && <CreatePackageAirfareDialog packageId={data.id ?? ''} />}
+          {<CreatePackageAirfareDialog packageId={data.id ?? ''} />}
         </div>
         <AirfareDataTable columns={AirfareColumns} data={data.airfares ?? []} />
       </div>
