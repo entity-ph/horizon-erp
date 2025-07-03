@@ -374,14 +374,15 @@ model PackageAccommodation {
 }
 
 model PackageAirfare {
-  id            String    @id @default(cuid())
-  packageId     String
-  rate          Float?
-  airline       String
-  flightDetails String
-  package       Package   @relation(fields: [packageId], references: [id])
-  createdAt     DateTime? @default(now())
-  updatedAt     DateTime? @updatedAt
+  id               String    @id @default(cuid())
+  packageId        String
+  rate             Float?
+  airline          String
+  flightDetails    String
+  baggageAllowance String?
+  package          Package   @relation(fields: [packageId], references: [id])
+  createdAt        DateTime? @default(now())
+  updatedAt        DateTime? @updatedAt
 }
 
 enum UserType {

@@ -1,7 +1,7 @@
-import { 
+import {
   ColumnDef,
-  flexRender, 
-  getCoreRowModel, 
+  flexRender,
+  getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table";
@@ -29,13 +29,13 @@ export function DataTable<TData, TValue>({
           <TableRow key={headerGroup.id} className="border">
             {headerGroup.headers.map((header) => {
               return (
-                <TableHead key={header.id} className="text-[12px]">
+                <TableHead key={header.id} className="text-[10px]">
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
                 </TableHead>
               )
             })}

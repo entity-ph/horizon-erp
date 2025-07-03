@@ -50,6 +50,7 @@ export interface IPackageAirfare {
   packageId: string;
   airline: string;
   flightDetails: string;
+  baggageAllowance: string;
   rate: number;
   package: IPackage;
   createdAt: Date;
@@ -94,6 +95,7 @@ export interface ICreatePackageAirfare {
   airline: string;
   rate?: number;
   flightDetails: string;
+  baggageAllowance: string;
 }
 
 export interface IUpdatePackageAirfare {
@@ -101,6 +103,7 @@ export interface IUpdatePackageAirfare {
   airline: string;
   rate?: number;
   flightDetails: string;
+  baggageAllowance: string;
 }
 export interface IUpdatePackageStatus {
   id: string;

@@ -10,7 +10,7 @@ export const Columns: ColumnDef<IPackageAirfare>[] = [
     id: "airline",
     header: "Airline",
     cell: ({ row }) => (
-      <span className="capitalize">
+      <span className="capitalize text-[10px]">
         {row.original.airline}
       </span>
     ),
@@ -19,17 +19,26 @@ export const Columns: ColumnDef<IPackageAirfare>[] = [
     id: "flightDetails",
     header: "Flight details",
     cell: ({ row }) => (
-      <span className="capitalize">
+      <span className="capitalize text-[10px]">
         {row.original.flightDetails}
       </span>
     )
   },
   {
-    id: "flightDetails",
+    id: "rate",
     header: "Rate",
     cell: ({ row }) => (
-      <span className="capitalize">
+      <span className="capitalize text-[10px]">
         {row.original.rate}
+      </span>
+    )
+  },
+  {
+    id: "baggageAllowance",
+    header: "Baggage Allowance",
+    cell: ({ row }) => (
+      <span className="capitalize text-[10px]">
+        {row.original.baggageAllowance}
       </span>
     )
   },

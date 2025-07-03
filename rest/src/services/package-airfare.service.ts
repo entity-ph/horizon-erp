@@ -5,6 +5,7 @@ interface ICreatePackageAirfare {
   airline: string;
   rate: number;
   flightDetails: string;
+  baggageAllowance: string;
 }
 export const createPackageAirfare = async (data: ICreatePackageAirfare) => {
   return await prisma.packageAirfare.create({ data });
@@ -15,6 +16,7 @@ interface IUpdatePackageAirfare {
   airline: string;
   rate: number;
   flightDetails: string;
+  baggageAllowance: string;
 }
 export const updatePackageAirfare = async ({ id, ...data }: IUpdatePackageAirfare) => {
   return await prisma.packageAirfare.update({

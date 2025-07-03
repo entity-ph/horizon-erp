@@ -33,6 +33,9 @@ const formSchema = z.object({
   flightDetails: z.string().trim().min(1, {
     message: "Flight details is required"
   }),
+  baggageAllowance: z.string().trim().min(1, {
+    message: "Baggage allowance is required"
+  }),
   rate: z.coerce.number().optional()
 });
 
@@ -49,6 +52,7 @@ export default function UpdatePackageAirfareDialog({ data }: Props) {
     defaultValues: {
       airline: '',
       flightDetails: '',
+      baggageAllowance: '',
       rate: 0
     }
   });
@@ -84,6 +88,7 @@ export default function UpdatePackageAirfareDialog({ data }: Props) {
       form.reset({
         airline: data.airline,
         flightDetails: data.flightDetails,
+        baggageAllowance: data.baggageAllowance,
         rate: data.rate
       })
     }
@@ -147,7 +152,19 @@ export default function UpdatePackageAirfareDialog({ data }: Props) {
                   </FormItem>
                 )}
               />
-
+              <FormField
+                control={form.control}
+                name="baggageAllowance"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Baggage Allowance</FormLabel>
+                    <FormControl>
+                      <CommonInput inputProps={{ ...field }} placeholder="Baggage Allowance" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="flex gap-2 justify-end">
               <DialogClose>

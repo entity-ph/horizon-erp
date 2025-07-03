@@ -33,6 +33,9 @@ const formSchema = z.object({
   flightDetails: z.string().trim().min(1, {
     message: "Flight details is required"
   }),
+  baggageAllowance: z.string().trim().min(1, {
+    message: "Baggage allowance is required"
+  }),
   rate: z.coerce.number().optional()
 });
 
@@ -138,7 +141,19 @@ export default function CreatePackageAirfareDialog({ packageId }: Props) {
                   </FormItem>
                 )}
               />
-
+              <FormField
+                control={form.control}
+                name="baggageAllowance"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Baggage Allowance</FormLabel>
+                    <FormControl>
+                      <CommonInput inputProps={{ ...field }} placeholder="Baggage allowance" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <div className="flex gap-2 justify-end">
               <DialogClose>
