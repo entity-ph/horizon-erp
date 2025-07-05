@@ -102,14 +102,19 @@ export const Columns: ColumnDef<IUser>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
+      const editable = row.original.email !== 'jestrada@horizonexpress.ph'
       return (
         <div className="flex items-center justify-center gap-4">
-          <EditUserDialog
-            data={row.original}
-          />
-          <DeleteUserDialog
-            userId={row.original.id}
-          />
+          {editable &&
+            <>
+              <EditUserDialog
+                data={row.original}
+              />
+              <DeleteUserDialog
+                userId={row.original.id}
+              />
+            </>
+          }
         </div>
       )
     },
