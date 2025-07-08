@@ -12,6 +12,7 @@ import { UserType } from "@/interfaces/user.interface";
 import Constants from "@/constants";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import clsx from "clsx";
 
 export const Columns: ColumnDef<ISalesAgreement>[] = [
   {
@@ -130,19 +131,23 @@ export const Columns: ColumnDef<ISalesAgreement>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.status;
-      const isActive = status === 'ACTIVE';
+
+      const statusClass = clsx(
+        "px-2 py-1 rounded text-xs font-semibold w-fit",
+        {
+          "bg-green-100 text-green-700": status === "ACTIVE",
+          "bg-red-100 text-red-700": status === "VOID",
+          "bg-yellow-100 text-yellow-800": status === "PAID",
+        }
+      );
 
       return (
-        <span
-          className={`px-2 py-1 text-xs rounded font-semibold w-fit ${isActive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-            }`}
-        >
+        <span className={statusClass}>
           {status}
         </span>
       );
     },
   },
-
 
   {
     id: "actions",

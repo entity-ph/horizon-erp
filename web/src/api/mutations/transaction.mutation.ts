@@ -339,7 +339,7 @@ export async function approveTransaction(id: string) {
 
 export interface IUpdateTransactionVoucherStatus {
   id: string
-  status?: 'ACTIVE' | 'VOID'
+  status?: 'ACTIVE' | 'VOID' | 'PAID'
 }
 
 export async function updateTransactionVoucherStatus({ id, status }: IUpdateTransactionVoucherStatus) {

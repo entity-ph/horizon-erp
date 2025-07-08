@@ -55,7 +55,7 @@ export async function approvePurchaseRequestOrder(id: string) {
 }
 export interface IUpdatePurchaseRequestStatus {
   id: string
-  status?: 'ACTIVE' | 'VOID'
+  status?: 'ACTIVE' | 'VOID' | 'PAID'
 }
 export async function updatePurchaseRequestStatus({ id, status }: IUpdatePurchaseRequestStatus) {
   try {

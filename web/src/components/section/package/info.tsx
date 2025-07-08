@@ -70,7 +70,7 @@ export default function PackageInfo({ data }: Props) {
             <span className="text-muted-foreground text-[10px]">Status</span>
             <Select
               onValueChange={(value) => {
-                updateStatusMutate({ id: data.id, status: value as 'ACTIVE' | 'VOID' })
+                updateStatusMutate({ id: data.id, status: value as 'ACTIVE' | 'VOID' | 'PAID' })
               }}
               defaultValue={data.status}
               disabled={isPending}
@@ -81,6 +81,7 @@ export default function PackageInfo({ data }: Props) {
               <SelectContent>
                 <SelectItem value="ACTIVE">ACTIVE</SelectItem>
                 <SelectItem value="VOID">VOID</SelectItem>
+                <SelectItem value="PAID">PAID</SelectItem>
               </SelectContent>
             </Select>
           </div>

@@ -72,17 +72,19 @@ export const Columns: ColumnDef<IPackage>[] = [
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.status;
-      const isActive = status === "ACTIVE";
+
+      const statusClass = clsx(
+        "px-2 py-1 rounded text-xs font-semibold w-fit",
+        {
+          "bg-green-100 text-green-700": status === "ACTIVE",
+          "bg-red-100 text-red-700": status === "VOID",
+          "bg-yellow-100 text-yellow-800": status === "PAID",
+        }
+      );
+
       return (
-        <span
-          className={clsx(
-            "px-2 py-1 rounded text-xs font-semibold w-fit",
-            isActive
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          )}
-        >
-          {isActive ? "ACTIVE" : "VOID"}
+        <span className={statusClass}>
+          {status}
         </span>
       );
     },

@@ -43,7 +43,7 @@ export interface ITransaction {
   createdAt?: Date
   updatedAt?: Date
   voucherCounts: IVoucherCounts;
-  status: 'VOID' | 'ACTIVE'
+  status: 'VOID' | 'ACTIVE' | 'PAID'
 }
 
 export interface IFetchTransaction {

@@ -460,4 +460,5 @@ enum Currency {
 enum Status {
   ACTIVE
   VOID
+  PAID
 }

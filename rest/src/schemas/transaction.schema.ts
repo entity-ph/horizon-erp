@@ -22,7 +22,7 @@ export const getTransactionsSchema = z.object({
 
 export const updateTransactionVoucherStatusSchema = z.object({
   body: z.object({
-    status: z.enum(['ACTIVE', 'VOID']),
+    status: z.enum(['ACTIVE', 'VOID', 'PAID']),
   }),
 });
 

@@ -180,6 +180,7 @@ export default function PrintPreview({ data }: Props) {
                     <th className="px-4 py-2 border-r border-gray-300 border-b">Airline</th>
                     <th className="px-4 py-2 border-r border-gray-300 border-b">Rate</th>
                     <th className="px-4 py-2 border-r border-gray-300 border-b">Flight details</th>
+                    <th className="px-4 py-2 border-r border-gray-300 border-b">Baggage Allowance</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -197,6 +198,10 @@ export default function PrintPreview({ data }: Props) {
                             <td className="px-4 py-2 border-r border-gray-300 text-center">
                               {item.flightDetails}
                             </td>
+                            <td className="px-4 py-2 border-r border-gray-300 text-center">
+                              {item.baggageAllowance}
+                            </td>
+
                           </tr>
                         )
                       })}

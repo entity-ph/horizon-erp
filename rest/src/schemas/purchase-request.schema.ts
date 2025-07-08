@@ -58,7 +58,7 @@ export const findPurchaseRequestsSchema = z.object({
 
 export const updatePurchaseRequestStatusSchema = z.object({
   body: z.object({
-    status: z.enum(['ACTIVE', 'VOID']),
+    status: z.enum(['ACTIVE', 'VOID','PAID']),
   }),
 });
 

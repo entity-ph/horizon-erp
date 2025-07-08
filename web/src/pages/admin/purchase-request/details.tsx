@@ -82,7 +82,7 @@ export default function PurchaseRequestDetails() {
                   <Select
                     value={data.status}
                     onValueChange={(status) => {
-                      updateStatusMutate({ id: String(id), status: status as "ACTIVE" | "VOID" });
+                      updateStatusMutate({ id: String(id), status: status as "ACTIVE" | "VOID" | "PAID" });
                     }}
                     disabled={isStatusUpdating}
                   >
@@ -92,6 +92,7 @@ export default function PurchaseRequestDetails() {
                     <SelectContent>
                       <SelectItem value="ACTIVE">ACTIVE</SelectItem>
                       <SelectItem value="VOID">VOID</SelectItem>
+                      <SelectItem value="PAID">PAID</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

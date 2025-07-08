@@ -18,7 +18,7 @@ export interface ISalesAgreement {
   approver?: IUser;
   updatedAt: Date;
   createdAt: Date;
-  status: 'ACTIVE' | 'VOID';
+  status: 'ACTIVE' | 'VOID' | 'PAID';
 }
 
 export enum TypeOfClient {
@@ -43,7 +43,7 @@ export interface IUpdateSalesAgreement {
 
 export interface IUpdateSalesAgreementStatus {
   id: string
-  status?: 'ACTIVE' | 'VOID'
+  status?: 'ACTIVE' | 'VOID' | 'PAID'
 }
 
 export interface IFetchSalesAgreements {

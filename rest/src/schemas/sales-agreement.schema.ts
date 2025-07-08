@@ -35,7 +35,7 @@ export const getSalesAgreementsSchema = z.object({
 
 export const updateSalesAgreementStatusSchema = z.object({
   body: z.object({
-    status: z.enum(['ACTIVE', 'VOID']),
+    status: z.enum(['ACTIVE', 'VOID','PAID']),
   }),
 });
 

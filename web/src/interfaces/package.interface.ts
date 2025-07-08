@@ -10,7 +10,7 @@ export interface IPackage {
   inclusions: string[];
   exclusions: string[];
   remarks: string;
-  status: 'ACTIVE' | 'VOID';
+  status: 'ACTIVE' | 'VOID' | 'PAID';
   accommodations?: IPackageAccommodation[];
   airfares?: IPackageAirfare[];
   officeBranch: OfficeBranch;
@@ -107,5 +107,5 @@ export interface IUpdatePackageAirfare {
 }
 export interface IUpdatePackageStatus {
   id: string;
-  status: 'ACTIVE' | 'VOID';
+  status: 'ACTIVE' | 'VOID' | 'PAID';
 }
