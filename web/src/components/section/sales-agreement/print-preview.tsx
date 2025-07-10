@@ -14,6 +14,7 @@ import logo from "../../../assets/logo.png"
 import SelectSalesAgreementTemplate, { SalesAgreementTemplateType } from '@/components/select/sales-agreement/print-template'
 import { RenderHeaderText } from '@/components/common/header'
 import { OfficeBranch } from '@/interfaces/user.interface'
+import Watermark from '@/components/common/watermark'
 
 interface Props {
   data: ISalesAgreement
@@ -55,7 +56,7 @@ export default function PrintPreview({ data }: Props) {
   const totalAmountDue = totalDue - lessEWT;
 
   return (
-    <div className="w-full bg-white rounded-lg">
+    <div className="w-full bg-white rounded-lg relative">
       <div className='h-[50px] px-4 flex items-center justify-between'>
         <h1 className='text-[12px] text-muted-foreground italic'>Print preview</h1>
         <div className='flex items-center gap-1'>
@@ -154,6 +155,7 @@ export default function PrintPreview({ data }: Props) {
           </div>
 
           <table className="w-full table-auto border border-gray-300 text-[12px] text-muted-foreground">
+
             <thead>
               <tr>
                 <th className="px-4 py-2 border-r border-gray-300 border-b">PARTICULARS</th>
@@ -309,6 +311,7 @@ export default function PrintPreview({ data }: Props) {
         </div>
 
         <div>
+          <Watermark text={data.status} />
           <div className='flex items-end justify-evenly gap-4 text-muted-foreground pb-4'>
             <div className='w-full text-center max-w-[250px] text-[12px] text-muted-foreground'>
               <div className='flex-1 border-b leading-[16px]'>

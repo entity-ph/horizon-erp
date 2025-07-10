@@ -18,7 +18,7 @@ export interface IPurchaseRequestOrder {
   purchaseOrderItems: IPurchaseRequestOrderItem[],
   transaction?: any;
   creator?: IUser;
-  status?: 'ACTIVE' | 'VOID' | 'PAID';
+  status: 'ACTIVE' | 'VOID' | 'PAID';
   approver?: IUser;
   salesAgreement?: ISalesAgreement;
   supplier?: ISupplier;

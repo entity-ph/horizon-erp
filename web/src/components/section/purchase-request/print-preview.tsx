@@ -12,6 +12,7 @@ import { OfficeBranch, UserType } from '@/interfaces/user.interface';
 import { formatCurrency } from '@/utils/currency.utils';
 import logo from "../../../assets/logo.png"
 import { RenderHeaderText } from '@/components/common/header';
+import Watermark from '@/components/common/watermark';
 
 interface Props {
   data: IPurchaseRequestOrder
@@ -43,7 +44,7 @@ export default function PrintPreview({ data }: Props) {
   const grandTotal = data.purchaseOrderItems.reduce((acc, item) => (acc + item.total), 0);
 
   return (
-    <div className="w-full bg-white rounded-lg">
+    <div className="w-full bg-white rounded-lg relative">
       <div className='h-[50px] px-4 flex items-center justify-between'>
         <h1 className='text-[12px] text-muted-foreground italic'>
           Print preview
@@ -77,6 +78,7 @@ export default function PrintPreview({ data }: Props) {
       </div>
       <Separator />
       <div ref={contentRef} className="flex flex-col min-h-[100vh] p-4 space-y-4 justify-between">
+        <Watermark text={data?.status} />
         <div>
           <div className='text-center text-black flex flex-col items-center'>
             <img src={logo} className='object-contain w-[220px] h-[150px] self-center' />
