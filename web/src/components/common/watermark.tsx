@@ -18,7 +18,7 @@ export default function Watermark({ text }: WatermarkProps) {
         className="
           -rotate-45
           whitespace-nowrap
-          text-[16rem]
+          text-[12rem]
           font-extrabold
           tracking-widest
           text-black
