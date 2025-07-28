@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findPurchaseRequestsSchema = exports.updatePurchaseRequestSchema = exports.createPurchaseRequestSchema = void 0;
+exports.updatePurchaseRequestStatusSchema = exports.findPurchaseRequestsSchema = exports.updatePurchaseRequestSchema = exports.createPurchaseRequestSchema = void 0;
 const client_1 = require("@prisma/client");
 const zod_1 = require("zod");
 exports.createPurchaseRequestSchema = zod_1.z.object({
@@ -53,4 +53,9 @@ exports.findPurchaseRequestsSchema = zod_1.z.object({
         type: zod_1.z.string().optional(),
         classification: zod_1.z.string().optional(),
     })
+});
+exports.updatePurchaseRequestStatusSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        status: zod_1.z.enum(['ACTIVE', 'VOID', 'PAID']),
+    }),
 });

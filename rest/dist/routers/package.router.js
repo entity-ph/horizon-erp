@@ -65,9 +65,9 @@ packageRouter.post('/', (0, validate_middleware_1.validate)(package_schema_1.cre
 packageRouter.put('/:id', (0, validate_middleware_1.validate)(package_schema_1.updatePackageSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.params.id;
-        const updated = yield (0, package_service_1.updatePackage)(Object.assign({ id }, req.body));
+        const updated = yield (0, package_service_1.updatePackageStatus)(Object.assign({ id }, req.body));
         if (!updated)
-            throw new Error('Failed to update packages');
+            throw new Error('Failed to update package status');
         res.status(200).json({
             message: 'Updated successfully'
         });
@@ -110,6 +110,21 @@ packageRouter.patch('/:id/approver', (req, res) => __awaiter(void 0, void 0, voi
         }
         return res.status(200).json({
             message: 'Package approved successfully'
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+}));
+packageRouter.put('/:id/status', (0, validate_middleware_1.validate)(package_schema_1.updatePackageStatusSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const updated = yield (0, package_service_1.updatePackageStatus)(Object.assign({ id }, req.body));
+        res.status(200).json({
+            message: 'Package status updated successfully',
+            data: updated,
         });
     }
     catch (error) {

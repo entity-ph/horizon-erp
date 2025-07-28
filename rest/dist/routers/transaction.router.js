@@ -153,4 +153,19 @@ transactionRouter.patch('/:id/approver', (0, authorize_middleware_1.authorize)([
         });
     }
 }));
+transactionRouter.put('/:id/status', (0, validate_middleware_1.validate)(transaction_schema_1.updateTransactionVoucherStatusSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const updated = yield (0, transaction_service_1.updateTransactionVoucherStatus)(Object.assign({ id }, req.body));
+        res.status(200).json({
+            message: 'Transaction Voucher status updated successfully',
+            data: updated,
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+}));
 exports.default = transactionRouter;

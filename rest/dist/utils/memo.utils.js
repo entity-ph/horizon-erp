@@ -7,14 +7,17 @@ const canAccessMemo = ({ userPermission, userBranch, memoAudience, userFirstName
         [client_1.PermissionType.ACCOUNTING]: {
             [client_1.OfficeBranch.CEBU]: "Accounting Cebu",
             [client_1.OfficeBranch.CALBAYOG]: "Accounting Calbayog",
+            [client_1.OfficeBranch.FUENTE]: "Accounting Fuente",
         },
         [client_1.PermissionType.RESERVATION]: {
             [client_1.OfficeBranch.CEBU]: "Reservation Cebu",
             [client_1.OfficeBranch.CALBAYOG]: "Reservation Calbayog",
+            [client_1.OfficeBranch.FUENTE]: "Reservation Fuente",
         },
         [client_1.PermissionType.SUPERVISOR]: {
             [client_1.OfficeBranch.CEBU]: "Supervisor Cebu",
             [client_1.OfficeBranch.CALBAYOG]: "Supervisor Calbayog",
+            [client_1.OfficeBranch.FUENTE]: "Supervisor Fuente",
         },
     };
     const departmentWideAudiences = {

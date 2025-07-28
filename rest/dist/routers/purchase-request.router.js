@@ -147,4 +147,19 @@ purchaseRequestRouter.patch('/:id/approver', (0, authorize_middleware_1.authoriz
         });
     }
 }));
+purchaseRequestRouter.put('/:id/status', (0, validate_middleware_1.validate)(purchase_request_schema_1.updatePurchaseRequestStatusSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const updated = yield (0, purchase_request_service_1.updatePurchaseRequestStatus)(Object.assign({ id }, req.body));
+        res.status(200).json({
+            message: 'Purchase Request status updated successfully',
+            data: updated,
+        });
+    }
+    catch (error) {
+        return res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+}));
 exports.default = purchaseRequestRouter;

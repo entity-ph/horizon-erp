@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.findPackageById = void 0;
 exports.createPackage = createPackage;
 exports.updatePackage = updatePackage;
+exports.updatePackageStatus = updatePackageStatus;
 exports.deletePackage = deletePackage;
 exports.findPackages = findPackages;
 exports.updatePackageApprover = updatePackageApprover;
@@ -54,6 +55,14 @@ function updatePackage(_a) {
         return yield db_utils_1.default.package.update({
             where: { id },
             data
+        });
+    });
+}
+function updatePackageStatus(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ id, status }) {
+        return yield db_utils_1.default.package.update({
+            where: { id },
+            data: { status },
         });
     });
 }

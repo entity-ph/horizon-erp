@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getTransactionsSchema = exports.TransactionTypeFilters = void 0;
+exports.updateTransactionVoucherStatusSchema = exports.getTransactionsSchema = exports.TransactionTypeFilters = void 0;
 const zod_1 = require("zod");
 var TransactionTypeFilters;
 (function (TransactionTypeFilters) {
@@ -20,4 +20,9 @@ exports.getTransactionsSchema = zod_1.z.object({
         search: zod_1.z.string().optional(),
         // filters: z.enum([TransactionTypeFilters.TOUR, TransactionTypeFilters.TRAVEL, TransactionTypeFilters.ACCOMMODATION, TransactionTypeFilters.TRANSPORTATION]).optional().array()
     })
+});
+exports.updateTransactionVoucherStatusSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        status: zod_1.z.enum(['ACTIVE', 'VOID', 'PAID']),
+    }),
 });

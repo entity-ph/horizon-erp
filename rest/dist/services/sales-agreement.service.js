@@ -30,6 +30,7 @@ exports.findSalesAgreementById = findSalesAgreementById;
 exports.deleteSalesAgreementById = deleteSalesAgreementById;
 exports.fetchSalesAgreementSummary = fetchSalesAgreementSummary;
 exports.updateSalesAgreementApprover = updateSalesAgreementApprover;
+exports.updateSalesAgreementStatus = updateSalesAgreementStatus;
 const client_1 = require("@prisma/client");
 const db_utils_1 = __importDefault(require("../utils/db.utils"));
 const moment_1 = __importDefault(require("moment"));
@@ -236,6 +237,14 @@ function updateSalesAgreementApprover(_a) {
         return yield db_utils_1.default.salesAgreement.update({
             where: { id },
             data: { approverId }
+        });
+    });
+}
+function updateSalesAgreementStatus(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ id, status }) {
+        return yield db_utils_1.default.salesAgreement.update({
+            where: { id },
+            data: { status },
         });
     });
 }

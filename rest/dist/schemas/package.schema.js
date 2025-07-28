@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePackageSchema = exports.createPackageSchema = exports.getPackagesSchema = void 0;
+exports.updatePackageStatusSchema = exports.updatePackageSchema = exports.createPackageSchema = exports.getPackagesSchema = void 0;
 const client_1 = require("@prisma/client");
 const zod_1 = require("zod");
 exports.getPackagesSchema = zod_1.z.object({
@@ -58,4 +58,9 @@ exports.updatePackageSchema = zod_1.z.object({
             message: "Remarks is required"
         }),
     })
+});
+exports.updatePackageStatusSchema = zod_1.z.object({
+    body: zod_1.z.object({
+        status: zod_1.z.enum(['ACTIVE', 'VOID', 'PAID']),
+    }),
 });

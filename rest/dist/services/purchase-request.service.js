@@ -30,6 +30,7 @@ exports.findPurchaseRequestById = findPurchaseRequestById;
 exports.deletePurchaseRequestById = deletePurchaseRequestById;
 exports.fetchPurchaseRequestSummary = fetchPurchaseRequestSummary;
 exports.updatePurchaseRequestOrderApprover = updatePurchaseRequestOrderApprover;
+exports.updatePurchaseRequestStatus = updatePurchaseRequestStatus;
 const client_1 = require("@prisma/client");
 const moment_1 = __importDefault(require("moment"));
 const db_utils_1 = __importDefault(require("../utils/db.utils"));
@@ -228,6 +229,14 @@ function updatePurchaseRequestOrderApprover(_a) {
         return yield db_utils_1.default.purchaseRequestOrder.update({
             where: { id },
             data: { approverId }
+        });
+    });
+}
+function updatePurchaseRequestStatus(_a) {
+    return __awaiter(this, arguments, void 0, function* ({ id, status }) {
+        return yield db_utils_1.default.purchaseRequestOrder.update({
+            where: { id },
+            data: { status },
         });
     });
 }

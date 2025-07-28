@@ -143,4 +143,20 @@ salesAgreementRouter.patch('/:id/approver', (req, res) => __awaiter(void 0, void
         });
     }
 }));
+salesAgreementRouter.put('/:id/status', (0, validate_middleware_1.validate)(sales_agreement_schema_1.updateSalesAgreementStatusSchema), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.params.id;
+        const updated = yield (0, sales_agreement_service_1.updateSalesAgreementStatus)(Object.assign({ id }, req.body));
+        res.status(200).json({
+            message: 'Sales Agreement status updated successfully',
+            data: updated,
+        });
+    }
+    catch (error) {
+        console.log('error update', error);
+        return res.status(500).json({
+            message: 'Internal server error'
+        });
+    }
+}));
 exports.default = salesAgreementRouter;
