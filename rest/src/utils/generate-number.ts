@@ -4,6 +4,15 @@ import dayjs from "dayjs";
 export function getNextMemorandumNumber(lastMemoNumber: string | null, branch: string) {
   const today = dayjs().format('MMDDYYYY');
   let newNumber = 1;
+  let branchCode
+  switch (branch) {
+    case 'CEBU': branchCode = 'CEB'
+      break;
+    case 'CALBAYOG': branchCode = 'CAL'
+      break;
+    case 'FUENTE': branchCode = 'FUENTE'
+      break;
+  }
 
   if (lastMemoNumber) {
     const numericPart = parseInt(lastMemoNumber.split('-')[0]);
@@ -11,7 +20,6 @@ export function getNextMemorandumNumber(lastMemoNumber: string | null, branch: s
   }
 
   const paddedNumber = String(newNumber).padStart(3, '0');
-  const branchCode = branch === 'CEBU' ? 'CEB' : 'CAL';
 
   return `${paddedNumber}-${today}-${branchCode}`;
 }
@@ -19,6 +27,15 @@ export function getNextMemorandumNumber(lastMemoNumber: string | null, branch: s
 
 export function getNextDtsNumber(lastDtsNumber: string | null, officeBranch: string) {
   let newNumber = 1;
+  let branchCode
+  switch (officeBranch) {
+    case 'CEBU': branchCode = 'CEB'
+      break;
+    case 'CALBAYOG': branchCode = 'CAL'
+      break;
+    case 'FUENTE': branchCode = 'FUENTE'
+      break;
+  }
 
   if (lastDtsNumber) {
     const numericPart = parseInt(lastDtsNumber.slice(3, 8));
@@ -26,16 +43,23 @@ export function getNextDtsNumber(lastDtsNumber: string | null, officeBranch: str
   }
   const paddedNumber = String(newNumber).padStart(5, '0');
   const today = dayjs().format('MMDDYYYY');
-  const branchCode = officeBranch === 'CEBU' ? 'CEB' : 'CAL';
 
   return `DTS${paddedNumber}-${today}-${branchCode}`;
 }
 
 
-
 export function getNextTransactionNumber(lastTransactionNumber: string | null, branch: OfficeBranch) {
   const today = dayjs().format('MMDDYYYY');
   let newTransactionNumber = '001';
+  let branchCode
+  switch (branch) {
+    case 'CEBU': branchCode = 'CEB'
+      break;
+    case 'CALBAYOG': branchCode = 'CAL'
+      break;
+    case 'FUENTE': branchCode = 'FUENTE'
+      break;
+  }
 
   if (lastTransactionNumber) {
     const numericPart = lastTransactionNumber.slice(1, 4);
@@ -45,14 +69,25 @@ export function getNextTransactionNumber(lastTransactionNumber: string | null, b
     }
   }
 
-  const branchCode = branch === OfficeBranch.CALBAYOG ? 'CLB' : 'CEB';
   return `T${newTransactionNumber}-${today}-${branchCode}`;
 }
 
 
 export function getNextSerialNumber(lastSerialNumber: string | null, branch: string) {
   const today = dayjs().format('MMDDYYYY');
-  let newNumber = branch === 'CEBU' ? 251 : 1451;
+  let newNumber
+  let branchCode
+  switch (branch) {
+    case 'CEBU': branchCode = 'CEB'
+      newNumber = 251
+      break;
+    case 'CALBAYOG': branchCode = 'CAL'
+      newNumber = 1451
+      break;
+    case 'FUENTE': branchCode = 'FUENTE'
+      newNumber = 1
+      break;
+  }
 
   if (lastSerialNumber) {
     const numericPart = parseInt(lastSerialNumber.slice(2, 7));
@@ -60,21 +95,32 @@ export function getNextSerialNumber(lastSerialNumber: string | null, branch: str
   }
 
   const paddedNumber = String(newNumber).padStart(5, '0');
-  const branchCode = branch === 'CEBU' ? 'CEB' : 'CAL';
+
 
   return `SA${paddedNumber}-${today}-${branchCode}`;
 }
 
 export function getNextPurchaseRequestNumber(lastSerialNumber: string | null, officeBranch: string) {
   const today = dayjs().format('MMDDYYYY');
-  let newNumber = officeBranch === 'CEBU' ? 551 : 2551;
+  let newNumber
+  let branchCode
+  switch (officeBranch) {
+    case 'CEBU': branchCode = 'CEB'
+      newNumber = 551
+      break;
+    case 'CALBAYOG': branchCode = 'CAL'
+      newNumber = 2551
+      break;
+    case 'FUENTE': branchCode = 'FUENTE'
+      newNumber = 1
+      break;
+  }
   if (lastSerialNumber) {
     const numericPart = parseInt(lastSerialNumber.slice(2, 7));
     newNumber = numericPart + 1;
   }
 
   const paddedNumber = String(newNumber).padStart(5, '0');
-  const branchCode = officeBranch === 'CEBU' ? 'CEB' : 'CAL';
 
   return `PO${paddedNumber}-${today}-${branchCode}`;
 }
@@ -82,14 +128,25 @@ export function getNextPurchaseRequestNumber(lastSerialNumber: string | null, of
 
 export function getNextPackageNumber(lastSerialNumber: string | null, officeBranch: string) {
   const today = dayjs().format('MMDDYYYY');
-  let newNumber = officeBranch === 'CEBU' ? 501 : 1;
+  let newNumber
+  let branchCode
+  switch (officeBranch) {
+    case 'CEBU': branchCode = 'CEB'
+      newNumber = 501
+      break;
+    case 'CALBAYOG': branchCode = 'CAL'
+      newNumber = 1
+      break;
+    case 'FUENTE': branchCode = 'FUENTE'
+      newNumber = 1
+      break;
+  }
   if (lastSerialNumber) {
     const numericPart = parseInt(lastSerialNumber.slice(2, 7));
     newNumber = numericPart + 1;
   }
 
   const paddedNumber = String(newNumber).padStart(5, '0');
-  const branchCode = officeBranch === 'CEBU' ? 'CEB' : 'CAL';
 
   return `P${paddedNumber}-${today}-${branchCode}`;
 }
