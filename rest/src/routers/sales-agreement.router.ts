@@ -33,6 +33,7 @@ salesAgreementRouter.post('/', validate(createSalesAgreementSchema), async (req:
     });
 
   } catch (error) {
+    console.log('here eerror', error)
     return res.status(500).json({
       message: 'Internal server error'
     });

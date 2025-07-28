@@ -34,6 +34,7 @@ salesAgreementRouter.post('/', (0, validate_middleware_1.validate)(sales_agreeme
         return res.status(200).json(Object.assign(Object.assign({}, created), { message: 'Sales agreement created successfully' }));
     }
     catch (error) {
+        console.log('here eerror', error);
         return res.status(500).json({
             message: 'Internal server error'
         });

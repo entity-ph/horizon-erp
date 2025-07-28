@@ -44,7 +44,7 @@ function createTransaction(_a) {
                     officeBranch: branch,
                 },
                 transactionNumber: {
-                    contains: branch === client_1.OfficeBranch.CEBU ? 'CEB' : 'CLB'
+                    contains: branch === 'CEBU' ? 'CEB' : branch === 'CALBAYOG' ? 'CAL' : 'FUENTE',
                 }
             },
             orderBy: {

@@ -16,7 +16,7 @@ export async function createTransaction({ id, creatorId, branch }: ICreateTransa
         officeBranch: branch,
       },
       transactionNumber: {
-        contains: branch === OfficeBranch.CEBU ? 'CEB' : 'CLB'
+        contains: branch === 'CEBU' ? 'CEB' : branch === 'CALBAYOG' ? 'CAL' : 'FUENTE',
       }
     },
     orderBy: {

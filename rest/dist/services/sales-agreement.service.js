@@ -44,7 +44,7 @@ function createSalesAgreement(_a) {
                     officeBranch,
                 },
                 serialNumber: {
-                    contains: officeBranch === 'CEBU' ? 'CEB' : 'CAL',
+                    contains: officeBranch === 'CEBU' ? 'CEB' : officeBranch === 'CALBAYOG' ? 'CAL' : 'FUENTE',
                 },
             },
             orderBy: {

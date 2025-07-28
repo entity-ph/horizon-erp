@@ -11,7 +11,7 @@ export async function createSalesAgreement({ officeBranch, ...data }: ICreateSal
         officeBranch,
       },
       serialNumber: {
-        contains: officeBranch === 'CEBU' ? 'CEB' : 'CAL',
+        contains: officeBranch === 'CEBU' ? 'CEB' : officeBranch === 'CALBAYOG' ? 'CAL' : 'FUENTE',
       },
     },
     orderBy: {
