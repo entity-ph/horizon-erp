@@ -31,6 +31,20 @@ export function RenderHeaderText(branch: OfficeBranch) {
         </>
       );
       break;
+    case OfficeBranch.FUENTE:
+      header = (
+        <>
+          <h3 className="text-xs font-semibold">
+            G/F Cebu Rajah Park Hotel Benigno Du Bldg Fuente Osmena Capitol Site Cebu City
+          </h3>
+          <div className="flex flex-col text-xs">
+            <span>Email: info@horizonexpress.ph</span>
+            <span>Contact Number: 09530856053, 09171025584, 09171833216</span>
+          </div>
+        </>
+      );
+      break;
+
     default:
       header = <span>No branch selected</span>;
   }
