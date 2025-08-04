@@ -51,7 +51,7 @@ export const Columns: ColumnDef<ISalesAgreementItem>[] = [
     header: "Total",
     cell: ({ row }) => (
       <span className="capitalize">
-        {(row.original.total + (row.original.serviceFee ?? 0)).toLocaleString()}
+        {((row.original.unitPrice + (row.original.serviceFee ?? 0)) * row.original.quantity).toLocaleString()}
       </span>
     )
   },
